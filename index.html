@@ -3,121 +3,234 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Марсианские коины</title>
+    <title>🚀 Mars Coins</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
-        <header class="header">
-            <h1>🚀 Марсианские коины</h1>
-            <div class="balance-container">
-                <span class="balance" id="balance">0 MC</span>
-            </div>
-        </header>
-
-        <main class="main-content">
-            <!-- Основной экран -->
-            <section id="mainScreen" class="screen active">
-                <div class="mining-area">
-                    <div class="mars-planet" id="marsPlanet">
-                        <div class="crater"></div>
-                        <div class="crater crater-small"></div>
-                        <div class="crater crater-large"></div>
+    <div class="app">
+        <!-- Бэкграунд с частицами -->
+        <div class="particles"></div>
+        
+        <div class="container">
+            <header class="header">
+                <div class="header-content">
+                    <div class="logo">
+                        <div class="logo-icon">🚀</div>
+                        <h1>Mars Coins</h1>
                     </div>
-                    <button class="mine-btn" id="mineBtn">Добыть коины</button>
-                    <div class="stats">
-                        <div class="stat-item">
-                            <span>Мощность:</span>
-                            <span id="powerLevel">1 коин/клик</span>
-                        </div>
-                        <div class="stat-item">
-                            <span>Автодобыча:</span>
-                            <span id="autoMineLevel">0 коин/сек</span>
-                        </div>
+                    <div class="balance-card">
+                        <div class="balance-label">Ваш баланс</div>
+                        <div class="balance-amount" id="balance">0 MC</div>
+                        <div class="balance-glow"></div>
                     </div>
                 </div>
+            </header>
 
-                <nav class="bottom-nav">
-                    <button class="nav-btn" data-screen="upgrades">⚡ Улучшения</button>
-                    <button class="nav-btn" data-screen="referral">👥 Рефералы</button>
-                    <button class="nav-btn" data-screen="leaders">🏆 Лидеры</button>
-                </nav>
-            </section>
-
-            <!-- Улучшения -->
-            <section id="upgradesScreen" class="screen">
-                <h2>⚡ Улучшения</h2>
-                <div class="upgrades-list">
-                    <div class="upgrade-item">
-                        <h3>Улучшить кирку</h3>
-                        <p>+1 коин за клик</p>
-                        <button class="buy-btn" data-upgrade="pickaxe" data-cost="10">Купить за 10 MC</button>
-                    </div>
-                    <div class="upgrade-item">
-                        <h3>Автоматическая добыча</h3>
-                        <p>+0.1 коин/сек</p>
-                        <button class="buy-btn" data-upgrade="autoMiner" data-cost="50">Купить за 50 MC</button>
-                    </div>
-                    <div class="upgrade-item">
-                        <h3>Марсоход</h3>
-                        <p>+0.5 коин/сек</p>
-                        <button class="buy-btn" data-upgrade="rover" data-cost="200">Купить за 200 MC</button>
-                    </div>
-                    <div class="upgrade-item">
-                        <h3>Космическая станция</h3>
-                        <p>+2 коин/сек</p>
-                        <button class="buy-btn" data-upgrade="station" data-cost="1000">Купить за 1000 MC</button>
-                    </div>
-                </div>
-                <button class="back-btn" data-screen="main">← Назад</button>
-            </section>
-
-            <!-- Реферальная система -->
-            <section id="referralScreen" class="screen">
-                <h2>👥 Реферальная система</h2>
-                <div class="referral-content">
-                    <div class="referral-code">
-                        <p>Ваша реферальная ссылка:</p>
-                        <div class="code-container">
-                            <span id="referralCode">Загрузка...</span>
-                            <button class="copy-btn" id="copyBtn">Копировать</button>
+            <main class="main">
+                <!-- Главный экран -->
+                <section id="mainScreen" class="screen active">
+                    <div class="mining-section">
+                        <div class="planet-container">
+                            <div class="mars-planet" id="marsPlanet">
+                                <div class="planet-glow"></div>
+                                <div class="crater crater-1"></div>
+                                <div class="crater crater-2"></div>
+                                <div class="crater crater-3"></div>
+                                <div class="crater crater-4"></div>
+                                <div class="sparkle"></div>
                             </div>
-                    </div>
-                    <div class="referral-stats">
-                        <div class="stat-card">
-                            <h3>Приглашено друзей</h3>
-                            <span id="referralsCount">0</span>
+                            <div class="orbit-ring"></div>
                         </div>
-                        <div class="stat-card">
-                            <h3>Бонус за приглашение</h3>
-                            <span>100 MC</span>
+                        
+                        <button class="mine-btn" id="mineBtn">
+                            <span class="btn-text">Добыть коины</span>
+                            <span class="btn-glow"></span>
+                            <span class="btn-particles"></span>
+                        </button>
+                        
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="stat-icon">⚡</div>
+                                <div class="stat-info">
+                                    <div class="stat-label">Мощность</div>
+                                    <div class="stat-value" id="powerLevel">1/клик</div>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon">🔄</div>
+                                <div class="stat-info">
+                                    <div class="stat-label">Автодобыча</div>
+                                    <div class="stat-value" id="autoMineLevel">0/сек</div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="referral-info">
-                        <p>💡 За каждого приглашенного друга вы получаете 100 MC!</p>
-                    </div>
-                </div>
-                <button class="back-btn" data-screen="main">← Назад</button>
-            </section>
+                </section>
 
-            <!-- Таблица лидеров -->
-            <section id="leadersScreen" class="screen">
-                <h2>🏆 Топ игроков</h2>
-                <div class="leaders-list" id="leadersList">
-                    <div class="leaderboard-item">
-                        <span class="rank">1</span>
-                        <span class="name">Игрок 1</span>
-                        <span class="score">1000 MC</span>
+                <!-- Улучшения -->
+                <section id="upgradesScreen" class="screen">
+                    <div class="screen-header">
+                        <h2>⚡ Улучшения</h2>
+                        <div class="section-description">Увеличивайте свою добычу</div>
                     </div>
-                    <!-- Лидерборд будет заполняться динамически -->
-                </div>
-                <button class="back-btn" data-screen="main">← Назад</button>
-            </section>
-        </main>
+                    
+                    <div class="upgrades-grid">
+                        <div class="upgrade-card" data-upgrade="pickaxe">
+                            <div class="upgrade-icon">⛏️</div>
+                            <div class="upgrade-content">
+                                <h3>Квантовая кирка</h3>
+                                <p>Увеличивает мощность добычи</p>
+                                <div class="upgrade-stats">
+                                    <span>+1 коин/клик</span>
+                                    <span class="upgrade-level">Ур. <span id="pickaxeLevel">0</span></span>
+                                </div>
+                            </div>
+                            <button class="upgrade-btn" data-cost="10">
+                                <span>10 MC</span>
+                            </button>
+                        </div>
+
+                        <div class="upgrade-card" data-upgrade="autoMiner">
+                            <div class="upgrade-icon">🤖</div>
+                            <div class="upgrade-content">
+                                <h3>Авто-майнер</h3>
+                                <p>Автоматическая добыча коинов</p>
+                                <div class="upgrade-stats">
+                                    <span>+0.2 коин/сек</span>
+                                    <span class="upgrade-level">Ур. <span id="autoMinerLevel">0</span></span>
+                                </div>
+                            </div>
+                            <button class="upgrade-btn" data-cost="50">
+                                <span>50 MC</span>
+                            </button>
+                        </div>
+
+                        <div class="upgrade-card" data-upgrade="rover">
+                            <div class="upgrade-icon">🌌</div>
+                            <div class="upgrade-content">
+                                <h3>Марсоход</h3>
+                                <p>Исследует новые территории</p>
+                                <div class="upgrade-stats">
+                                    <span>+0.5 коин/сек</span>
+                                    <span class="upgrade-level">Ур. <span id="roverLevel">0</span></span>
+                                </div>
+                            </div>
+                            <button class="upgrade-btn" data-cost="200">
+                                <span>200 MC</span>
+                            </button>
+                        </div>
+
+                        <div class="upgrade-card" data-upgrade="station">
+                            <div class="upgrade-icon">🛰️</div>
+                            <div class="upgrade-content">
+                                <h3>Космическая станция</h3>
+                                <p>Максимальная эффективность</p>
+                                <div class="upgrade-stats">
+                                    <span>+2 коин/сек</span>
+                                    <span class="upgrade-level">Ур. <span id="stationLevel">0</span></span>
+                                </div>
+                            </div>
+                            <button class="upgrade-btn" data-cost="1000">
+                                <span>1000 MC</span>
+                            </button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Рефералы -->
+                <section id="referralScreen" class="screen">
+                    <div class="screen-header">
+                        <h2>👥 Реферальная система</h2>
+                        <div class="section-description">Приглашайте друзей и получайте бонусы</div>
+                    </div>
+                    
+                    <div class="referral-content">
+                        <div class="referral-card">
+                            <div class="referral-header">
+                                <div class="referral-icon">🎁</div>
+                                <div class="referral-info">
+                                    <h3>Ваша реферальная ссылка</h3>
+                                    <p>Получите 100 MC за каждого друга</p>
+                                </div>
+                            </div>
+                            
+                            <div class="code-section">
+                                <div class="code-display" id="referralCode">Загрузка...</div>
+                                <button class="copy-btn" id="copyBtn">
+                                    <span>Копировать</span>
+                                    <div class="copy-icon">📋</div>
+                                </button>
+                            </div>
+                            
+                            <div class="referral-stats">
+                                <div class="referral-stat">
+                                    <div class="stat-number" id="referralsCount">0</div>
+                                    <div class="stat-label">Приглашено</div>
+                                </div>
+                                <div class="referral-stat">
+                                    <div class="stat-number">100 MC</div>
+                                    <div class="stat-label">За друга</div>
+                                </div>
+                                <div class="referral-stat">
+                                    <div class="stat-number" id="referralBonus">0 MC</div>
+                                    <div class="stat-label">Всего бонусов</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Лидеры -->
+                <section id="leadersScreen" class="screen">
+                    <div class="screen-header">
+                        <h2>🏆 Топ игроков</h2>
+                        <div class="section-description">Соревнуйтесь с другими игроками</div>
+                    </div>
+                    
+                    <div class="leaders-board">
+                        <div class="leaderboard-header">
+                            <span>#</span>
+                            <span>Игрок</span>
+                            <span>Баланс</span>
+                        </div>
+                        <div class="leaders-list" id="leadersList">
+                            <!-- Лидеры будут загружены динамически -->
+                        </div>
+                    </div>
+                </section>
+            </main>
+
+            <!-- Навигация -->
+            <nav class="bottom-nav">
+                <button class="nav-item active" data-screen="main">
+                    <div class="nav-icon">🌍</div>
+                    <span>Добыча</span>
+                </button>
+                <button class="nav-item" data-screen="upgrades">
+                    <div class="nav-icon">⚡</div>
+                    <span>Улучшения</span>
+                </button>
+                <button class="nav-item" data-screen="referral">
+                    <div class="nav-icon">👥</div>
+                    <span>Друзья</span>
+                </button>
+                <button class="nav-item" data-screen="leaders">
+                    <div class="nav-icon">🏆</div>
+                    <span>Топ</span>
+                </button>
+            </nav>
+        </div>
+
+        <!-- Уведомления -->
+        <div id="notification" class="notification">
+            <div class="notification-content"></div>
+        </div>
+
+        <!-- Эффекты -->
+        <div class="click-effect"></div>
     </div>
-
-    <div id="notification" class="notification"></div>
 
     <script src="script.js"></script>
 </body>
