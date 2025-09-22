@@ -4,10 +4,10 @@ class MarsCoinsGame {
         this.powerLevel = 1;
         this.autoMineRate = 0;
         this.upgrades = {
-            pickaxe: 0,
-            autoMiner: 0,
-            rover: 0,
-            station: 0
+            pickaxe: { level: 0, baseCost: 10 },
+            autoMiner: { level: 0, baseCost: 50 },
+            rover: { level: 0, baseCost: 200 },
+            station: { level: 0, baseCost: 1000 }
         };
         this.referrals = [];
         this.userId = null;
@@ -22,25 +22,36 @@ class MarsCoinsGame {
         this.startAutoMining();
         this.generateReferralCode();
         this.updateDisplay();
-        
-        // Имитация инициализации Telegram Web App
+        this.initTelegram();
+    }
+
+    initTelegram() {
         if (window.Telegram && Telegram.WebApp) {
-            this.userId = Telegram.WebApp.initDataUnsafe.user?.id || Math.random().toString(36).substr(2, 9);
+            this.userId = Telegram.WebApp.initDataUnsafe.user?.id || this.generateId();
             Telegram.WebApp.expand();
+            Telegram.WebApp.enableClosingConfirmation();
         } else {
-            this.userId = Math.random().toString(36).substr(2, 9);
+            this.userId = this.generateId();
         }
+    }
+
+    generateId() {
+        return Math.random().toString(36).substr(2, 9);
     }
 
     loadGame() {
         const saved = localStorage.getItem('marsCoinsGame');
         if (saved) {
-            const data = JSON.parse(saved);
-            this.coins = data.coins || 0;
-            this.powerLevel = data.powerLevel || 1;
-            this.autoMineRate = data.autoMineRate || 0;
-            this.upgrades = data.upgrades || this.upgrades;
-            this.referrals = data.referrals || [];
+            try {
+                const data = JSON.parse(saved);
+                this.coins = data.coins || 0;
+                this.powerLevel = data.powerLevel || 1;
+                this.autoMineRate = data.autoMineRate || 0;
+                this.upgrades = data.upgrades || this.upgrades;
+                this.referrals = data.referrals || [];
+            } catch (e) {
+                console.error('Error loading game:', e);
+            }
         }
     }
 
@@ -50,54 +61,73 @@ class MarsCoinsGame {
             powerLevel: this.powerLevel,
             autoMineRate: this.autoMineRate,
             upgrades: this.upgrades,
-            referrals: this.referrals
+            referrals: this.referrals,
+            timestamp: Date.now()
         };
         localStorage.setItem('marsCoinsGame', JSON.stringify(data));
     }
 
     setupEventListeners() {
         // Кнопка добычи
-        document.getElementById('mineBtn').addEventListener('click', () => {
+        document.getElementById('mineBtn').addEventListener('click', (e) => {
             this.mineCoins();
-            this.animatePlanet();
+            this.createClickEffect(e);
         });
 
         // Навигация
-        document.querySelectorAll('.nav-btn').forEach(btn => {
+        document.querySelectorAll('.nav-item').forEach(btn => {
             btn.addEventListener('click', (e) => {
-                this.showScreen(e.target.dataset.screen);
-            });
-        });
-
-        // Кнопки назад
-        document.querySelectorAll('.back-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                this.showScreen(e.target.dataset.screen);
+                this.handleNavigation(e.currentTarget);
             });
         });
 
         // Покупка улучшений
-        document.querySelectorAll('.buy-btn').forEach(btn => {
+        document.querySelectorAll('.upgrade-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
-                const upgrade = e.target.dataset.upgrade;
-                const cost = parseInt(e.target.dataset.cost);
-                this.buyUpgrade(upgrade, cost);
+                const card = e.target.closest('.upgrade-card');
+                if (card) {
+                    this.buyUpgrade(card.dataset.upgrade);
+                }
             });
         });
 
-        // Копирование реферальной ссылки
+        // Копирование реферального кода
         document.getElementById('copyBtn').addEventListener('click', () => {
             this.copyReferralCode();
         });
+
+        // Обработка реферального кода из URL
+        this.processUrlReferral();
+    }
+
+    handleNavigation(navItem) {
+        // Убрать активный класс у всех кнопок
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.classList.remove('active');
+        });
+        
+        // Добавить активный класс к текущей кнопке
+        navItem.classList.add('active');
+        
+        // Показать соответствующий экран
+        const screenName = navItem.dataset.screen;
+        this.showScreen(screenName);
     }
 
     mineCoins() {
-        this.coins += this.powerLevel;
-        this.showNotification(+${this.powerLevel} MC!);
+        const coinsEarned = this.powerLevel;
+        this.coins += coinsEarned;
+        
+        // Анимация планеты
+        this.animatePlanet();
+        
+        // Показать уведомление
+        this.showNotification(+${coinsEarned} MC!, 'success');
+        
+        // Обновить отображение
         this.updateDisplay();
         this.saveGame();
     }
-
     animatePlanet() {
         const planet = document.getElementById('marsPlanet');
         planet.style.transform = 'scale(0.95)';
@@ -106,45 +136,65 @@ class MarsCoinsGame {
         }, 100);
     }
 
-    buyUpgrade(upgrade, cost) {
+    createClickEffect(e) {
+        const effect = document.querySelector('.click-effect');
+        effect.style.left = (e.clientX - 10) + 'px';
+        effect.style.top = (e.clientY - 10) + 'px';
+        effect.style.opacity = '1';
+        
+        setTimeout(() => {
+            effect.style.opacity = '0';
+        }, 500);
+    }
+
+    buyUpgrade(upgradeType) {
+        const upgrade = this.upgrades[upgradeType];
+        if (!upgrade) return;
+
+        const cost = this.getUpgradeCost(upgradeType);
+        
         if (this.coins >= cost) {
             this.coins -= cost;
+            upgrade.level++;
             
-            switch(upgrade) {
+            // Применить эффект улучшения
+            switch(upgradeType) {
                 case 'pickaxe':
                     this.powerLevel += 1;
-                    this.upgrades.pickaxe++;
                     break;
                 case 'autoMiner':
-                    this.autoMineRate += 0.1;
-                    this.upgrades.autoMiner++;
+                    this.autoMineRate += 0.2;
                     break;
                 case 'rover':
                     this.autoMineRate += 0.5;
-                    this.upgrades.rover++;
                     break;
                 case 'station':
                     this.autoMineRate += 2;
-                    this.upgrades.station++;
                     break;
             }
             
-            this.showNotification(Улучшение куплено!);
+            this.showNotification('Улучшение приобретено! 🚀', 'success');
             this.updateDisplay();
             this.saveGame();
         } else {
-            this.showNotification('Недостаточно коинов!');
+            this.showNotification('Недостаточно коинов! 💰', 'error');
         }
+    }
+
+    getUpgradeCost(upgradeType) {
+        const upgrade = this.upgrades[upgradeType];
+        return Math.floor(upgrade.baseCost * Math.pow(1.5, upgrade.level));
     }
 
     startAutoMining() {
         setInterval(() => {
             if (this.autoMineRate > 0) {
-                this.coins += this.autoMineRate;
+                this.coins += this.autoMineRate / 10; // Обновляем 10 раз в секунду для плавности
                 this.updateDisplay();
-                this.saveGame();
+                // Сохраняем реже для производительности
+                if (Math.random() < 0.1) this.saveGame();
             }
-        }, 1000);
+        }, 100);
     }
 
     generateReferralCode() {
@@ -152,11 +202,14 @@ class MarsCoinsGame {
         document.getElementById('referralCode').textContent = this.referralCode;
     }
 
-    copyReferralCode() {
+    async copyReferralCode() {
         const referralLink = https://t.me/your_bot?start=${this.referralCode};
-        navigator.clipboard.writeText(referralLink).then(() => {
-            this.showNotification('Ссылка скопирована!');
-        });
+        try {
+            await navigator.clipboard.writeText(referralLink);
+            this.showNotification('Ссылка скопирована! 📋', 'success');
+        } catch (err) {
+            this.showNotification('Ошибка копирования', 'error');
+        }
     }
 
     showScreen(screenName) {
@@ -166,104 +219,103 @@ class MarsCoinsGame {
         });
         
         // Показать выбранный экран
-        document.getElementById(screenName + 'Screen').classList.add('active');
+        const targetScreen = document.getElementById(screenName + 'Screen');
+        if (targetScreen) {
+            targetScreen.classList.add('active');
+        }
         
-        // Обновить данные на экране лидеров
+        // Обновить данные на экранах
         if (screenName === 'leaders') {
             this.updateLeaderboard();
         }
     }
 
     updateDisplay() {
-        // Обновление баланса
+        // Баланс
         document.getElementById('balance').textContent = Math.floor(this.coins) + ' MC';
         
-        // Обновление статистики
-        document.getElementById('powerLevel').textContent = this.powerLevel + ' коин/клик';
-        document.getElementById('autoMineLevel').textContent = this.autoMineRate.toFixed(1) + ' коин/сек';
+        // Статистика
+        document.getElementById('powerLevel').textContent = this.powerLevel + '/клик';
+        document.getElementById('autoMineLevel').textContent = this.autoMineRate.toFixed(1) + '/сек';
         
-        // Обновление реферальной статистики
+        // Уровни улучшений
+        Object.keys(this.upgrades).forEach(upgrade => {
+            const levelElement = document.getElementById(upgrade + 'Level');
+            if (levelElement) {
+                levelElement.textContent = this.upgrades[upgrade].level;
+            }
+        });
+        
+        // Реферальная статистика
         document.getElementById('referralsCount').textContent = this.referrals.length;
+        document.getElementById('referralBonus').textContent = (this.referrals.length * 100) + ' MC';
         
-        // Обновление кнопок улучшений
+        // Обновить кнопки улучшений
         this.updateUpgradeButtons();
     }
 
     updateUpgradeButtons() {
-        const upgrades = [
-            { type: 'pickaxe', cost: 10 + (this.upgrades.pickaxe * 5) },
-            { type: 'autoMiner', cost: 50 + (this.upgrades.autoMiner * 25) },
-            { type: 'rover', cost: 200 + (this.upgrades.rover * 100) },
-            { type: 'station', cost: 1000 + (this.upgrades.station * 500) }
-        ];
-
-        upgrades.forEach(upgrade => {
-            const btn = document.querySelector([data-upgrade="${upgrade.type}"]);
-            if (btn) {
-                btn.dataset.cost = upgrade.cost;
-                btn.textContent = Купить за ${upgrade.cost} MC;
-                btn.disabled = this.coins < upgrade.cost;
-            }
+        document.querySelectorAll('.upgrade-card').forEach(card => {
+            const upgradeType = card.dataset.upgrade;
+            const cost = this.getUpgradeCost(upgradeType);
+            const btn = card.querySelector('.upgrade-btn');
+            
+            btn.innerHTML = <span>${cost} MC</span>;
+            btn.disabled = this.coins < cost;
         });
     }
 
     updateLeaderboard() {
-        // В реальном приложении здесь был бы запрос к серверу
         const leadersList = document.getElementById('leadersList');
         leadersList.innerHTML = '';
         
+        // Заглушка для демонстрации
         const mockLeaders = [
-            { name: 'Космический майнер', score: 15000 },
-            { name: 'Марсианский пионер', score: 12000 },
-            { name: 'Галактический искатель', score: 9800 },
-            { name: 'Вы', score: Math.floor(this.coins) },
-            { name: 'Новичок вселенной', score: 3500 }
+            { name: 'Космический майнер', score: 15000, isCurrent: false },
+            { name: 'Марсианский пионер', score: 12000, isCurrent: false },
+            { name: 'Галактический искатель', score: 9800, isCurrent: false },
+            { name: 'Вы', score: Math.floor(this.coins), isCurrent: true },
+            { name: 'Новичок вселенной', score: 3500, isCurrent: false }
         ].sort((a, b) => b.score - a.score);
 
         mockLeaders.forEach((leader, index) => {
             const item = document.createElement('div');
-            item.className = 'leaderboard-item';
+            item.className = leader-item ${leader.isCurrent ? 'current-user' : ''};
             item.innerHTML = 
-                <span class="rank">${index + 1}</span>
-                <span class="name">${leader.name}</span>
-                <span class="score">${leader.score} MC</span>
+                <div class="leader-rank rank-${index + 1}">${index + 1}</div>
+                <div class="leader-name">${leader.name}</div>
+                <div class="leader-score">${leader.score} MC</div>
             ;
-            if (leader.name === 'Вы') {
-                item.style.border = '2px solid #e94560';
-            }
             leadersList.appendChild(item);
         });
     }
-showNotification(message) {
+
+    showNotification(message, type = 'info') {
         const notification = document.getElementById('notification');
-        notification.textContent = message;
+        const content = notification.querySelector('.notification-content');
+        
+        content.textContent = message;
         notification.classList.add('show');
         
         setTimeout(() => {
             notification.classList.remove('show');
-        }, 2000);
+        }, 3000);
     }
 
-    // Метод для обработки реферальных ссылок (вызывается при старте бота)
-    processReferral(code) {
-        if (code && code !== this.referralCode && !this.referrals.includes(code)) {
-            this.referrals.push(code);
-            this.coins += 100; // Бонус за реферала
-            this.showNotification('Реферальный бонус: +100 MC!');
+    processUrlReferral() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const refCode = urlParams.get('start');
+        if (refCode && refCode !== this.referralCode && !this.referrals.includes(refCode)) {
+            this.referrals.push(refCode);
+            this.coins += 100;
+            this.showNotification('Реферальный бонус: +100 MC! 🎁', 'success');
             this.saveGame();
             this.updateDisplay();
         }
     }
 }
 
-// Инициализация игры при загрузке страницы
+// Инициализация игры
 document.addEventListener('DOMContentLoaded', () => {
     window.game = new MarsCoinsGame();
-    
-    // Обработка реферального кода из URL параметров
-    const urlParams = new URLSearchParams(window.location.search);
-    const refCode = urlParams.get('start');
-    if (refCode) {
-        window.game.processReferral(refCode);
-    }
 });
