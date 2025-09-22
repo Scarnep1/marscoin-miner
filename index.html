@@ -3,177 +3,202 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mars Coins</title>
+    <title>Hamster Menu</title>
     <link rel="stylesheet" href="style.css">
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="app">
-        <div class="container">
-            <!-- Header -->
-            <header class="header">
-                <div class="logo">
-                    <span class="logo-icon">🚀</span>
-                    <h1>Mars Coins</h1>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1 class="app-title">Hamster Menu</h1>
+                <div class="user-avatar">H</div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Games Section -->
+            <section id="games-section" class="content-section active">
+                <div class="section-header">
+                    <h2>Games</h2>
+                    <span class="section-subtitle">Social media</span>
                 </div>
+                
+                <div class="games-grid">
+                    <div class="game-card" data-bot="hamsterkombat_bot">
+                        <div class="game-image">
+                            <div class="game-icon">🐹</div>
+                        </div>
+                        <div class="game-info">
+                            <h3>Hamster Kombat</h3>
+                            <p>Tap to earn coins</p>
+                        </div>
+                        <div class="game-badge">Hot</div>
+                    </div>
+
+                    <div class="game-card" data-bot="hamsterdev_bot">
+                        <div class="game-image">
+                            <div class="game-icon">🎮</div>
+                        </div>
+                        <div class="game-info">
+                            <h3>Hamster GameDev</h3>
+                            <p>Create your studio</p>
+                        </div>
+                    </div>
+
+                    <div class="game-card" data-bot="hamsterking_bot">
+                        <div class="game-image">
+                            <div class="game-icon">👑</div>
+                        </div>
+                        <div class="game-info">
+                            <h3>Hamster King</h3>
+                            <p>Fight Club</p>
+                        </div>
+                    </div>
+
+                    <div class="game-card" data-bot="bitquest_bot">
+                        <div class="game-image">
+                            <div class="game-icon">⚡</div>
+                        </div>
+                        <div class="game-info">
+                            <h3>BitQuest</h3>
+                            <p>Snapshot done</p>
+                        </div>
+                        <div class="game-badge new">New</div>
+                    </div>
+
+                    <div class="game-card" data-bot="hamsterinterlude_bot">
+                        <div class="game-image">
+                            <div class="game-icon">🌌</div>
+                        </div>
+                        <div class="game-info">
+                            <h3>Hamster Interlude</h3>
+                            <p>Adventure awaits</p>
+                        </div>
+                    </div>
+
+                    <div class="game-card" data-bot="hamstercoin_bot">
+                        <div class="game-image">
+                            <div class="game-icon">💰</div>
+                        </div>
+                        <div class="game-info">
+                            <h3>Hamster Coin</h3>
+                            <p>Earn rewards</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Wallet Section -->
+            <section id="wallet-section" class="content-section">
+                <div class="section-header">
+                    <h2>Best Exchanges</h2>
+                    <span class="section-subtitle">Buy HMSTR coin</span>
+                </div>
+                
+                <div class="exchanges-list">
+                    <div class="exchange-card" data-url="https://binance.com">
+                        <div class="exchange-logo">B</div>
+                        <div class="exchange-info">
+                            <h3>Binance</h3>
+                            <p>Global exchange</p>
+                        </div>
+                        <div class="exchange-arrow">→</div>
+                    </div>
+
+                    <div class="exchange-card" data-url="https://bybit.com">
+                        <div class="exchange-logo">B</div>
+                        <div class="exchange-info">
+                            <h3>Bybit</h3>
+                            <p>Fast trading</p>
+                        </div>
+                        <div class="exchange-arrow">→</div>
+                    </div>
+
+                    <div class="exchange-card" data-url="https://okx.com">
+                        <div class="exchange-logo">O</div>
+                        <div class="exchange-info">
+                            <h3>OKX</h3>
+                            <p>Secure platform</p>
+                        </div>
+                        <div class="exchange-arrow">→</div>
+                    </div>
+
+                    <div class="exchange-card" data-url="https://kucoin.com">
+                        <div class="exchange-logo">K</div>
+                        <div class="exchange-info">
+                            <h3>KuCoin</h3>
+                            <p>Many pairs</p>
+                        </div>
+                        <div class="exchange-arrow">→</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Profile Section -->
+            <section id="profile-section" class="content-section">
+                <div class="profile-header">
+                    <div class="profile-avatar">H</div>
+                    <div class="profile-info">
+                        <h2>Hamster User</h2>
+                        <p>@hamster_fan</p>
+                    </div>
+                </div>
+
                 <div class="balance-card">
-                    <div class="balance-label">Ваш баланс</div>
-                    <div class="balance-amount" id="balance">0 MC</div>
+                    <div class="balance-header">
+                        <span>Your Balance</span>
+                        <span class="balance-refresh">⟳</span>
+                    </div>
+                    <div class="balance-amount">
+                        <span class="amount">1,540</span>
+                        <span class="currency">HMSTR</span>
+                    </div>
+                    <div class="balance-equivalent">≈ $15.40</div>
                 </div>
-            </header>
 
-            <!-- Main Content -->
-            <main class="main">
-                <!-- Mining Screen -->
-                <section id="mainScreen" class="screen active">
-                    <div class="mining-section">
-                        <div class="planet-container">
-                            <div class="mars-planet" id="marsPlanet">
-                                <div class="crater"></div>
-                                <div class="crater"></div>
-                                <div class="crater"></div>
-                            </div>
-                        </div>
-                        
-                        <button class="mine-btn" id="mineBtn">
-                            <span class="btn-text">Добыть коины</span>
-                        </button>
-                        
-                        <div class="stats-grid">
-                            <div class="stat-card">
-                                <div class="stat-icon">⚡</div>
-                                <div class="stat-info">
-                                    <div class="stat-label">Мощность</div>
-                                    <div class="stat-value" id="powerLevel">1/клик</div>
-                                </div>
-                            </div>
-                            <div class="stat-card">
-                                <div class="stat-icon">🔄</div>
-                                <div class="stat-info">
-                                    <div class="stat-label">Автодобыча</div>
-                                    <div class="stat-value" id="autoMineLevel">0/сек</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Upgrades Screen -->
-                <section id="upgradesScreen" class="screen">
-                    <div class="screen-header">
-                        <h2>⚡ Улучшения</h2>
+                <div class="referral-section">
+                    <h3>Invite Friends</h3>
+                    <p>Get 10 points for each friend!</p>
+                    
+                    <div class="referral-link">
+                        <input type="text" id="referral-input" readonly value="https://t.me/hamster_app_bot?start=ref_12345">
+                        <button id="copy-btn">Copy</button>
                     </div>
                     
-                    <div class="upgrades-grid">
-                        <div class="upgrade-card" data-upgrade="pickaxe">
-                            <div class="upgrade-icon">⛏️</div>
-                            <div class="upgrade-content">
-                                <h3>Улучшенная кирка</h3>
-                                <p>+1 коин за клик</p>
-                                <div class="upgrade-cost">Стоимость: <span id="pickaxeCost">10</span> MC</div>
-                            </div>
-                            <button class="upgrade-btn" onclick="game.buyUpgrade('pickaxe')">Купить</button>
+                    <div class="referral-stats">
+                        <div class="stat-item">
+                            <span class="stat-number">5</span>
+                            <span class="stat-label">Friends invited</span>
                         </div>
-
-                        <div class="upgrade-card" data-upgrade="autoMiner">
-                            <div class="upgrade-icon">🤖</div>
-                            <div class="upgrade-content">
-                                <h3>Авто-майнер</h3>
-                                <p>+0.2 коин/сек</p>
-                                <div class="upgrade-cost">Стоимость: <span id="autoMinerCost">50</span> MC</div>
-                            </div>
-                            <button class="upgrade-btn" onclick="game.buyUpgrade('autoMiner')">Купить</button>
-                        </div>
-                        <div class="upgrade-card" data-upgrade="rover">
-                            <div class="upgrade-icon">🌌</div>
-                            <div class="upgrade-content">
-                                <h3>Марсоход</h3>
-                                <p>+0.5 коин/сек</p>
-                                <div class="upgrade-cost">Стоимость: <span id="roverCost">200</span> MC</div>
-                            </div>
-                            <button class="upgrade-btn" onclick="game.buyUpgrade('rover')">Купить</button>
-                        </div>
-
-                        <div class="upgrade-card" data-upgrade="station">
-                            <div class="upgrade-icon">🛰️</div>
-                            <div class="upgrade-content">
-                                <h3>Космическая станция</h3>
-                                <p>+2 коин/сек</p>
-                                <div class="upgrade-cost">Стоимость: <span id="stationCost">1000</span> MC</div>
-                            </div>
-                            <button class="upgrade-btn" onclick="game.buyUpgrade('station')">Купить</button>
+                        <div class="stat-item">
+                            <span class="stat-number">50</span>
+                            <span class="stat-label">Points earned</span>
                         </div>
                     </div>
-                </section>
-
-                <!-- Referral Screen -->
-                <section id="referralScreen" class="screen">
-                    <div class="screen-header">
-                        <h2>👥 Рефералы</h2>
-                    </div>
-                    
-                    <div class="referral-card">
-                        <div class="referral-info">
-                            <h3>Приглашайте друзей</h3>
-                            <p>Получите 100 MC за каждого друга</p>
-                        </div>
-                        
-                        <div class="referral-code-section">
-                            <div class="code-label">Ваш код:</div>
-                            <div class="code-display" id="referralCode">LOADING...</div>
-                            <button class="copy-btn" onclick="game.copyReferralCode()">Копировать</button>
-                        </div>
-                        
-                        <div class="referral-stats">
-                            <div class="stat-item">
-                                <span class="stat-number" id="referralsCount">0</span>
-                                <span class="stat-label">Приглашено</span>
-                            </div>
-                            <div class="stat-item">
-                                <span class="stat-number">100 MC</span>
-                                <span class="stat-label">За друга</span>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Leaders Screen -->
-                <section id="leadersScreen" class="screen">
-                    <div class="screen-header">
-                        <h2>🏆 Топ игроков</h2>
-                    </div>
-                    
-                    <div class="leaders-board">
-                        <div class="leaders-list" id="leadersList">
-                            <!-- Будет заполняться динамически -->
-                        </div>
-                    </div>
-                </section>
-            </main>
-
-            <!-- Navigation -->
-            <nav class="bottom-nav">
-                <button class="nav-btn active" onclick="game.showScreen('main')">
-                    <span class="nav-icon">🌍</span>
-                    <span class="nav-label">Добыча</span>
-                </button>
-                <button class="nav-btn" onclick="game.showScreen('upgrades')">
-                    <span class="nav-icon">⚡</span>
-                    <span class="nav-label">Улучшения</span>
-                </button>
-                <button class="nav-btn" onclick="game.showScreen('referral')">
-                    <span class="nav-icon">👥</span>
-                    <span class="nav-label">Друзья</span>
-                </button>
-                <button class="nav-btn" onclick="game.showScreen('leaders')">
-                    <span class="nav-icon">🏆</span>
-                    <span class="nav-label">Топ</span>
-                </button>
-            </nav>
-        </div>
+                </div>
+            </section>
+        </main>
+        <!-- Bottom Navigation -->
+        <nav class="bottom-nav">
+            <button class="nav-item active" data-section="games-section">
+                <span class="nav-icon">🎮</span>
+                <span class="nav-label">Games</span>
+            </button>
+            <button class="nav-item" data-section="wallet-section">
+                <span class="nav-icon">💰</span>
+                <span class="nav-label">Wallet</span>
+            </button>
+            <button class="nav-item" data-section="profile-section">
+                <span class="nav-icon">👤</span>
+                <span class="nav-label">Profile</span>
+            </button>
+        </nav>
 
         <!-- Notification -->
-        <div id="notification" class="notification"></div>
+        <div id="notification" class="notification">Link copied to clipboard!</div>
     </div>
 
     <script src="script.js"></script>
