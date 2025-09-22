@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MarsCoin Miner 🚀</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Заголовок -->
+        <header>
+            <h1>🚀 MarsCoin Miner</h1>
+            <p>Добывайте марсианские коины и станьте лучшим майнером!</p>
+        </header>
+
+        <!-- Блок баланса -->
+        <div class="balance-section">
+            <div class="balance-label">Ваш баланс:</div>
+            <div class="balance-amount" id="balance">0</div>
+            <div class="balance-currency">MarsCoins</div>
+        </div>
+
+        <!-- Кнопка майнинга -->
+        <div class="mine-section">
+            <button id="mine-btn" class="mine-button">
+                <span class="button-text">⛏️ Добыть коин!</span>
+                <span class="click-power">+<span id="click-power">1</span> за клик</span>
+            </button>
+        </div>
+
+        <!-- Автоматический доход -->
+        <div class="auto-income">
+            <div>⚡ Автоматический доход: <span id="coins-per-second">0</span> коинов/сек</div>
+        </div>
+
+        <!-- Улучшения -->
+        <div class="upgrades-section">
+            <h2>🛠️ Улучшения</h2>
+            
+            <div class="upgrade-item">
+                <div class="upgrade-info">
+                    <h3>🧊 Ледяной бур</h3>
+                    <p>Добывает 1 коин каждые 2 секунды</p>
+                    <div class="upgrade-stats">
+                        <span>Куплено: <span id="upgrade1-count">0</span> шт.</span>
+                    </div>
+                </div>
+                <button class="buy-btn" data-upgrade="1" data-cost="15" data-power="0.5">
+                    Купить за <span class="cost">15</span> коинов
+                </button>
+            </div>
+
+            <div class="upgrade-item">
+                <div class="upgrade-info">
+                    <h3>🤖 Марсоход-майнер</h3>
+                    <p>Добывает 2 коина каждую секунду</p>
+                    <div class="upgrade-stats">
+                        <span>Куплено: <span id="upgrade2-count">0</span> шт.</span>
+                    </div>
+                </div>
+                <button class="buy-btn" data-upgrade="2" data-cost="100" data-power="2">
+                    Купить за <span class="cost">100</span> коинов
+                </button>
+            </div>
+
+            <div class="upgrade-item">
+                <div class="upgrade-info">
+                    <h3>🏭 Майнинг-база</h3>
+                    <p>Мощная установка для добычи 10 коинов/сек</p>
+                    <div class="upgrade-stats">
+                        <span>Куплено: <span id="upgrade3-count">0</span> шт.</span>
+                    </div>
+                </div>
+                <button class="buy-btn" data-upgrade="3" data-cost="500" data-power="10">
+                    Купить за <span class="cost">500</span> коинов
+                </button>
+            </div>
+        </div>
+
+        <!-- Таблица лидеров -->
+        <div class="leaderboard-section">
+            <h2>🏆 Таблица лидеров</h2>
+            <div id="leaderboard">
+                <div class="loading">Загрузка...</div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
