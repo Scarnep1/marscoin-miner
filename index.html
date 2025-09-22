@@ -1,43 +1,124 @@
-<!-- Улучшения -->
-<div class="upgrades-section">
-    <h2>🛠️ Улучшения</h2>
-    
-    <div class="upgrade-item">
-        <div class="upgrade-info">
-            <h3>🧊 Ледяной бур</h3>
-            <p>Добывает 0.5 коина каждую секунду</p>
-            <div class="upgrade-stats">
-                <span>Куплено: <span id="upgrade1-count">0</span> шт.</span>
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Марсианские коины</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>🚀 Марсианские коины</h1>
+            <div class="balance-container">
+                <span class="balance" id="balance">0 MC</span>
             </div>
-        </div>
-        <button class="buy-btn" data-upgrade="1">
-            Купить за <span class="cost">15</span> коинов
-        </button>
+        </header>
+
+        <main class="main-content">
+            <!-- Основной экран -->
+            <section id="mainScreen" class="screen active">
+                <div class="mining-area">
+                    <div class="mars-planet" id="marsPlanet">
+                        <div class="crater"></div>
+                        <div class="crater crater-small"></div>
+                        <div class="crater crater-large"></div>
+                    </div>
+                    <button class="mine-btn" id="mineBtn">Добыть коины</button>
+                    <div class="stats">
+                        <div class="stat-item">
+                            <span>Мощность:</span>
+                            <span id="powerLevel">1 коин/клик</span>
+                        </div>
+                        <div class="stat-item">
+                            <span>Автодобыча:</span>
+                            <span id="autoMineLevel">0 коин/сек</span>
+                        </div>
+                    </div>
+                </div>
+
+                <nav class="bottom-nav">
+                    <button class="nav-btn" data-screen="upgrades">⚡ Улучшения</button>
+                    <button class="nav-btn" data-screen="referral">👥 Рефералы</button>
+                    <button class="nav-btn" data-screen="leaders">🏆 Лидеры</button>
+                </nav>
+            </section>
+
+            <!-- Улучшения -->
+            <section id="upgradesScreen" class="screen">
+                <h2>⚡ Улучшения</h2>
+                <div class="upgrades-list">
+                    <div class="upgrade-item">
+                        <h3>Улучшить кирку</h3>
+                        <p>+1 коин за клик</p>
+                        <button class="buy-btn" data-upgrade="pickaxe" data-cost="10">Купить за 10 MC</button>
+                    </div>
+                    <div class="upgrade-item">
+                        <h3>Автоматическая добыча</h3>
+                        <p>+0.1 коин/сек</p>
+                        <button class="buy-btn" data-upgrade="autoMiner" data-cost="50">Купить за 50 MC</button>
+                    </div>
+                    <div class="upgrade-item">
+                        <h3>Марсоход</h3>
+                        <p>+0.5 коин/сек</p>
+                        <button class="buy-btn" data-upgrade="rover" data-cost="200">Купить за 200 MC</button>
+                    </div>
+                    <div class="upgrade-item">
+                        <h3>Космическая станция</h3>
+                        <p>+2 коин/сек</p>
+                        <button class="buy-btn" data-upgrade="station" data-cost="1000">Купить за 1000 MC</button>
+                    </div>
+                </div>
+                <button class="back-btn" data-screen="main">← Назад</button>
+            </section>
+
+            <!-- Реферальная система -->
+            <section id="referralScreen" class="screen">
+                <h2>👥 Реферальная система</h2>
+                <div class="referral-content">
+                    <div class="referral-code">
+                        <p>Ваша реферальная ссылка:</p>
+                        <div class="code-container">
+                            <span id="referralCode">Загрузка...</span>
+                            <button class="copy-btn" id="copyBtn">Копировать</button>
+                            </div>
+                    </div>
+                    <div class="referral-stats">
+                        <div class="stat-card">
+                            <h3>Приглашено друзей</h3>
+                            <span id="referralsCount">0</span>
+                        </div>
+                        <div class="stat-card">
+                            <h3>Бонус за приглашение</h3>
+                            <span>100 MC</span>
+                        </div>
+                    </div>
+                    <div class="referral-info">
+                        <p>💡 За каждого приглашенного друга вы получаете 100 MC!</p>
+                    </div>
+                </div>
+                <button class="back-btn" data-screen="main">← Назад</button>
+            </section>
+
+            <!-- Таблица лидеров -->
+            <section id="leadersScreen" class="screen">
+                <h2>🏆 Топ игроков</h2>
+                <div class="leaders-list" id="leadersList">
+                    <div class="leaderboard-item">
+                        <span class="rank">1</span>
+                        <span class="name">Игрок 1</span>
+                        <span class="score">1000 MC</span>
+                    </div>
+                    <!-- Лидерборд будет заполняться динамически -->
+                </div>
+                <button class="back-btn" data-screen="main">← Назад</button>
+            </section>
+        </main>
     </div>
 
-    <div class="upgrade-item">
-        <div class="upgrade-info">
-            <h3>🤖 Марсоход-майнер</h3>
-            <p>Добывает 2 коина каждую секунду</p>
-            <div class="upgrade-stats">
-                <span>Куплено: <span id="upgrade2-count">0</span> шт.</span>
-            </div>
-        </div>
-        <button class="buy-btn" data-upgrade="2">
-            Купить за <span class="cost">100</span> коинов
-        </button>
-    </div>
+    <div id="notification" class="notification"></div>
 
-    <div class="upgrade-item">
-        <div class="upgrade-info">
-            <h3>🏭 Майнинг-база</h3>
-            <p>Мощная установка для добычи 10 коинов/сек</p>
-            <div class="upgrade-stats">
-                <span>Куплено: <span id="upgrade3-count">0</span> шт.</span>
-            </div>
-        </div>
-        <button class="buy-btn" data-upgrade="3">
-            Купить за <span class="cost">500</span> коинов
-        </button>
-    </div>
-</div>
+    <script src="script.js"></script>
+</body>
+</html>
