@@ -1,0 +1,229 @@
+/* Основные стили */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    color: #ffffff;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.container {
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+/* Заголовок */
+header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+header h1 {
+    color: #e63946;
+    font-size: 2.2em;
+    margin-bottom: 10px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+header p {
+    color: #a8dadc;
+    opacity: 0.9;
+}
+
+/* Блок баланса */
+.balance-section {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    margin-bottom: 20px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.balance-label {
+    font-size: 1.1em;
+    color: #a8dadc;
+    margin-bottom: 5px;
+}
+
+.balance-amount {
+    font-size: 3em;
+    font-weight: bold;
+    color: #4cc9f0;
+    text-shadow: 0 2px 4px rgba(76, 201, 240, 0.3);
+}
+
+.balance-currency {
+    color: #f1faee;
+    font-size: 1.2em;
+}
+
+/* Кнопка майнинга */
+.mine-section {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.mine-button {
+    background: linear-gradient(45deg, #e63946, #f4a261);
+    border: none;
+    border-radius: 50px;
+    padding: 25px 40px;
+    font-size: 1.3em;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(230, 57, 70, 0.4);
+    width: 100%;
+    max-width: 300px;
+}
+
+.mine-button:active {
+    transform: scale(0.95);
+    box-shadow: 0 2px 8px rgba(230, 57, 70, 0.6);
+}
+
+.button-text {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.click-power {
+    font-size: 0.9em;
+    opacity: 0.9;
+}
+
+/* Автоматический доход */
+.auto-income {
+    text-align: center;
+    background: rgba(76, 201, 240, 0.1);
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 25px;
+    border: 1px solid rgba(76, 201, 240, 0.3);
+}
+
+/* Секция улучшений */
+.upgrades-section {
+    margin-bottom: 30px;
+}
+
+.upgrades-section h2 {
+    color: #f4a261;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.upgrade-item {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.upgrade-info h3 {
+    color: #a8dadc;
+    margin-bottom: 5px;
+}
+
+.upgrade-info p {
+    color: #f1faee;
+    opacity: 0.8;
+    font-size: 0.9em;
+    margin-bottom: 10px;
+}
+
+.upgrade-stats {
+    font-size: 0.9em;
+    color: #4cc9f0;
+}
+
+.buy-btn {
+    background: linear-gradient(45deg, #457b9d, #1d3557);
+    border: none;
+    border-radius: 8px;
+    padding: 12px 20px;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.buy-btn:hover:not(:disabled) {
+    background: linear-gradient(45deg, #1d3557, #457b9d);
+    transform: translateY(-2px);
+}
+
+.buy-btn:disabled {
+    background: #6c757d;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+/* Таблица лидеров */
+.leaderboard-section {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    padding: 20px;
+}
+
+.leaderboard-section h2 {
+    color: #f4a261;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.leaderboard-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.leaderboard-position {
+    font-weight: bold;
+    color: #4cc9f0;
+}
+
+.leaderboard-name {
+    flex-grow: 1;
+    margin-left: 10px;
+}
+
+.leaderboard-score {
+    font-weight: bold;
+    color: #f4a261;
+}
+
+.loading {
+    text-align: center;
+    color: #a8dadc;
+    font-style: italic;
+}
+
+/* Адаптивность */
+@media (max-width: 480px) {
+    .container {
+        padding: 10px;
+    }
+    
+    .balance-amount {
+        font-size: 2.5em;
+    }
+    
+    .mine-button {
+        padding: 20px 30px;
+        font-size: 1.1em;
+    }
+}
