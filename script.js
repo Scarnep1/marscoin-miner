@@ -1,23 +1,26 @@
-// Initialize the app
 document.addEventListener('DOMContentLoaded', function() {
     initializeApp();
 });
 
 function initializeApp() {
-    // Navigation functionality
     setupNavigation();
-    
-    // Game card clicks
     setupGameCards();
-    
-    // Exchange card clicks
     setupExchangeCards();
-    
-    // Copy referral link functionality
     setupReferralLink();
-    
-    // Balance refresh
     setupBalanceRefresh();
+    
+    // Telegram Web App integration
+    if (window.Telegram && window.Telegram.WebApp) {
+        window.Telegram.WebApp.expand();
+        
+        const themeParams = window.Telegram.WebApp.themeParams;
+        if (themeParams) {
+            document.documentElement.style.setProperty('--tg-theme-bg-color', themeParams.bg_color || '#ffffff');
+            document.documentElement.style.setProperty('--tg-theme-text-color', themeParams.text_color || '#000000');
+            document.documentElement.style.setProperty('--tg-theme-button-color', themeParams.button_color || '#667eea');
+            document.documentElement.style.setProperty('--tg-theme-button-text-color', themeParams.button_text_color || '#ffffff');
+        }
+    }
 }
 
 function setupNavigation() {
@@ -50,14 +53,12 @@ function setupGameCards() {
         card.addEventListener('click', function() {
             const botUsername = this.getAttribute('data-bot');
             if (botUsername) {
-                // In Telegram Mini App, this would open the bot
-                // For web testing, we'll simulate the behavior
+                const telegramUrl = `https://t.me/${botUsername}`;
+                
                 if (window.Telegram && window.Telegram.WebApp) {
-                    // Telegram Mini App environment
-                    window.Telegram.WebApp.openTelegramLink(https://t.me/${botUsername});
+                    window.Telegram.WebApp.openTelegramLink(telegramUrl);
                 } else {
-                    // Regular web environment - open in new tab for demo
-                    window.open(https://t.me/${botUsername}, '_blank');
+                    window.open(telegramUrl, '_blank');
                 }
             }
         });
@@ -71,7 +72,6 @@ function setupExchangeCards() {
         card.addEventListener('click', function() {
             const exchangeUrl = this.getAttribute('data-url');
             if (exchangeUrl) {
-                // Open exchange URL
                 if (window.Telegram && window.Telegram.WebApp) {
                     window.Telegram.WebApp.openLink(exchangeUrl);
                 } else {
@@ -87,101 +87,80 @@ function setupReferralLink() {
     const referralInput = document.getElementById('referral-input');
     const notification = document.getElementById('notification');
     
-    copyBtn.addEventListener('click', function() {
-        // Select the text field
-        referralInput.select();
-        referralInput.setSelectionRange(0, 99999); // For mobile devices
-        
-        // Copy the text inside the text field
-        navigator.clipboard.writeText(referralInput.value).then(function() {
-            // Show notification
-            notification.classList.add('show');
+    if (copyBtn && referralInput && notification) {
+        copyBtn.addEventListener('click', function() {
+            referralInput.select();
+            referralInput.setSelectionRange(0, 99999);
             
-            // Hide notification after 2 seconds
-            setTimeout(function() {
-                notification.classList.remove('show');
-            }, 2000);
-        }).catch(function(err) {
-            console.error('Failed to copy text: ', err);
-            // Fallback for older browsers
-            try {
-                document.execCommand('copy');
-                notification.classList.add('show');
-                setTimeout(function() {
-                    notification.classList.remove('show');
-                }, 2000);
-            } catch (e) {
-                console.error('Fallback copy failed: ', e);
-            }
+            navigator.clipboard.writeText(referralInput.value).then(() => {
+                showNotification(notification);
+            }).catch(() => {
+                // Fallback for older browsers
+                try {
+                    document.execCommand('copy');
+                    showNotification(notification);
+                } catch (err) {
+                    console.error('Copy failed:', err);
+                }
+            });
         });
-    });
+    }
 }
+
+function showNotification(notification) {
+    notification.classList.add('show');
+    setTimeout(() => {
+        notification.classList.remove('show');
+    }, 2000);
+}
+
 function setupBalanceRefresh() {
     const refreshBtn = document.querySelector('.balance-refresh');
     const balanceAmount = document.querySelector('.amount');
     
-    if (refreshBtn) {
+    if (refreshBtn && balanceAmount) {
         refreshBtn.addEventListener('click', function() {
-            // Add rotation animation
             this.style.transition = 'transform 0.3s ease';
             this.style.transform = 'rotate(360deg)';
             
-            // Simulate balance update (in real app, this would fetch from API)
             setTimeout(() => {
-                // Reset rotation
                 this.style.transform = 'rotate(0deg)';
                 
-                // Simulate small balance change for demo
                 const currentBalance = parseInt(balanceAmount.textContent.replace(',', ''));
-                const randomChange = Math.floor(Math.random() * 10) - 5; // -5 to +5
+                const randomChange = Math.floor(Math.random() * 10) - 5;
                 const newBalance = Math.max(0, currentBalance + randomChange);
                 
                 balanceAmount.textContent = newBalance.toLocaleString();
                 
-                // Update equivalent USD value (simplified)
                 const usdValue = (newBalance * 0.01).toFixed(2);
-                document.querySelector('.balance-equivalent').textContent = ≈ $${usdValue};
+                const usdElement = document.querySelector('.balance-equivalent');
+                if (usdElement) {
+                    usdElement.textContent = `≈ $${usdValue}`;
+                }
             }, 1000);
         });
     }
 }
 
-// Telegram Web App integration
-if (window.Telegram && window.Telegram.WebApp) {
-    // Expand the app to full height
-    window.Telegram.WebApp.expand();
-    
-    // Set theme parameters
-    const themeParams = window.Telegram.WebApp.themeParams;
-    if (themeParams) {
-        document.documentElement.style.setProperty('--tg-theme-bg-color', themeParams.bg_color || '#ffffff');
-        document.documentElement.style.setProperty('--tg-theme-text-color', themeParams.text_color || '#000000');
-        document.documentElement.style.setProperty('--tg-theme-button-color', themeParams.button_color || '#667eea');
-        document.documentElement.style.setProperty('--tg-theme-button-text-color', themeParams.button_text_color || '#ffffff');
-    }
-}
-
-// Add some sample data and functionality for demo purposes
+// Simulate user activity for demo
 function simulateUserActivity() {
-    // Simulate some random activity for demo
+    const balanceElement = document.querySelector('.amount');
+    if (!balanceElement) return;
+
     setInterval(() => {
-        const balanceElement = document.querySelector('.amount');
-        if (balanceElement) {
-            const currentBalance = parseInt(balanceElement.textContent.replace(',', ''));
-            // Small random increase to simulate mining
-            const randomIncrease = Math.floor(Math.random() * 3);
-            const newBalance = currentBalance + randomIncrease;
-            balanceElement.textContent = newBalance.toLocaleString();
-            
-            // Update USD equivalent
-            const usdValue = (newBalance * 0.01).toFixed(2);
-            const usdElement = document.querySelector('.balance-equivalent');
-            if (usdElement) {
-                usdElement.textContent = ≈ $${usdValue};
-            }
+        const currentBalance = parseInt(balanceElement.textContent.replace(',', ''));
+        const randomIncrease = Math.floor(Math.random() * 3);
+        const newBalance = currentBalance + randomIncrease;
+        
+        balanceElement.textContent = newBalance.toLocaleString();
+        
+        const usdValue = (newBalance * 0.01).toFixed(2);
+        const usdElement = document.querySelector('.balance-equivalent');
+        if (usdElement) {
+            usdElement.textContent = `≈ $${usdValue}`;
         }
-    }, 30000); // Update every 30 seconds
+    }, 30000);
 }
 
-// Start simulation when page loads
+// Start simulation after delay
 setTimeout(simulateUserActivity, 5000);
