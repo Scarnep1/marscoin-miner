@@ -8,7 +8,9 @@ function initializeApp() {
     setupExchangeCards();
     setupThemeToggle();
     setupShareButton();
+    setupSettingsPanel();
     loadThemePreference();
+    loadUserData();
     
     // Плавная загрузка контента
     setTimeout(() => {
@@ -106,6 +108,73 @@ function setupExchangeCards() {
     });
 }
 
+function setupSettingsPanel() {
+    const settingsButton = document.getElementById('settings-button');
+    const settingsPanel = document.getElementById('settings-panel');
+    const closeSettings = document.getElementById('close-settings');
+    
+    if (settingsButton) {
+        settingsButton.addEventListener('click', function() {
+            settingsPanel.classList.add('active');
+        });
+    }
+    
+    if (closeSettings) {
+        closeSettings.addEventListener('click', function() {
+            settingsPanel.classList.remove('active');
+        });
+    }
+    
+    // Close settings when clicking outside
+    if (settingsPanel) {
+        settingsPanel.addEventListener('click', function(e) {
+            if (e.target === settingsPanel) {
+                settingsPanel.classList.remove('active');
+            }
+        });
+    }
+    
+    // Theme switcher in settings
+    const themeOptions = document.querySelectorAll('.theme-option');
+    themeOptions.forEach(option => {
+        option.addEventListener('click', function() {
+            const theme = this.getAttribute('data-theme');
+            
+            // Update active state
+            themeOptions.forEach(opt => opt.classList.remove('active'));
+            this.classList.add('active');
+            
+            // Apply theme
+            if (theme === 'dark') {
+                document.body.classList.add('dark-theme');
+            } else {
+                document.body.classList.remove('dark-theme');
+            }
+            
+            // Save to localStorage
+            localStorage.setItem('theme', theme);
+        });
+    });
+    
+    // Language switcher in settings
+    const languageOptions = document.querySelectorAll('.language-option');
+    languageOptions.forEach(option => {
+        option.addEventListener('click', function() {
+            const lang = this.getAttribute('data-lang');
+            
+            // Update active state
+            languageOptions.forEach(opt => opt.classList.remove('active'));
+            this.classList.add('active');
+            
+            // Save to localStorage
+            localStorage.setItem('language', lang);
+            
+            // In a real app, you would reload translations here
+            console.log('Language changed to:', lang);
+        });
+    });
+}
+
 function setupThemeToggle() {
     const themeButton = document.getElementById('theme-button');
     const body = document.body;
@@ -115,6 +184,7 @@ function setupThemeToggle() {
             body.classList.toggle('dark-theme');
             localStorage.setItem('theme', body.classList.contains('dark-theme') ? 'dark' : 'light');
             updateThemeButton();
+            updateSettingsThemeOptions();
         });
     }
 }
@@ -125,6 +195,11 @@ function loadThemePreference() {
         document.body.classList.add('dark-theme');
     }
     updateThemeButton();
+    updateSettingsThemeOptions();
+    
+    // Load language preference
+    const savedLang = localStorage.getItem('language') || 'ru';
+    updateSettingsLanguageOptions(savedLang);
 }
 
 function updateThemeButton() {
@@ -143,8 +218,67 @@ function updateThemeButton() {
     }
 }
 
+function updateSettingsThemeOptions() {
+    const themeOptions = document.querySelectorAll('.theme-option');
+    const isDarkTheme = document.body.classList.contains('dark-theme');
+    
+    themeOptions.forEach(option => {
+        option.classList.remove('active');
+        if ((isDarkTheme && option.getAttribute('data-theme') === 'dark') || 
+            (!isDarkTheme && option.getAttribute('data-theme') === 'light')) {
+            option.classList.add('active');
+        }
+    });
+}
+
+function updateSettingsLanguageOptions(lang) {
+    const languageOptions = document.querySelectorAll('.language-option');
+    
+    languageOptions.forEach(option => {
+        option.classList.remove('active');
+        if (option.getAttribute('data-lang') === lang) {
+            option.classList.add('active');
+        }
+    });
+}
+
+function loadUserData() {
+    // Try to get user data from Telegram Web App
+    if (window.Telegram && window.Telegram.WebApp) {
+        const user = window.Telegram.WebApp.initDataUnsafe?.user;
+        
+        if (user) {
+            // Update user name
+            const userName = document.getElementById('user-name');
+            if (userName && user.first_name) {
+                userName.textContent = user.first_name + (user.last_name ? ' ' + user.last_name : '');
+            }
+            
+            // Update username
+            const userUsername = document.getElementById('user-username');
+            if (userUsername && user.username) {
+                userUsername.textContent = '@' + user.username;
+            }
+            
+            // Update avatar
+            const userAvatar = document.getElementById('user-avatar');
+            const avatarImg = document.getElementById('avatar-img');
+            const avatarFallback = document.getElementById('avatar-fallback');
+            
+            if (userAvatar && user.photo_url) {
+                avatarImg.src = user.photo_url;
+                avatarImg.style.display = 'block';
+                avatarFallback.style.display = 'none';
+            } else if (userAvatar && user.first_name) {
+                // Show first letter of first name as fallback
+                avatarFallback.textContent = user.first_name.charAt(0).toUpperCase();
+            }
+        }
+    }
+}
+
 function setupShareButton() {
-    const shareButton = document.getElementById('share-button');
+    const shareButton = document.getElementById('share-friends-button');
     const notification = document.getElementById('notification');
     
     if (shareButton) {
