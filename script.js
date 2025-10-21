@@ -30,7 +30,8 @@ const translations = {
         user: "Пользователь",
         shareWithFriends: "Поделиться с друзьями",
         profile: "Профиль",
-        linkCopied: "Ссылка скопирована в буфер обмена!"
+        linkCopied: "Ссылка скопирована в буфер обмена!",
+        go: "Перейти"
     },
     en: {
         appTitle: "Games Verse",
@@ -58,14 +59,15 @@ const translations = {
         user: "User",
         shareWithFriends: "Share with friends",
         profile: "Profile",
-        linkCopied: "Link copied to clipboard!"
+        linkCopied: "Link copied to clipboard!",
+        go: "Go"
     }
 };
 
 function initializeApp() {
     setupNavigation();
-    setupGameCards();
-    setupExchangeCards();
+    setupGameButtons();
+    setupExchangeButtons();
     setupSettingsPanel();
     loadThemePreference();
     loadLanguagePreference();
@@ -114,11 +116,12 @@ function setupNavigation() {
     });
 }
 
-function setupGameCards() {
-    const gameCards = document.querySelectorAll('.game-card');
+function setupGameButtons() {
+    const playButtons = document.querySelectorAll('.play-button');
     
-    gameCards.forEach(card => {
-        card.addEventListener('click', function() {
+    playButtons.forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.stopPropagation();
             const botUsername = this.getAttribute('data-bot');
             if (botUsername) {
                 const telegramUrl = `https://t.me/${botUsername}`;
@@ -130,32 +133,15 @@ function setupGameCards() {
                 }
             }
         });
-        
-        // Also make the play button work
-        const playButton = card.querySelector('.play-button');
-        if (playButton) {
-            playButton.addEventListener('click', function(e) {
-                e.stopPropagation(); // Prevent triggering the card click event twice
-                const botUsername = card.getAttribute('data-bot');
-                if (botUsername) {
-                    const telegramUrl = `https://t.me/${botUsername}`;
-                    
-                    if (window.Telegram && window.Telegram.WebApp) {
-                        window.Telegram.WebApp.openTelegramLink(telegramUrl);
-                    } else {
-                        window.open(telegramUrl, '_blank');
-                    }
-                }
-            });
-        }
     });
 }
 
-function setupExchangeCards() {
-    const exchangeCards = document.querySelectorAll('.exchange-card');
+function setupExchangeButtons() {
+    const exchangeButtons = document.querySelectorAll('.exchange-button');
     
-    exchangeCards.forEach(card => {
-        card.addEventListener('click', function() {
+    exchangeButtons.forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.stopPropagation();
             const exchangeUrl = this.getAttribute('data-url');
             if (exchangeUrl) {
                 if (window.Telegram && window.Telegram.WebApp) {
