@@ -13,10 +13,10 @@
   --text-secondary-dark: #a0aec0;
   --border-light: #e2e8f0;
   --border-dark: #2d3748;
-  --nav-light: rgba(255, 255, 255, 0.95);
-  --nav-dark: rgba(30, 30, 30, 0.95);
-  --nav-shadow-light: 0 -4px 20px rgba(0, 0, 0, 0.08);
-  --nav-shadow-dark: 0 -4px 20px rgba(0, 0, 0, 0.3);
+  --nav-light: rgba(255, 255, 255, 0.98);
+  --nav-dark: rgba(18, 18, 18, 0.98);
+  --nav-shadow-light: 0 -8px 32px rgba(0, 0, 0, 0.1);
+  --nav-shadow-dark: 0 -8px 32px rgba(0, 0, 0, 0.3);
   --success-color: #48bb78;
   --shadow-light: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   --shadow-dark: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
@@ -58,7 +58,7 @@ body.dark-theme {
   background: var(--surface-light);
   min-height: 100vh;
   position: relative;
-  padding-bottom: 85px;
+  padding-bottom: 90px;
   overflow-x: hidden;
 }
 
@@ -585,7 +585,7 @@ body.dark-theme {
   font-size: 20px;
 }
 
-/* Improved Bottom Navigation */
+/* Professional Bottom Navigation */
 .bottom-nav {
   position: fixed;
   bottom: 0;
@@ -595,24 +595,22 @@ body.dark-theme {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  padding: 12px 16px;
-  border-top: 1px solid var(--border-light);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  padding: 16px 20px;
+  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
   max-width: 400px;
   width: 100%;
   z-index: 100;
   border-radius: 24px 24px 0 0;
   box-shadow: var(--nav-shadow-light);
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 .dark-theme .bottom-nav {
   background: var(--nav-dark);
-  border-color: var(--border-dark);
+  border-color: rgba(255, 255, 255, 0.08);
   box-shadow: var(--nav-shadow-dark);
-  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .nav-item {
@@ -626,11 +624,11 @@ body.dark-theme {
   border-radius: 16px;
   cursor: pointer;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  opacity: 0.7;
+  opacity: 0.6;
   position: relative;
   min-width: 70px;
   gap: 6px;
-  transform: translateY(0);
+  transform: translateY(0) scale(1);
 }
 
 .nav-item::before {
@@ -653,8 +651,8 @@ body.dark-theme {
 
 .nav-item.active {
   opacity: 1;
-  transform: translateY(-8px);
-  background: rgba(102, 126, 234, 0.1);
+  transform: translateY(-6px) scale(1.05);
+  background: rgba(102, 126, 234, 0.12);
 }
 
 .nav-item.active::before {
@@ -662,22 +660,29 @@ body.dark-theme {
 }
 
 .dark-theme .nav-item.active {
-  background: rgba(74, 85, 104, 0.2);
+  background: rgba(74, 85, 104, 0.15);
 }
 
 .nav-icon {
-  font-size: 22px;
+  font-size: 20px;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  filter: grayscale(0.5);
   transform: scale(1);
   position: relative;
   z-index: 1;
+  filter: grayscale(1) brightness(0.7);
 }
 
 .nav-item.active .nav-icon {
-  transform: scale(1.15);
-  filter: grayscale(0);
-  text-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+  transform: scale(1.2);
+  filter: grayscale(0) brightness(1);
+}
+
+.dark-theme .nav-icon {
+  filter: grayscale(1) brightness(0.5);
+}
+
+.dark-theme .nav-item.active .nav-icon {
+  filter: grayscale(0) brightness(1);
 }
 
 .nav-label {
@@ -687,6 +692,11 @@ body.dark-theme {
   position: relative;
   z-index: 1;
   letter-spacing: 0.3px;
+  color: var(--text-secondary-light);
+}
+
+.dark-theme .nav-label {
+  color: var(--text-secondary-dark);
 }
 
 .nav-item.active .nav-label {
@@ -695,41 +705,48 @@ body.dark-theme {
   transform: translateY(1px);
 }
 
-/* Active state indicator */
+/* Active state indicator with premium dot */
 .nav-item::after {
   content: '';
   position: absolute;
-  bottom: -12px;
+  bottom: -14px;
   left: 50%;
   transform: translateX(-50%) scale(0);
-  width: 4px;
-  height: 4px;
+  width: 5px;
+  height: 5px;
   background: var(--primary-gradient);
   border-radius: 50%;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   opacity: 0;
+  box-shadow: 0 0 8px rgba(102, 126, 234, 0.6);
 }
 
 .dark-theme .nav-item::after {
   background: var(--primary-dark);
+  box-shadow: 0 0 8px rgba(74, 85, 104, 0.6);
 }
 
 .nav-item.active::after {
   transform: translateX(-50%) scale(1);
   opacity: 1;
-  bottom: -8px;
+  bottom: -10px;
 }
 
-/* Hover effects */
+/* Premium hover effects */
 .nav-item:hover:not(.active) {
-  opacity: 0.9;
-  transform: translateY(-2px);
-  background: rgba(102, 126, 234, 0.05);
+  opacity: 0.8;
+  transform: translateY(-2px) scale(1.02);
+  background: rgba(102, 126, 234, 0.08);
 }
 
 .dark-theme .nav-item:hover:not(.active) {
   background: rgba(74, 85, 104, 0.1);
 }
+
+/* Premium icons styling */
+.nav-icon.games::before { content: "🎯"; }
+.nav-icon.exchanges::before { content: "📈"; }
+.nav-icon.profile::before { content: "👑"; }
 
 /* Notification */
 .notification {
@@ -755,7 +772,7 @@ body.dark-theme {
 /* Responsive */
 @media (max-width: 480px) {
   .app-container {
-    padding-bottom: 85px;
+    padding-bottom: 90px;
   }
   
   .header {
@@ -794,7 +811,7 @@ body.dark-theme {
   }
   
   .bottom-nav {
-    padding: 12px 12px;
+    padding: 14px 16px;
     border-radius: 20px 20px 0 0;
   }
   
@@ -804,7 +821,7 @@ body.dark-theme {
   }
   
   .nav-icon {
-    font-size: 20px;
+    font-size: 18px;
   }
   
   .nav-label {
@@ -833,15 +850,27 @@ body.dark-theme {
   }
 }
 
-@keyframes navBounce {
+@keyframes premiumBounce {
   0% {
     transform: translateY(0) scale(1);
   }
   50% {
-    transform: translateY(-4px) scale(1.05);
+    transform: translateY(-8px) scale(1.08);
   }
   100% {
-    transform: translateY(-8px) scale(1);
+    transform: translateY(-6px) scale(1.05);
+  }
+}
+
+@keyframes iconPulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.3);
+  }
+  100% {
+    transform: scale(1.2);
   }
 }
 
@@ -850,7 +879,11 @@ body.dark-theme {
 }
 
 .nav-item.active {
-  animation: navBounce 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: premiumBounce 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.nav-item.active .nav-icon {
+  animation: iconPulse 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
 /* Плавные переходы для всех интерактивных элементов */
