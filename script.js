@@ -135,7 +135,7 @@ function setupGameCards() {
         const playButton = card.querySelector('.play-button');
         if (playButton) {
             playButton.addEventListener('click', function(e) {
-                e.stopPropagation(); // Prevent triggering the card click event twice
+                e.stopPropagation();
                 const botUsername = card.getAttribute('data-bot');
                 if (botUsername) {
                     const telegramUrl = `https://t.me/${botUsername}`;
@@ -176,12 +176,14 @@ function setupSettingsPanel() {
     if (settingsButton) {
         settingsButton.addEventListener('click', function() {
             settingsPanel.classList.add('active');
+            document.body.style.overflow = 'hidden';
         });
     }
     
     if (closeSettings) {
         closeSettings.addEventListener('click', function() {
             settingsPanel.classList.remove('active');
+            document.body.style.overflow = 'auto';
         });
     }
     
@@ -190,6 +192,7 @@ function setupSettingsPanel() {
         settingsPanel.addEventListener('click', function(e) {
             if (e.target === settingsPanel) {
                 settingsPanel.classList.remove('active');
+                document.body.style.overflow = 'auto';
             }
         });
     }
@@ -236,7 +239,6 @@ function setupSettingsPanel() {
 }
 
 function setLanguage(lang) {
-    // Update all elements with data-i18n attribute
     const elements = document.querySelectorAll('[data-i18n]');
     elements.forEach(element => {
         const key = element.getAttribute('data-i18n');
@@ -285,24 +287,20 @@ function updateSettingsLanguageOptions(lang) {
 }
 
 function loadUserData() {
-    // Try to get user data from Telegram Web App
     if (window.Telegram && window.Telegram.WebApp) {
         const user = window.Telegram.WebApp.initDataUnsafe?.user;
         
         if (user) {
-            // Update user name
             const userName = document.getElementById('user-name');
             if (userName && user.first_name) {
                 userName.textContent = user.first_name + (user.last_name ? ' ' + user.last_name : '');
             }
             
-            // Update username
             const userUsername = document.getElementById('user-username');
             if (userUsername && user.username) {
                 userUsername.textContent = '@' + user.username;
             }
             
-            // Update avatar
             const userAvatar = document.getElementById('user-avatar');
             const avatarImg = document.getElementById('avatar-img');
             const avatarFallback = document.getElementById('avatar-fallback');
@@ -312,7 +310,6 @@ function loadUserData() {
                 avatarImg.style.display = 'block';
                 avatarFallback.style.display = 'none';
             } else if (userAvatar && user.first_name) {
-                // Show first letter of first name as fallback
                 avatarFallback.textContent = user.first_name.charAt(0).toUpperCase();
             }
         }
@@ -327,7 +324,6 @@ function setupShareButton() {
         shareButton.addEventListener('click', function() {
             const shareUrl = window.location.href;
             
-            // Check if Web Share API is available
             if (navigator.share) {
                 navigator.share({
                     title: 'Games Verse',
@@ -337,11 +333,9 @@ function setupShareButton() {
                 .then(() => console.log('Успешный шаринг'))
                 .catch((error) => console.log('Ошибка шаринга', error));
             } else {
-                // Fallback: copy to clipboard
                 navigator.clipboard.writeText(shareUrl).then(() => {
                     showNotification(notification);
                 }).catch(() => {
-                    // Fallback for older browsers
                     try {
                         const textArea = document.createElement('textarea');
                         textArea.value = shareUrl;
