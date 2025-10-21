@@ -8,7 +8,6 @@ function initializeApp() {
     setupExchangeCards();
     setupThemeToggle();
     setupShareButton();
-    setupEarnCategories();
     setupReferralSystem();
     
     // Telegram Web App integration
@@ -55,7 +54,7 @@ function setupGameCards() {
         card.addEventListener('click', function() {
             const botUsername = this.getAttribute('data-bot');
             if (botUsername) {
-                const telegramUrl = `https://t.me/${botUsername}`;
+                const telegramUrl = `https://t.me/${botUsername}?start=ref_gamesverse`;
                 
                 if (window.Telegram && window.Telegram.WebApp) {
                     window.Telegram.WebApp.openTelegramLink(telegramUrl);
@@ -72,7 +71,7 @@ function setupGameCards() {
                 e.stopPropagation(); // Prevent triggering the card click event twice
                 const botUsername = card.getAttribute('data-bot');
                 if (botUsername) {
-                    const telegramUrl = `https://t.me/${botUsername}`;
+                    const telegramUrl = `https://t.me/${botUsername}?start=ref_gamesverse`;
                     
                     if (window.Telegram && window.Telegram.WebApp) {
                         window.Telegram.WebApp.openTelegramLink(telegramUrl);
@@ -90,7 +89,7 @@ function setupExchangeCards() {
     
     exchangeCards.forEach(card => {
         card.addEventListener('click', function() {
-            const exchangeUrl = this.getAttribute('data-url');
+            const exchangeUrl = this.getAttribute('data-url') + '?ref=gamesverse';
             if (exchangeUrl) {
                 if (window.Telegram && window.Telegram.WebApp) {
                     window.Telegram.WebApp.openLink(exchangeUrl);
@@ -99,6 +98,22 @@ function setupExchangeCards() {
                 }
             }
         });
+        
+        // Also make the exchange button work
+        const exchangeButton = card.querySelector('.exchange-button');
+        if (exchangeButton) {
+            exchangeButton.addEventListener('click', function(e) {
+                e.stopPropagation(); // Prevent triggering the card click event twice
+                const exchangeUrl = card.getAttribute('data-url') + '?ref=gamesverse';
+                if (exchangeUrl) {
+                    if (window.Telegram && window.Telegram.WebApp) {
+                        window.Telegram.WebApp.openLink(exchangeUrl);
+                    } else {
+                        window.open(exchangeUrl, '_blank');
+                    }
+                }
+            });
+        }
     });
 }
 
@@ -111,14 +126,14 @@ function setupThemeToggle() {
             body.classList.toggle('dark-theme');
             
             // Update button text and icon
-            const themeIcon = this.querySelector('.action-icon');
-            const themeText = this.querySelector('span:last-child');
+            const themeIcon = this.querySelector('.action-icon i');
+            const themeText = this.querySelector('.action-text');
             
             if (body.classList.contains('dark-theme')) {
-                themeIcon.textContent = '☀️';
+                themeIcon.className = 'fas fa-sun';
                 themeText.textContent = 'Светлая тема';
             } else {
-                themeIcon.textContent = '🌙';
+                themeIcon.className = 'fas fa-moon';
                 themeText.textContent = 'Темная тема';
             }
         });
@@ -132,12 +147,13 @@ function setupShareButton() {
     if (shareButton) {
         shareButton.addEventListener('click', function() {
             const shareUrl = window.location.href;
+            const shareText = 'Открой для себя лучшие игры Telegram и торговые платформы с реферальной программой в одном приложении!';
             
             // Check if Web Share API is available
             if (navigator.share) {
                 navigator.share({
                     title: 'Games Verse',
-                    text: 'Открой для себя лучшие игры Telegram в одном приложении!',
+                    text: shareText,
                     url: shareUrl,
                 })
                 .then(() => console.log('Успешный шаринг'))
@@ -166,37 +182,14 @@ function setupShareButton() {
     }
 }
 
-function setupEarnCategories() {
-    const chips = document.querySelectorAll('.category-chip');
-    const contents = document.querySelectorAll('.category-content');
-    
-    chips.forEach(chip => {
-        chip.addEventListener('click', function() {
-            const category = this.getAttribute('data-category');
-            
-            // Update active chip
-            chips.forEach(c => c.classList.remove('active'));
-            this.classList.add('active');
-            
-            // Show corresponding content
-            contents.forEach(content => {
-                content.classList.remove('active');
-                if (content.getAttribute('data-category') === category) {
-                    content.classList.add('active');
-                }
-            });
-        });
-    });
-}
-
 function setupReferralSystem() {
     const referralButton = document.getElementById('copy-referral');
     const notification = document.getElementById('notification');
     
     if (referralButton) {
         referralButton.addEventListener('click', function() {
-            const referralCode = 'GAMESVERSE123'; // Генерируйте уникальный код
-            const referralUrl = `https://t.me/your_bot?start=${referralCode}`;
+            const referralCode = 'ref_gamesverse_12345';
+            const referralUrl = `https://t.me/gamesverse_bot?start=${referralCode}`;
             
             navigator.clipboard.writeText(referralUrl).then(() => {
                 showNotification(notification, 'Реферальная ссылка скопирована!');
@@ -221,11 +214,11 @@ function setupReferralSystem() {
 
 function showNotification(notification, message) {
     if (message) {
-        notification.textContent = message;
+        notification.querySelector('.notification-text').textContent = message;
     }
     
     notification.classList.add('show');
     setTimeout(() => {
         notification.classList.remove('show');
-    }, 2000);
+    }, 3000);
 }
