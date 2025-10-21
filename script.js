@@ -5,20 +5,26 @@ document.addEventListener('DOMContentLoaded', function() {
 function initializeApp() {
     setupNavigation();
     setupGameCards();
-    setupExchangeCards();
+    setupEarningCards();
+    setupReferralSystem();
     setupThemeToggle();
-    setupShareButton();
     
     // Telegram Web App integration
     if (window.Telegram && window.Telegram.WebApp) {
         window.Telegram.WebApp.expand();
-        
+        applyTelegramTheme();
+    }
+}
+
+function applyTelegramTheme() {
+    if (window.Telegram && window.Telegram.WebApp) {
         const themeParams = window.Telegram.WebApp.themeParams;
         if (themeParams) {
-            document.documentElement.style.setProperty('--tg-theme-bg-color', themeParams.bg_color || '#ffffff');
-            document.documentElement.style.setProperty('--tg-theme-text-color', themeParams.text_color || '#000000');
-            document.documentElement.style.setProperty('--tg-theme-button-color', themeParams.button_color || '#667eea');
-            document.documentElement.style.setProperty('--tg-theme-button-text-color', themeParams.button_text_color || '#ffffff');
+            // Apply Telegram theme if needed
+            if (window.Telegram.WebApp.colorScheme === 'dark') {
+                document.body.setAttribute('data-theme', 'dark');
+                updateThemeButton('dark');
+            }
         }
     }
 }
@@ -53,114 +59,138 @@ function setupGameCards() {
         card.addEventListener('click', function() {
             const botUsername = this.getAttribute('data-bot');
             if (botUsername) {
-                const telegramUrl = `https://t.me/${botUsername}`;
-                
-                if (window.Telegram && window.Telegram.WebApp) {
-                    window.Telegram.WebApp.openTelegramLink(telegramUrl);
-                } else {
-                    window.open(telegramUrl, '_blank');
-                }
+                openTelegramLink(`https://t.me/${botUsername}`);
             }
         });
-        
-        // Also make the play button work
-        const playButton = card.querySelector('.play-button');
-        if (playButton) {
-            playButton.addEventListener('click', function(e) {
-                e.stopPropagation(); // Prevent triggering the card click event twice
-                const botUsername = card.getAttribute('data-bot');
-                if (botUsername) {
-                    const telegramUrl = `https://t.me/${botUsername}`;
-                    
-                    if (window.Telegram && window.Telegram.WebApp) {
-                        window.Telegram.WebApp.openTelegramLink(telegramUrl);
-                    } else {
-                        window.open(telegramUrl, '_blank');
-                    }
-                }
-            });
-        }
     });
 }
 
-function setupExchangeCards() {
+function setupEarningCards() {
     const exchangeCards = document.querySelectorAll('.exchange-card');
+    const earningCards = document.querySelectorAll('.earning-card');
     
     exchangeCards.forEach(card => {
         card.addEventListener('click', function() {
             const exchangeUrl = this.getAttribute('data-url');
             if (exchangeUrl) {
-                if (window.Telegram && window.Telegram.WebApp) {
-                    window.Telegram.WebApp.openLink(exchangeUrl);
-                } else {
-                    window.open(exchangeUrl, '_blank');
-                }
+                openExternalLink(exchangeUrl);
+            }
+        });
+    });
+    
+    earningCards.forEach(card => {
+        card.addEventListener('click', function() {
+            const botUsername = this.getAttribute('data-bot');
+            if (botUsername) {
+                openTelegramLink(`https://t.me/${botUsername}`);
             }
         });
     });
 }
 
-function setupThemeToggle() {
-    const themeButton = document.getElementById('theme-button');
-    const body = document.body;
+function setupReferralSystem() {
+    const copyBtn = document.getElementById('copy-btn');
+    const referralInput = document.getElementById('referral-input');
+    const shareButton = document.getElementById('share-button');
+    const notification = document.getElementById('notification');
     
-    if (themeButton) {
-        themeButton.addEventListener('click', function() {
-            body.classList.toggle('dark-theme');
-            
-            // Update button text and icon
-            const themeIcon = this.querySelector('.action-icon');
-            const themeText = this.querySelector('span:last-child');
-            
-            if (body.classList.contains('dark-theme')) {
-                themeIcon.textContent = '☀️';
-                themeText.textContent = 'Светлая тема';
-            } else {
-                themeIcon.textContent = '🌙';
-                themeText.textContent = 'Темная тема';
-            }
+    if (copyBtn && referralInput) {
+        copyBtn.addEventListener('click', function() {
+            copyToClipboard(referralInput.value, notification);
+        });
+    }
+    
+    if (shareButton) {
+        shareButton.addEventListener('click', function() {
+            shareReferralLink(referralInput.value, notification);
         });
     }
 }
 
-function setupShareButton() {
-    const shareButton = document.getElementById('share-button');
-    const notification = document.getElementById('notification');
+function setupThemeToggle() {
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeIcon = themeToggle.querySelector('.theme-icon');
     
-    if (shareButton) {
-        shareButton.addEventListener('click', function() {
-            const shareUrl = window.location.href;
-            
-            // Check if Web Share API is available
-            if (navigator.share) {
-                navigator.share({
-                    title: 'Games Verse',
-                    text: 'Открой для себя лучшие игры Telegram в одном приложении!',
-                    url: shareUrl,
-                })
-                .then(() => console.log('Успешный шаринг'))
-                .catch((error) => console.log('Ошибка шаринга', error));
-            } else {
-                // Fallback: copy to clipboard
-                navigator.clipboard.writeText(shareUrl).then(() => {
-                    showNotification(notification, 'Ссылка скопирована в буфер обмена!');
-                }).catch(() => {
-                    // Fallback for older browsers
-                    try {
-                        const textArea = document.createElement('textarea');
-                        textArea.value = shareUrl;
-                        document.body.appendChild(textArea);
-                        textArea.select();
-                        document.execCommand('copy');
-                        document.body.removeChild(textArea);
-                        showNotification(notification, 'Ссылка скопирована в буфер обмена!');
-                    } catch (err) {
-                        console.error('Copy failed:', err);
-                        showNotification(notification, 'Не удалось скопировать ссылку');
-                    }
-                });
-            }
+    // Check for saved theme or prefer-color-scheme
+    const savedTheme = localStorage.getItem('theme');
+    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    
+    if (savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) {
+        document.body.setAttribute('data-theme', 'dark');
+        updateThemeButton('dark');
+    }
+    
+    themeToggle.addEventListener('click', function() {
+        const currentTheme = document.body.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        
+        document.body.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+        updateThemeButton(newTheme);
+    });
+}
+
+function updateThemeButton(theme) {
+    const themeIcon = document.querySelector('.theme-icon');
+    if (theme === 'dark') {
+        themeIcon.textContent = '☀️';
+    } else {
+        themeIcon.textContent = '🌙';
+    }
+}
+
+function openTelegramLink(url) {
+    if (window.Telegram && window.Telegram.WebApp) {
+        window.Telegram.WebApp.openTelegramLink(url);
+    } else {
+        window.open(url, '_blank');
+    }
+}
+
+function openExternalLink(url) {
+    if (window.Telegram && window.Telegram.WebApp) {
+        window.Telegram.WebApp.openLink(url);
+    } else {
+        window.open(url, '_blank');
+    }
+}
+
+function copyToClipboard(text, notification) {
+    navigator.clipboard.writeText(text).then(() => {
+        showNotification(notification, 'Ссылка скопирована в буфер обмена!');
+    }).catch(() => {
+        // Fallback for older browsers
+        try {
+            const textArea = document.createElement('textarea');
+            textArea.value = text;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textArea);
+            showNotification(notification, 'Ссылка скопирована в буфер обмена!');
+        } catch (err) {
+            console.error('Copy failed:', err);
+            showNotification(notification, 'Не удалось скопировать ссылку');
+        }
+    });
+}
+
+function shareReferralLink(url, notification) {
+    // Check if Web Share API is available
+    if (navigator.share) {
+        navigator.share({
+            title: 'Games Verse - Лучшие игры Telegram',
+            text: 'Присоединяйся к Games Verse и получай бонусы за игры!',
+            url: url,
+        })
+        .then(() => console.log('Успешный шаринг'))
+        .catch((error) => {
+            console.log('Ошибка шаринга', error);
+            copyToClipboard(url, notification);
         });
+    } else {
+        // Fallback to copy
+        copyToClipboard(url, notification);
     }
 }
 
@@ -174,3 +204,24 @@ function showNotification(notification, message) {
         notification.classList.remove('show');
     }, 2000);
 }
+
+// Simulate user activity for demo
+function simulateUserActivity() {
+    const statNumbers = document.querySelectorAll('.stat-number');
+    if (!statNumbers.length) return;
+
+    setInterval(() => {
+        // Randomly increase referral stats
+        const randomIncrease = Math.floor(Math.random() * 2);
+        const currentStat = parseInt(statNumbers[0].textContent);
+        statNumbers[0].textContent = currentStat + randomIncrease;
+        
+        // Also increase bonus points
+        const bonusIncrease = Math.floor(Math.random() * 5);
+        const currentBonus = parseInt(statNumbers[1].textContent);
+        statNumbers[1].textContent = currentBonus + bonusIncrease;
+    }, 30000);
+}
+
+// Start simulation after delay
+setTimeout(simulateUserActivity, 10000);
