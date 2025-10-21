@@ -13,7 +13,11 @@
         <header class="header">
             <div class="header-content">
                 <h1 class="app-title">Games Verse</h1>
-                <div class="user-avatar">U</div>
+                <div class="header-actions">
+                    <button class="theme-toggle" id="theme-toggle">
+                        <span class="theme-icon">🌙</span>
+                    </button>
+                </div>
             </div>
         </header>
 
@@ -22,122 +26,242 @@
             <!-- Games Section -->
             <section id="games-section" class="content-section active">
                 <div class="section-header">
-                    <h2>Игры</h2>
-                    <span class="section-subtitle">Лучшие игры Telegram</span>
+                    <h2>Популярные игры</h2>
+                    <span class="section-subtitle">Выбери игру и начинай играть</span>
                 </div>
                 
                 <div class="games-grid">
                     <div class="game-card" data-bot="hamsterdev_bot">
                         <div class="game-image">
                             <img src="images/hamster-gamedev.jpg" alt="Hamster GameDev" class="game-img">
+                            <div class="game-overlay">
+                                <span class="play-text">Играть</span>
+                            </div>
                         </div>
-                        <div class="game-info">
-                            <h3>Hamster GameDev</h3>
-                            <p>Создай свою студию</p>
+                        <div class="game-content">
+                            <div class="game-info">
+                                <h3>Hamster GameDev</h3>
+                                <p>Создай свою игровую студию</p>
+                            </div>
+                            <div class="game-stats">
+                                <div class="stat">
+                                    <span class="stat-value">4.8</span>
+                                    <span class="stat-label">Рейтинг</span>
+                                </div>
+                                <div class="stat">
+                                    <span class="stat-value">50K</span>
+                                    <span class="stat-label">Игроков</span>
+                                </div>
+                            </div>
                         </div>
-                        <button class="play-button">Играть</button>
                     </div>
 
                     <div class="game-card" data-bot="hamsterking_bot">
                         <div class="game-image">
                             <img src="images/hamster-king.jpg" alt="Hamster King" class="game-img">
+                            <div class="game-overlay">
+                                <span class="play-text">Играть</span>
+                            </div>
                         </div>
-                        <div class="game-info">
-                            <h3>Hamster King</h3>
-                            <p>Стань королем хомяков</p>
+                        <div class="game-content">
+                            <div class="game-info">
+                                <h3>Hamster King</h3>
+                                <p>Стань королём хомяков</p>
+                            </div>
+                            <div class="game-stats">
+                                <div class="stat">
+                                    <span class="stat-value">4.6</span>
+                                    <span class="stat-label">Рейтинг</span>
+                                </div>
+                                <div class="stat">
+                                    <span class="stat-value">42K</span>
+                                    <span class="stat-label">Игроков</span>
+                                </div>
+                            </div>
                         </div>
-                        <button class="play-button">Играть</button>
                     </div>
 
                     <div class="game-card" data-bot="hamsterfightclub_bot">
                         <div class="game-image">
-                            <img src="images/hamster-fightclub.jpg" alt="Hamster Fight Club" class="game-img">
+                            <img src="images/hamster-fight-club.jpg" alt="Hamster Fight Club" class="game-img">
+                            <div class="game-overlay">
+                                <span class="play-text">Играть</span>
+                            </div>
                         </div>
-                        <div class="game-info">
-                            <h3>Hamster Fight Club</h3>
-                            <p>Бойцовский клуб хомяков</p>
+                        <div class="game-content">
+                            <div class="game-info">
+                                <h3>Hamster Fight Club</h3>
+                                <p>Бойцовский клуб хомяков</p>
+                            </div>
+                            <div class="game-stats">
+                                <div class="stat">
+                                    <span class="stat-value">4.7</span>
+                                    <span class="stat-label">Рейтинг</span>
+                                </div>
+                                <div class="stat">
+                                    <span class="stat-value">38K</span>
+                                    <span class="stat-label">Игроков</span>
+                                </div>
+                            </div>
                         </div>
-                        <button class="play-button">Играть</button>
                     </div>
 
                     <div class="game-card" data-bot="bitquest_bot">
                         <div class="game-image">
                             <img src="images/bitquest.jpg" alt="BitQuest" class="game-img">
+                            <div class="game-overlay">
+                                <span class="play-text">Играть</span>
+                            </div>
                         </div>
-                        <div class="game-info">
-                            <h3>BitQuest</h3>
-                            <p>Приключения в мире крипты</p>
+                        <div class="game-content">
+                            <div class="game-info">
+                                <h3>BitQuest</h3>
+                                <p>Приключения в мире крипты</p>
+                            </div>
+                            <div class="game-stats">
+                                <div class="stat">
+                                    <span class="stat-value">4.9</span>
+                                    <span class="stat-label">Рейтинг</span>
+                                </div>
+                                <div class="stat">
+                                    <span class="stat-value">65K</span>
+                                    <span class="stat-label">Игроков</span>
+                                </div>
+                            </div>
                         </div>
-                        <button class="play-button">Играть</button>
                     </div>
                 </div>
             </section>
 
-            <!-- Wallet Section -->
-            <section id="wallet-section" class="content-section">
+            <!-- Earnings Section -->
+            <section id="earnings-section" class="content-section">
                 <div class="section-header">
-                    <h2>Лучшие биржи</h2>
-                    <span class="section-subtitle">Купить HMSTR coin</span>
+                    <h2>Заработок</h2>
+                    <span class="section-subtitle">Зарабатывай на играх и инвестициях</span>
                 </div>
                 
-                <div class="exchanges-list">
-                    <div class="exchange-card" data-url="https://binance.com">
-                        <div class="exchange-logo">B</div>
-                        <div class="exchange-info">
-                            <h3>Binance</h3>
-                            <p>Глобальная биржа</p>
-                        </div>
-                        <div class="exchange-arrow">→</div>
+                <div class="earnings-categories">
+                    <div class="category-header">
+                        <h3>Криптобиржи</h3>
+                        <span class="category-subtitle">Покупай и продавай HMSTR</span>
                     </div>
-
-                    <div class="exchange-card" data-url="https://bybit.com">
-                        <div class="exchange-logo">B</div>
-                        <div class="exchange-info">
-                            <h3>Bybit</h3>
-                            <p>Быстрая торговля</p>
+                    
+                    <div class="exchanges-grid">
+                        <div class="exchange-card" data-url="https://binance.com">
+                            <div class="exchange-icon">
+                                <div class="exchange-logo">B</div>
+                            </div>
+                            <div class="exchange-info">
+                                <h4>Binance</h4>
+                                <p>Крупнейшая биржа</p>
+                            </div>
+                            <div class="exchange-bonus">
+                                <span class="bonus-badge">+10% кешбек</span>
+                            </div>
                         </div>
-                        <div class="exchange-arrow">→</div>
+
+                        <div class="exchange-card" data-url="https://bybit.com">
+                            <div class="exchange-icon">
+                                <div class="exchange-logo">B</div>
+                            </div>
+                            <div class="exchange-info">
+                                <h4>Bybit</h4>
+                                <p>Быстрая торговля</p>
+                            </div>
+                            <div class="exchange-bonus">
+                                <span class="bonus-badge">+5% к депозиту</span>
+                            </div>
+                        </div>
+
+                        <div class="exchange-card" data-url="https://okx.com">
+                            <div class="exchange-icon">
+                                <div class="exchange-logo">O</div>
+                            </div>
+                            <div class="exchange-info">
+                                <h4>OKX</h4>
+                                <p>Безопасная платформа</p>
+                            </div>
+                            <div class="exchange-bonus">
+                                <span class="bonus-badge">Бонус $10</span>
+                            </div>
+                        </div>
                     </div>
-
-                    <div class="exchange-card" data-url="https://okx.com">
-                        <div class="exchange-logo">O</div>
-                        <div class="exchange-info">
-                            <h3>OKX</h3>
-                            <p>Безопасная платформа</p>
-                        </div>
-                        <div class="exchange-arrow">→</div>
+                    
+                    <div class="category-header">
+                        <h3>Игры с выводом</h3>
+                        <span class="category-subtitle">Зарабатывай играя</span>
                     </div>
-
-                    <div class="exchange-card" data-url="https://kucoin.com">
-                        <div class="exchange-logo">K</div>
-                        <div class="exchange-info">
-                            <h3>KuCoin</h3>
-                            <p>Много торговых пар</p>
+                    
+                    <div class="earnings-grid">
+                        <div class="earning-card" data-bot="hamsterearn_bot">
+                            <div class="earning-icon">💰</div>
+                            <div class="earning-info">
+                                <h4>Hamster Earn</h4>
+                                <p>Зарабатывай каждый день</p>
+                            </div>
+                            <div class="earning-badge">
+                                <span>Вывод от $1</span>
+                            </div>
                         </div>
-                        <div class="exchange-arrow">→</div>
+
+                        <div class="earning-card" data-bot="cryptohamster_bot">
+                            <div class="earning-icon">₿</div>
+                            <div class="earning-info">
+                                <h4>Crypto Hamster</h4>
+                                <p>Майнинг в телеграм</p>
+                            </div>
+                            <div class="earning-badge">
+                                <span>Бесплатный старт</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
 
-            <!-- Profile Section -->
-            <section id="profile-section" class="content-section">
-                <div class="profile-header">
-                    <div class="profile-avatar">U</div>
-                    <div class="profile-info">
-                        <h2>Пользователь</h2>
-                        <p>@gamesverse_user</p>
+            <!-- Referrals Section -->
+            <section id="referrals-section" class="content-section">
+                <div class="section-header">
+                    <h2>Пригласи друзей</h2>
+                    <span class="section-subtitle">Получай бонусы за каждого друга</span>
+                </div>
+                
+                <div class="referral-hero">
+                    <div class="referral-badge">
+                        <span class="badge-text">+50% к заработку</span>
+                    </div>
+                    <h3>За каждого приглашённого друга</h3>
+                    <p>Твой друг получает бонус при регистрации, а ты - процент от его заработка</p>
+                </div>
+
+                <div class="referral-stats">
+                    <div class="stat-card">
+                        <div class="stat-icon">👥</div>
+                        <div class="stat-content">
+                            <span class="stat-number">12</span>
+                            <span class="stat-label">Друзей приглашено</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">💰</div>
+                        <div class="stat-content">
+                            <span class="stat-number">245</span>
+                            <span class="stat-label">Бонусов получено</span>
+                        </div>
                     </div>
                 </div>
 
-                <div class="profile-actions">
-                    <button class="action-button" id="share-button">
-                        <span class="action-icon">📤</span>
-                        <span>Поделиться приложением</span>
-                    </button>
-                    
-                    <button class="action-button" id="theme-button">
-                        <span class="action-icon">🌙</span>
-                        <span>Сменить тему</span>
+                <div class="referral-share">
+                    <h4>Твоя реферальная ссылка</h4>
+                    <div class="share-link">
+                        <input type="text" id="referral-input" readonly value="https://t.me/gamesverse_bot?start=ref_12345">
+                        <button id="copy-btn" class="copy-button">
+                            <span class="copy-icon">📋</span>
+                            Копировать
+                        </button>
+                    </div>
+                    <button class="share-button" id="share-button">
+                        <span class="share-icon">📤</span>
+                        Поделиться с друзьями
                     </button>
                 </div>
             </section>
@@ -149,13 +273,13 @@
                 <span class="nav-icon">🎮</span>
                 <span class="nav-label">Игры</span>
             </button>
-            <button class="nav-item" data-section="wallet-section">
+            <button class="nav-item" data-section="earnings-section">
                 <span class="nav-icon">💰</span>
-                <span class="nav-label">Кошелек</span>
+                <span class="nav-label">Заработок</span>
             </button>
-            <button class="nav-item" data-section="profile-section">
-                <span class="nav-icon">👤</span>
-                <span class="nav-label">Профиль</span>
+            <button class="nav-item" data-section="referrals-section">
+                <span class="nav-icon">👥</span>
+                <span class="nav-label">Рефералы</span>
             </button>
         </nav>
 
