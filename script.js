@@ -2,66 +2,31 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeApp();
 });
 
-// Translations object
-const translations = {
-    ru: {
-        appTitle: "Games Verse",
-        settings: "Настройки",
-        theme: "Тема",
-        lightTheme: "Светлая",
-        darkTheme: "Темная",
-        language: "Язык",
-        russian: "Русский",
-        english: "English",
-        done: "Готово",
-        games: "Игры",
-        bestGames: "Лучшие игры Telegram",
-        hamsterGameDevDesc: "Создай свою студию",
-        hamsterKingDesc: "Стань королем хомяков",
-        hamsterFightClubDesc: "Бойцовский клуб хомяков",
-        bitquestDesc: "Приключения в мире крипты",
-        play: "Играть",
-        exchanges: "Биржи",
-        exchangesDesc: "Торгуйте криптовалютами безопасно",
-        bybitDesc: "Продвинутая торговая платформа",
-        bingxDesc: "Социальная торговля и копирование",
-        bitgetDesc: "Инновационная торговая платформа",
-        mexcDesc: "Глобальная биржа с низкими комиссиями",
-        user: "Пользователь",
-        shareWithFriends: "Поделиться с друзьями",
-        profile: "Профиль",
-        linkCopied: "Ссылка скопирована в буфер обмена!",
-        go: "Перейти"
-    },
-    en: {
-        appTitle: "Games Verse",
-        settings: "Settings",
-        theme: "Theme",
-        lightTheme: "Light",
-        darkTheme: "Dark",
-        language: "Language",
-        russian: "Russian",
-        english: "English",
-        done: "Done",
-        games: "Games",
-        bestGames: "Best Telegram Games",
-        hamsterGameDevDesc: "Create your own studio",
-        hamsterKingDesc: "Become the hamster king",
-        hamsterFightClubDesc: "Hamster fighting club",
-        bitquestDesc: "Adventures in the crypto world",
-        play: "Play",
-        exchanges: "Exchanges",
-        exchangesDesc: "Trade cryptocurrencies safely",
-        bybitDesc: "Advanced trading platform",
-        bingxDesc: "Social trading and copy trading",
-        bitgetDesc: "Innovative trading platform",
-        mexcDesc: "Global exchange with low fees",
-        user: "User",
-        shareWithFriends: "Share with friends",
-        profile: "Profile",
-        linkCopied: "Link copied to clipboard!",
-        go: "Go"
-    }
+// Система пользователя
+const userData = {
+    points: 0,
+    level: 1,
+    gamesPlayed: 0,
+    friendsInvited: 0,
+    achievements: [],
+    gameHistory: [],
+    exchangeVisits: []
+};
+
+// Партнерские ссылки (замените YOUR_REF_CODE на ваши реф-коды)
+const affiliateLinks = {
+    'bybit': 'https://www.bybit.com/register?ref=YOUR_REF_CODE',
+    'bingx': 'https://www.bingx.com/register?ref=YOUR_REF_CODE',
+    'bitget': 'https://www.bitget.com/register?ref=YOUR_REF_CODE',
+    'mexc': 'https://www.mexc.com/register?ref=YOUR_REF_CODE'
+};
+
+// Достижения
+const achievements = {
+    'first_play': { name: 'Первая игра', points: 10, earned: false },
+    'invite_3': { name: 'Пригласи 3 друзей', points: 50, earned: false },
+    'play_5_games': { name: '5 разных игр', points: 30, earned: false },
+    'exchange_visit': { name: 'Посети биржу', points: 25, earned: false }
 };
 
 function vibrate() {
@@ -71,14 +36,15 @@ function vibrate() {
 }
 
 function initializeApp() {
+    loadUserData();
     setupNavigation();
     setupGameButtons();
     setupExchangeButtons();
     setupSettingsPanel();
+    setupReferralSystem();
+    setupShareButtons();
     loadThemePreference();
-    loadLanguagePreference();
-    loadUserData();
-    setupShareButton();
+    updateUI();
     
     // Плавная загрузка контента
     setTimeout(() => {
@@ -88,13 +54,61 @@ function initializeApp() {
     // Telegram Web App integration
     if (window.Telegram && window.Telegram.WebApp) {
         window.Telegram.WebApp.expand();
+        loadUserDataFromTelegram();
+    }
+    
+    // Кэширование данных
+    cacheEssentialData();
+}
+
+function loadUserData() {
+    const savedData = localStorage.getItem('userData');
+    if (savedData) {
+        Object.assign(userData, JSON.parse(savedData));
+    }
+    
+    // Обработка реферальных параметров
+    const urlParams = new URLSearchParams(window.location.search);
+    const refCode = urlParams.get('ref');
+    if (refCode && !localStorage.getItem('referrer')) {
+        localStorage.setItem('referrer', refCode);
+        awardReferralBonus(refCode);
+    }
+}
+
+function saveUserData() {
+    localStorage.setItem('userData', JSON.stringify(userData));
+}
+
+function loadUserDataFromTelegram() {
+    if (window.Telegram && window.Telegram.WebApp) {
+        const user = window.Telegram.WebApp.initDataUnsafe?.user;
         
-        const themeParams = window.Telegram.WebApp.themeParams;
-        if (themeParams) {
-            document.documentElement.style.setProperty('--tg-theme-bg-color', themeParams.bg_color || '#ffffff');
-            document.documentElement.style.setProperty('--tg-theme-text-color', themeParams.text_color || '#000000');
-            document.documentElement.style.setProperty('--tg-theme-button-color', themeParams.button_color || '#667eea');
-            document.documentElement.style.setProperty('--tg-theme-button-text-color', themeParams.button_text_color || '#ffffff');
+        if (user) {
+            // Обновление имени пользователя
+            const userName = document.getElementById('user-name');
+            if (userName && user.first_name) {
+                userName.textContent = user.first_name + (user.last_name ? ' ' + user.last_name : '');
+            }
+            
+            // Обновление username
+            const userUsername = document.getElementById('user-username');
+            if (userUsername && user.username) {
+                userUsername.textContent = '@' + user.username;
+            }
+            
+            // Обновление аватара
+            const userAvatar = document.getElementById('user-avatar');
+            const avatarImg = document.getElementById('avatar-img');
+            const avatarFallback = document.getElementById('avatar-fallback');
+            
+            if (userAvatar && user.photo_url) {
+                avatarImg.src = user.photo_url;
+                avatarImg.style.display = 'block';
+                avatarFallback.style.display = 'none';
+            } else if (userAvatar && user.first_name) {
+                avatarFallback.textContent = user.first_name.charAt(0).toUpperCase();
+            }
         }
     }
 }
@@ -108,15 +122,20 @@ function setupNavigation() {
             vibrate();
             const targetSection = this.getAttribute('data-section');
             
-            // Update active nav item
+            // Обновление активного элемента навигации
             navItems.forEach(nav => nav.classList.remove('active'));
             this.classList.add('active');
             
-            // Show target section
+            // Показать целевую секцию
             sections.forEach(section => {
                 section.classList.remove('active');
                 if (section.id === targetSection) {
                     section.classList.add('active');
+                    
+                    // Обновление рекомендаций при переходе в игры
+                    if (targetSection === 'games-section') {
+                        updateGameRecommendations();
+                    }
                 }
             });
         });
@@ -130,7 +149,16 @@ function setupGameButtons() {
         button.addEventListener('click', function(e) {
             e.stopPropagation();
             vibrate();
+            
             const botUsername = this.getAttribute('data-bot');
+            const gameName = this.getAttribute('data-game');
+            
+            // Отслеживание игры
+            trackGamePlay(gameName);
+            
+            // Начисление достижений
+            checkAndAwardAchievement('first_play');
+            
             if (botUsername) {
                 const telegramUrl = `https://t.me/${botUsername}`;
                 
@@ -151,12 +179,21 @@ function setupExchangeButtons() {
         button.addEventListener('click', function(e) {
             e.stopPropagation();
             vibrate();
-            const exchangeUrl = this.getAttribute('data-url');
-            if (exchangeUrl) {
+            
+            const exchangeName = this.getAttribute('data-exchange');
+            const affiliateUrl = affiliateLinks[exchangeName.toLowerCase()] || this.getAttribute('data-url');
+            
+            // Отслеживание посещения биржи
+            trackExchangeVisit(exchangeName);
+            
+            // Начисление достижений
+            checkAndAwardAchievement('exchange_visit');
+            
+            if (affiliateUrl) {
                 if (window.Telegram && window.Telegram.WebApp) {
-                    window.Telegram.WebApp.openLink(exchangeUrl);
+                    window.Telegram.WebApp.openLink(affiliateUrl);
                 } else {
-                    window.open(exchangeUrl, '_blank');
+                    window.open(affiliateUrl, '_blank');
                 }
             }
         });
@@ -182,7 +219,7 @@ function setupSettingsPanel() {
         });
     }
     
-    // Close settings when clicking outside
+    // Закрытие настроек при клике снаружи
     if (settingsPanel) {
         settingsPanel.addEventListener('click', function(e) {
             if (e.target === settingsPanel) {
@@ -191,56 +228,230 @@ function setupSettingsPanel() {
         });
     }
     
-    // Theme switcher in settings
+    // Переключатель темы в настройках
     const themeOptions = document.querySelectorAll('.theme-option');
     themeOptions.forEach(option => {
         option.addEventListener('click', function() {
             vibrate();
             const theme = this.getAttribute('data-theme');
             
-            // Update active state
+            // Обновление активного состояния
             themeOptions.forEach(opt => opt.classList.remove('active'));
             this.classList.add('active');
             
-            // Apply theme
+            // Применение темы
             if (theme === 'dark') {
                 document.body.classList.add('dark-theme');
             } else {
                 document.body.classList.remove('dark-theme');
             }
             
-            // Save to localStorage
+            // Сохранение в localStorage
             localStorage.setItem('theme', theme);
-        });
-    });
-    
-    // Language switcher in settings
-    const languageOptions = document.querySelectorAll('.language-option');
-    languageOptions.forEach(option => {
-        option.addEventListener('click', function() {
-            vibrate();
-            const lang = this.getAttribute('data-lang');
-            
-            // Update active state
-            languageOptions.forEach(opt => opt.classList.remove('active'));
-            this.classList.add('active');
-            
-            // Change language
-            setLanguage(lang);
-            
-            // Save to localStorage
-            localStorage.setItem('language', lang);
         });
     });
 }
 
-function setLanguage(lang) {
-    // Update all elements with data-i18n attribute
-    const elements = document.querySelectorAll('[data-i18n]');
-    elements.forEach(element => {
-        const key = element.getAttribute('data-i18n');
-        if (translations[lang] && translations[lang][key]) {
-            element.textContent = translations[lang][key];
+function setupReferralSystem() {
+    // Генерация реферального кода
+    if (!localStorage.getItem('refCode')) {
+        const refCode = generateRefCode();
+        localStorage.setItem('refCode', refCode);
+    }
+    
+    // Обновление реферальной ссылки
+    updateReferralLink();
+}
+
+function generateRefCode() {
+    return 'GV' + Math.random().toString(36).substr(2, 8).toUpperCase();
+}
+
+function updateReferralLink() {
+    const refCode = localStorage.getItem('refCode');
+    const currentUrl = window.location.origin + window.location.pathname;
+    const referralLink = `${currentUrl}?ref=${refCode}`;
+    
+    const referralInput = document.getElementById('referral-link-input');
+    if (referralInput) {
+        referralInput.value = referralLink;
+    }
+}
+
+function copyReferralLink() {
+    const referralInput = document.getElementById('referral-link-input');
+    if (referralInput) {
+        navigator.clipboard.writeText(referralInput.value).then(() => {
+            showNotification('Реферальная ссылка скопирована!');
+        });
+    }
+}
+
+function awardReferralBonus(refCode) {
+    // Здесь можно интегрировать с бэкендом для начисления бонусов
+    userData.points += 100;
+    userData.friendsInvited += 1;
+    
+    // Проверка достижений
+    if (userData.friendsInvited >= 3) {
+        checkAndAwardAchievement('invite_3');
+    }
+    
+    saveUserData();
+    updateUI();
+    showNotification('+100 очков за приглашенного друга!');
+}
+
+function setupShareButtons() {
+    const shareOptions = document.querySelectorAll('.share-option');
+    
+    shareOptions.forEach(option => {
+        option.addEventListener('click', function() {
+            vibrate();
+            const platform = this.getAttribute('data-platform');
+            shareToPlatform(platform);
+        });
+    });
+}
+
+function shareToPlatform(platform) {
+    const referralLink = document.getElementById('referral-link-input').value;
+    const shareText = 'Присоединяйся к Games Verse - лучшие игры Telegram и крипто-биржи в одном месте! 🎮';
+    
+    let shareUrl = '';
+    
+    switch (platform) {
+        case 'telegram':
+            shareUrl = `https://t.me/share/url?url=${encodeURIComponent(referralLink)}&text=${encodeURIComponent(shareText)}`;
+            break;
+        case 'whatsapp':
+            shareUrl = `https://wa.me/?text=${encodeURIComponent(shareText + ' ' + referralLink)}`;
+            break;
+        case 'copy':
+            navigator.clipboard.writeText(shareText + ' ' + referralLink).then(() => {
+                showNotification('Текст для шаринга скопирован!');
+            });
+            return;
+    }
+    
+    if (shareUrl) {
+        window.open(shareUrl, '_blank');
+    }
+}
+
+function trackGamePlay(gameName) {
+    if (!userData.gameHistory.includes(gameName)) {
+        userData.gameHistory.push(gameName);
+        userData.gamesPlayed += 1;
+        
+        // Начисление очков
+        userData.points += 10;
+        
+        // Проверка достижений
+        if (userData.gameHistory.length >= 5) {
+            checkAndAwardAchievement('play_5_games');
+        }
+        
+        saveUserData();
+        updateUI();
+    }
+    
+    // Аналитика
+    trackUserAction('game_play', gameName);
+}
+
+function trackExchangeVisit(exchangeName) {
+    if (!userData.exchangeVisits.includes(exchangeName)) {
+        userData.exchangeVisits.push(exchangeName);
+        
+        // Начисление очков
+        userData.points += 15;
+        
+        saveUserData();
+        updateUI();
+    }
+    
+    // Аналитика
+    trackUserAction('exchange_visit', exchangeName);
+}
+
+function checkAndAwardAchievement(achievementId) {
+    if (!achievements[achievementId] || achievements[achievementId].earned) return;
+    
+    achievements[achievementId].earned = true;
+    userData.points += achievements[achievementId].points;
+    
+    // Обновление UI достижения
+    const achievementElement = document.querySelector(`[data-achievement="${achievementId}"]`);
+    if (achievementElement) {
+        achievementElement.classList.add('earned');
+    }
+    
+    saveUserData();
+    updateUI();
+    showNotification(`Достижение разблокировано: +${achievements[achievementId].points} очков!`);
+}
+
+function updateGameRecommendations() {
+    const recommendedContainer = document.getElementById('recommended-games');
+    if (!recommendedContainer) return;
+    
+    const recommendations = getGameRecommendations();
+    
+    // Очистка и добавление рекомендаций
+    recommendedContainer.innerHTML = '';
+    recommendations.forEach(gameName => {
+        const gameCard = createRecommendedGameCard(gameName);
+        if (gameCard) {
+            recommendedContainer.appendChild(gameCard);
+        }
+    });
+}
+
+function getGameRecommendations() {
+    // Простая логика рекомендаций
+    if (userData.gameHistory.includes('Hamster')) {
+        return ['Hamster King', 'Hamster Fight Club'];
+    } else if (userData.gameHistory.length === 0) {
+        return ['BitQuest', 'Hamster GameDev'];
+    }
+    
+    return ['BitQuest', 'Hamster King'];
+}
+
+function createRecommendedGameCard(gameName) {
+    // Здесь можно создать карточку игры на основе названия
+    // Для простоты возвращаем существующую карточку
+    const allGames = document.querySelectorAll('.game-card');
+    for (let game of allGames) {
+        if (game.querySelector('h3').textContent === gameName) {
+            return game.cloneNode(true);
+        }
+    }
+    return null;
+}
+
+function updateUI() {
+    // Обновление статистики
+    document.getElementById('games-played').textContent = userData.gamesPlayed;
+    document.getElementById('friends-invited').textContent = userData.friendsInvited;
+    document.getElementById('points-earned').textContent = userData.points;
+    document.getElementById('user-points').textContent = `${userData.points} очков`;
+    
+    // Обновление прогресса уровня
+    const levelProgress = (userData.points % 100) / 100 * 100;
+    document.getElementById('level-progress').style.width = levelProgress + '%';
+    
+    // Обновление достижений
+    updateAchievementsUI();
+}
+
+function updateAchievementsUI() {
+    const achievementElements = document.querySelectorAll('.achievement');
+    achievementElements.forEach(element => {
+        const achievementId = element.getAttribute('data-achievement');
+        if (achievements[achievementId] && achievements[achievementId].earned) {
+            element.classList.add('earned');
         }
     });
 }
@@ -251,12 +462,6 @@ function loadThemePreference() {
         document.body.classList.add('dark-theme');
     }
     updateSettingsThemeOptions();
-}
-
-function loadLanguagePreference() {
-    const savedLang = localStorage.getItem('language') || 'ru';
-    setLanguage(savedLang);
-    updateSettingsLanguageOptions(savedLang);
 }
 
 function updateSettingsThemeOptions() {
@@ -272,101 +477,40 @@ function updateSettingsThemeOptions() {
     });
 }
 
-function updateSettingsLanguageOptions(lang) {
-    const languageOptions = document.querySelectorAll('.language-option');
-    
-    languageOptions.forEach(option => {
-        option.classList.remove('active');
-        if (option.getAttribute('data-lang') === lang) {
-            option.classList.add('active');
-        }
-    });
-}
-
-function loadUserData() {
-    // Try to get user data from Telegram Web App
-    if (window.Telegram && window.Telegram.WebApp) {
-        const user = window.Telegram.WebApp.initDataUnsafe?.user;
-        
-        if (user) {
-            // Update user name
-            const userName = document.getElementById('user-name');
-            if (userName && user.first_name) {
-                userName.textContent = user.first_name + (user.last_name ? ' ' + user.last_name : '');
-            }
-            
-            // Update username
-            const userUsername = document.getElementById('user-username');
-            if (userUsername && user.username) {
-                userUsername.textContent = '@' + user.username;
-            }
-            
-            // Update avatar
-            const userAvatar = document.getElementById('user-avatar');
-            const avatarImg = document.getElementById('avatar-img');
-            const avatarFallback = document.getElementById('avatar-fallback');
-            
-            if (userAvatar && user.photo_url) {
-                avatarImg.src = user.photo_url;
-                avatarImg.style.display = 'block';
-                avatarFallback.style.display = 'none';
-            } else if (userAvatar && user.first_name) {
-                // Show first letter of first name as fallback
-                avatarFallback.textContent = user.first_name.charAt(0).toUpperCase();
-            }
-        }
-    }
-}
-
-function setupShareButton() {
-    const shareButton = document.getElementById('share-friends-button');
-    const notification = document.getElementById('notification');
-    
-    if (shareButton) {
-        shareButton.addEventListener('click', function() {
-            vibrate();
-            const shareUrl = window.location.href;
-            
-            // Check if Web Share API is available
-            if (navigator.share) {
-                navigator.share({
-                    title: 'Games Verse',
-                    text: 'Открой для себя лучшие игры Telegram в одном приложении!',
-                    url: shareUrl,
-                })
-                .then(() => console.log('Успешный шаринг'))
-                .catch((error) => console.log('Ошибка шаринга', error));
-            } else {
-                // Fallback: copy to clipboard
-                navigator.clipboard.writeText(shareUrl).then(() => {
-                    showNotification(notification);
-                }).catch(() => {
-                    // Fallback for older browsers
-                    try {
-                        const textArea = document.createElement('textarea');
-                        textArea.value = shareUrl;
-                        document.body.appendChild(textArea);
-                        textArea.select();
-                        document.execCommand('copy');
-                        document.body.removeChild(textArea);
-                        showNotification(notification);
-                    } catch (err) {
-                        console.error('Copy failed:', err);
-                        showNotification(notification, 'Не удалось скопировать ссылку');
-                    }
-                });
-            }
+function cacheEssentialData() {
+    if ('caches' in window) {
+        caches.open('games-verse-v1').then(cache => {
+            cache.addAll([
+                '/',
+                '/style.css',
+                '/script.js',
+                '/images/'
+            ]);
         });
     }
 }
 
-function showNotification(notification, customMessage) {
-    if (customMessage) {
-        notification.textContent = customMessage;
-    }
-    
-    notification.classList.add('show');
-    setTimeout(() => {
-        notification.classList.remove('show');
-    }, 2000);
+function trackUserAction(action, value) {
+    const analytics = JSON.parse(localStorage.getItem('analytics') || '[]');
+    analytics.push({
+        action,
+        value,
+        timestamp: Date.now(),
+        userId: localStorage.getItem('refCode') || 'anonymous'
+    });
+    localStorage.setItem('analytics', JSON.stringify(analytics.slice(-1000)));
 }
+
+function showNotification(message) {
+    const notification = document.getElementById('notification');
+    if (notification) {
+        notification.textContent = message;
+        notification.classList.add('show');
+        setTimeout(() => {
+            notification.classList.remove('show');
+        }, 2000);
+    }
+}
+
+// Экспорт для глобального использования
+window.copyReferralLink = copyReferralLink;
