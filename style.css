@@ -96,13 +96,15 @@ body.dark-theme {
 .settings-panel {
     position: fixed;
     top: 0;
-    left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
+    left: 0;
+    background: rgba(0, 0, 0, 0.3);
     z-index: 100;
     display: none;
-    align-items: flex-end;
+    justify-content: flex-end;
+    align-items: flex-start;
+    padding: 70px 16px 0 0;
 }
 
 .settings-panel.active {
@@ -111,46 +113,45 @@ body.dark-theme {
 
 .settings-content {
     background: var(--surface-light);
-    width: 100%;
-    border-radius: 20px 20px 0 0;
-    padding: 24px 20px;
-    max-height: 70vh;
-    overflow-y: auto;
-    transform: translateY(100%);
+    width: 280px;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    transform: translateX(100%);
     transition: transform 0.3s ease;
-    box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.1);
 }
 
 .dark-theme .settings-content {
     background: var(--card-dark);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
 .settings-panel.active .settings-content {
-    transform: translateY(0);
+    transform: translateX(0);
 }
 
 .settings-title {
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 700;
     margin-bottom: 20px;
     text-align: center;
 }
 
 .setting-item {
-    margin-bottom: 24px;
+    margin-bottom: 20px;
 }
 
 .setting-label {
     display: block;
     font-weight: 600;
-    margin-bottom: 12px;
-    font-size: 16px;
+    margin-bottom: 10px;
+    font-size: 14px;
 }
 
 .theme-switcher, .language-switcher {
     display: flex;
     background: var(--card-light);
-    border-radius: 12px;
+    border-radius: 10px;
     padding: 4px;
     border: 1px solid var(--border-light);
 }
@@ -162,13 +163,14 @@ body.dark-theme {
 
 .theme-option, .language-option {
     flex: 1;
-    padding: 10px 16px;
+    padding: 8px 12px;
     border: none;
     background: transparent;
     border-radius: 8px;
     cursor: pointer;
     font-weight: 500;
     transition: all 0.3s ease;
+    font-size: 13px;
 }
 
 .theme-option.active, .language-option.active {
@@ -179,16 +181,16 @@ body.dark-theme {
 
 .close-settings {
     width: 100%;
-    padding: 14px;
+    padding: 12px;
     background: var(--primary-gradient);
     color: white;
     border: none;
-    border-radius: 14px;
+    border-radius: 12px;
     font-weight: 600;
     cursor: pointer;
     margin-top: 10px;
     transition: all 0.3s ease;
-    font-size: 16px;
+    font-size: 14px;
 }
 
 .close-settings:hover {
@@ -441,15 +443,6 @@ body.dark-theme {
     color: var(--text-secondary-dark);
 }
 
-.exchange-badge {
-    background: var(--primary-gradient);
-    color: white;
-    padding: 2px 8px;
-    border-radius: 8px;
-    font-size: 10px;
-    font-weight: 600;
-}
-
 .exchange-arrow {
     margin-left: auto;
     font-size: 20px;
@@ -537,59 +530,6 @@ body.dark-theme {
 .share-friends-button:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(245, 87, 108, 0.4);
-}
-
-.action-button {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    width: 100%;
-    padding: 18px;
-    background: var(--card-light);
-    border: 1px solid var(--border-light);
-    border-radius: 20px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-size: 16px;
-    font-weight: 500;
-    position: relative;
-    overflow: hidden;
-}
-
-.action-button::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-    transition: left 0.6s;
-}
-
-.action-button:hover::before {
-    left: 100%;
-}
-
-.dark-theme .action-button {
-    background: var(--card-dark);
-    border-color: var(--border-dark);
-    color: var(--text-primary-dark);
-}
-
-.action-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-    background: #ffffff;
-}
-
-.dark-theme .action-button:hover {
-    background: #2a2a2a;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-}
-
-.action-icon {
-    font-size: 24px;
 }
 
 /* Bottom Navigation */
@@ -701,12 +641,17 @@ body.dark-theme {
         font-size: 28px;
     }
     
-    .action-button, .share-friends-button {
+    .share-friends-button {
         padding: 16px;
     }
     
     .settings-content {
-        padding: 20px 16px;
+        width: 260px;
+        padding: 16px;
+    }
+    
+    .settings-panel {
+        padding: 60px 12px 0 0;
     }
 }
 
