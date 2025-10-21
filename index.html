@@ -6,14 +6,23 @@
     <title>Games Verse</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <div class="app-container">
         <!-- Header -->
         <header class="header">
             <div class="header-content">
-                <h1 class="app-title">Games Verse</h1>
-                <div class="user-avatar">U</div>
+                <div class="header-left">
+                    <h1 class="app-title">Games Verse</h1>
+                    <div class="balance-widget">
+                        <i class="fas fa-coins"></i>
+                        <span class="balance-amount">$24.50</span>
+                    </div>
+                </div>
+                <div class="user-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
             </div>
         </header>
 
@@ -23,221 +32,267 @@
             <section id="games-section" class="content-section active">
                 <div class="section-header">
                     <h2>Игры</h2>
-                    <span class="section-subtitle">Лучшие игры Telegram</span>
+                    <span class="section-subtitle">Зарабатывайте, играя в лучшие игры Telegram</span>
+                </div>
+                
+                <div class="stats-cards">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-gamepad"></i>
+                        </div>
+                        <div class="stat-info">
+                            <div class="stat-value">12</div>
+                            <div class="stat-label">Доступно игр</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-gem"></i>
+                        </div>
+                        <div class="stat-info">
+                            <div class="stat-value">$24.50</div>
+                            <div class="stat-label">Ваш заработок</div>
+                        </div>
+                    </div>
                 </div>
                 
                 <div class="games-grid">
                     <div class="game-card" data-bot="hamsterdev_bot">
+                        <div class="game-badge">Хит</div>
                         <div class="game-image">
-                            <img src="images/hamster-gamedev.jpg" alt="Hamster GameDev" class="game-img">
+                            <div class="game-placeholder">
+                                <i class="fas fa-gamepad"></i>
+                            </div>
                         </div>
                         <div class="game-info">
                             <h3>Hamster GameDev</h3>
-                            <p>Создай свою студию</p>
-                            <span class="referral-badge">Рефералка</span>
+                            <p>Создай свою игровую студию и стань лидером</p>
+                            <div class="game-meta">
+                                <span class="earn-badge">
+                                    <i class="fas fa-coins"></i>
+                                    До $10
+                                </span>
+                                <span class="players-count">
+                                    <i class="fas fa-users"></i>
+                                    45K
+                                </span>
+                            </div>
                         </div>
-                        <button class="play-button">Играть</button>
+                        <button class="play-button">
+                            <i class="fas fa-play"></i>
+                        </button>
                     </div>
 
                     <div class="game-card" data-bot="hamsterking_bot">
+                        <div class="game-badge">Новое</div>
                         <div class="game-image">
-                            <img src="images/hamster-king.jpg" alt="Hamster King" class="game-img">
+                            <div class="game-placeholder">
+                                <i class="fas fa-crown"></i>
+                            </div>
                         </div>
                         <div class="game-info">
                             <h3>Hamster King</h3>
-                            <p>Стань королем хомяков</p>
-                            <span class="referral-badge">Рефералка</span>
+                            <p>Стань королем хомяков в этом увлекательном приключении</p>
+                            <div class="game-meta">
+                                <span class="earn-badge">
+                                    <i class="fas fa-coins"></i>
+                                    До $15
+                                </span>
+                                <span class="players-count">
+                                    <i class="fas fa-users"></i>
+                                    32K
+                                </span>
+                            </div>
                         </div>
-                        <button class="play-button">Играть</button>
+                        <button class="play-button">
+                            <i class="fas fa-play"></i>
+                        </button>
                     </div>
 
                     <div class="game-card" data-bot="hamsterfightclub_bot">
                         <div class="game-image">
-                            <img src="images/hamster-fight-club.jpg" alt="Hamster Fight Club" class="game-img">
+                            <div class="game-placeholder">
+                                <i class="fas fa-fist-raised"></i>
+                            </div>
                         </div>
                         <div class="game-info">
                             <h3>Hamster Fight Club</h3>
-                            <p>Бойцовский клуб хомяков</p>
-                            <span class="referral-badge">Рефералка</span>
+                            <p>Бойцовский клуб хомяков - покажи кто сильнее</p>
+                            <div class="game-meta">
+                                <span class="earn-badge">
+                                    <i class="fas fa-coins"></i>
+                                    До $8
+                                </span>
+                                <span class="players-count">
+                                    <i class="fas fa-users"></i>
+                                    28K
+                                </span>
+                            </div>
                         </div>
-                        <button class="play-button">Играть</button>
+                        <button class="play-button">
+                            <i class="fas fa-play"></i>
+                        </button>
                     </div>
 
                     <div class="game-card" data-bot="bitquest_bot">
+                        <div class="game-badge">Крипта</div>
                         <div class="game-image">
-                            <img src="images/bitquest.jpg" alt="BitQuest" class="game-img">
+                            <div class="game-placeholder">
+                                <i class="fab fa-bitcoin"></i>
+                            </div>
                         </div>
                         <div class="game-info">
                             <h3>BitQuest</h3>
-                            <p>Приключения в мире крипты</p>
-                            <span class="referral-badge">Рефералка</span>
+                            <p>Приключения в мире криптовалют и блокчейна</p>
+                            <div class="game-meta">
+                                <span class="earn-badge">
+                                    <i class="fas fa-coins"></i>
+                                    До $20
+                                </span>
+                                <span class="players-count">
+                                    <i class="fas fa-users"></i>
+                                    51K
+                                </span>
+                            </div>
                         </div>
-                        <button class="play-button">Играть</button>
+                        <button class="play-button">
+                            <i class="fas fa-play"></i>
+                        </button>
                     </div>
                 </div>
             </section>
 
-            <!-- Earn Section -->
-            <section id="earn-section" class="content-section">
+            <!-- Exchanges Section -->
+            <section id="exchanges-section" class="content-section">
                 <div class="section-header">
-                    <h2>Зарабатывай</h2>
-                    <span class="section-subtitle">Игры и торговые платформы</span>
+                    <h2>Торговые платформы</h2>
+                    <span class="section-subtitle">Зарабатывайте на рефералах с ведущих бирж</span>
                 </div>
                 
-                <div class="earn-categories">
-                    <div class="category-chip active" data-category="games">Игры</div>
-                    <div class="category-chip" data-category="exchanges">Биржи</div>
-                    <div class="category-chip" data-category="all">Все</div>
+                <div class="stats-cards">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-exchange-alt"></i>
+                        </div>
+                        <div class="stat-info">
+                            <div class="stat-value">8</div>
+                            <div class="stat-label">Партнерских бирж</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="stat-info">
+                            <div class="stat-value">40%</div>
+                            <div class="stat-label">Макс. комиссия</div>
+                        </div>
+                    </div>
                 </div>
                 
-                <div class="earn-content">
-                    <!-- Games for earning -->
-                    <div class="category-content active" data-category="games">
-                        <div class="games-grid">
-                            <div class="game-card" data-bot="hamsterdev_bot">
-                                <div class="game-image">
-                                    <img src="images/hamster-gamedev.jpg" alt="Hamster GameDev" class="game-img">
-                                </div>
-                                <div class="game-info">
-                                    <h3>Hamster GameDev</h3>
-                                    <p>Создай свою студию</p>
-                                    <span class="referral-badge">Рефералка</span>
-                                </div>
-                                <button class="play-button">Играть</button>
+                <div class="exchanges-grid">
+                    <div class="exchange-card" data-url="https://binance.com">
+                        <div class="exchange-header">
+                            <div class="exchange-logo binance">
+                                <i class="fas fa-chart-bar"></i>
                             </div>
-
-                            <div class="game-card" data-bot="hamsterking_bot">
-                                <div class="game-image">
-                                    <img src="images/hamster-king.jpg" alt="Hamster King" class="game-img">
-                                </div>
-                                <div class="game-info">
-                                    <h3>Hamster King</h3>
-                                    <p>Стань королем хомяков</p>
-                                    <span class="referral-badge">Рефералка</span>
-                                </div>
-                                <button class="play-button">Играть</button>
-                            </div>
-
-                            <div class="game-card" data-bot="hamsterfightclub_bot">
-                                <div class="game-image">
-                                    <img src="images/hamster-fight-club.jpg" alt="Hamster Fight Club" class="game-img">
-                                </div>
-                                <div class="game-info">
-                                    <h3>Hamster Fight Club</h3>
-                                    <p>Бойцовский клуб хомяков</p>
-                                    <span class="referral-badge">Рефералка</span>
-                                </div>
-                                <button class="play-button">Играть</button>
-                            </div>
-
-                            <div class="game-card" data-bot="bitquest_bot">
-                                <div class="game-image">
-                                    <img src="images/bitquest.jpg" alt="BitQuest" class="game-img">
-                                </div>
-                                <div class="game-info">
-                                    <h3>BitQuest</h3>
-                                    <p>Приключения в мире крипты</p>
-                                    <span class="referral-badge">Рефералка</span>
-                                </div>
-                                <button class="play-button">Играть</button>
+                            <div class="exchange-badge">До 40%</div>
+                        </div>
+                        <div class="exchange-info">
+                            <h3>Binance</h3>
+                            <p>Крупнейшая мировая биржа с тысячами торговых пар</p>
+                            <div class="exchange-meta">
+                                <span class="meta-item">
+                                    <i class="fas fa-user-friends"></i>
+                                    Рефералы
+                                </span>
+                                <span class="meta-item">
+                                    <i class="fas fa-star"></i>
+                                    4.9/5
+                                </span>
                             </div>
                         </div>
+                        <button class="exchange-button">
+                            <i class="fas fa-external-link-alt"></i>
+                        </button>
                     </div>
-                    
-                    <!-- Exchanges -->
-                    <div class="category-content" data-category="exchanges">
-                        <div class="exchanges-list">
-                            <div class="exchange-card" data-url="https://binance.com">
-                                <div class="exchange-logo binance">B</div>
-                                <div class="exchange-info">
-                                    <h3>Binance</h3>
-                                    <p>До 40% комиссии с рефералов</p>
-                                    <span class="referral-badge">Рефералка</span>
-                                </div>
-                                <div class="exchange-arrow">→</div>
-                            </div>
 
-                            <div class="exchange-card" data-url="https://bybit.com">
-                                <div class="exchange-logo bybit">B</div>
-                                <div class="exchange-info">
-                                    <h3>Bybit</h3>
-                                    <p>До 30% комиссии с рефералов</p>
-                                    <span class="referral-badge">Рефералка</span>
-                                </div>
-                                <div class="exchange-arrow">→</div>
+                    <div class="exchange-card" data-url="https://bybit.com">
+                        <div class="exchange-header">
+                            <div class="exchange-logo bybit">
+                                <i class="fas fa-rocket"></i>
                             </div>
-
-                            <div class="exchange-card" data-url="https://okx.com">
-                                <div class="exchange-logo okx">O</div>
-                                <div class="exchange-info">
-                                    <h3>OKX</h3>
-                                    <p>До 25% комиссии с рефералов</p>
-                                    <span class="referral-badge">Рефералка</span>
-                                </div>
-                                <div class="exchange-arrow">→</div>
-                            </div>
-
-                            <div class="exchange-card" data-url="https://kucoin.com">
-                                <div class="exchange-logo kucoin">K</div>
-                                <div class="exchange-info">
-                                    <h3>KuCoin</h3>
-                                    <p>До 20% комиссии с рефералов</p>
-                                    <span class="referral-badge">Рефералка</span>
-                                </div>
-                                <div class="exchange-arrow">→</div>
+                            <div class="exchange-badge">До 30%</div>
+                        </div>
+                        <div class="exchange-info">
+                            <h3>Bybit</h3>
+                            <p>Современная платформа для фьючерсной и маржинальной торговли</p>
+                            <div class="exchange-meta">
+                                <span class="meta-item">
+                                    <i class="fas fa-user-friends"></i>
+                                    Рефералы
+                                </span>
+                                <span class="meta-item">
+                                    <i class="fas fa-star"></i>
+                                    4.8/5
+                                </span>
                             </div>
                         </div>
+                        <button class="exchange-button">
+                            <i class="fas fa-external-link-alt"></i>
+                        </button>
                     </div>
-                    
-                    <!-- All items -->
-                    <div class="category-content" data-category="all">
-                        <div class="games-grid">
-                            <div class="game-card" data-bot="hamsterdev_bot">
-                                <div class="game-image">
-                                    <img src="images/hamster-gamedev.jpg" alt="Hamster GameDev" class="game-img">
-                                </div>
-                                <div class="game-info">
-                                    <h3>Hamster GameDev</h3>
-                                    <p>Создай свою студию</p>
-                                    <span class="referral-badge">Рефералка</span>
-                                </div>
-                                <button class="play-button">Играть</button>
-                            </div>
 
-                            <div class="game-card" data-bot="hamsterking_bot">
-                                <div class="game-image">
-                                    <img src="images/hamster-king.jpg" alt="Hamster King" class="game-img">
-                                </div>
-                                <div class="game-info">
-                                    <h3>Hamster King</h3>
-                                    <p>Стань королем хомяков</p>
-                                    <span class="referral-badge">Рефералка</span>
-                                </div>
-                                <button class="play-button">Играть</button>
+                    <div class="exchange-card" data-url="https://okx.com">
+                        <div class="exchange-header">
+                            <div class="exchange-logo okx">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <div class="exchange-badge">До 25%</div>
+                        </div>
+                        <div class="exchange-info">
+                            <h3>OKX</h3>
+                            <p>Безопасная платформа с продвинутыми торговыми инструментами</p>
+                            <div class="exchange-meta">
+                                <span class="meta-item">
+                                    <i class="fas fa-user-friends"></i>
+                                    Рефералы
+                                </span>
+                                <span class="meta-item">
+                                    <i class="fas fa-star"></i>
+                                    4.7/5
+                                </span>
                             </div>
                         </div>
-                        
-                        <div class="exchanges-list">
-                            <div class="exchange-card" data-url="https://binance.com">
-                                <div class="exchange-logo binance">B</div>
-                                <div class="exchange-info">
-                                    <h3>Binance</h3>
-                                    <p>До 40% комиссии с рефералов</p>
-                                    <span class="referral-badge">Рефералка</span>
-                                </div>
-                                <div class="exchange-arrow">→</div>
-                            </div>
+                        <button class="exchange-button">
+                            <i class="fas fa-external-link-alt"></i>
+                        </button>
+                    </div>
 
-                            <div class="exchange-card" data-url="https://bybit.com">
-                                <div class="exchange-logo bybit">B</div>
-                                <div class="exchange-info">
-                                    <h3>Bybit</h3>
-                                    <p>До 30% комиссии с рефералов</p>
-                                    <span class="referral-badge">Рефералка</span>
-                                </div>
-                                <div class="exchange-arrow">→</div>
+                    <div class="exchange-card" data-url="https://kucoin.com">
+                        <div class="exchange-header">
+                            <div class="exchange-logo kucoin">
+                                <i class="fas fa-gem"></i>
+                            </div>
+                            <div class="exchange-badge">До 20%</div>
+                        </div>
+                        <div class="exchange-info">
+                            <h3>KuCoin</h3>
+                            <p>Низкие комиссии и широкий выбор альткойнов</p>
+                            <div class="exchange-meta">
+                                <span class="meta-item">
+                                    <i class="fas fa-user-friends"></i>
+                                    Рефералы
+                                </span>
+                                <span class="meta-item">
+                                    <i class="fas fa-star"></i>
+                                    4.6/5
+                                </span>
                             </div>
                         </div>
+                        <button class="exchange-button">
+                            <i class="fas fa-external-link-alt"></i>
+                        </button>
                     </div>
                 </div>
             </section>
@@ -245,47 +300,91 @@
             <!-- Profile Section -->
             <section id="profile-section" class="content-section">
                 <div class="profile-header">
-                    <div class="profile-avatar">U</div>
+                    <div class="profile-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
                     <div class="profile-info">
-                        <h2>Пользователь</h2>
-                        <p>@gamesverse_user</p>
+                        <h2>Александр Петров</h2>
+                        <p>@alex_gamer</p>
                         <div class="user-tier">
-                            <span class="tier-badge">Новичок</span>
+                            <span class="tier-badge">
+                                <i class="fas fa-medal"></i>
+                                Gold Member
+                            </span>
                         </div>
                     </div>
                 </div>
 
                 <div class="referral-section">
-                    <h3>Реферальная программа</h3>
-                    <p>Приглашай друзей и получай бонусы</p>
+                    <div class="section-title">
+                        <h3>Реферальная программа</h3>
+                        <div class="info-icon">
+                            <i class="fas fa-info-circle"></i>
+                        </div>
+                    </div>
+                    <p class="referral-description">Приглашайте друзей и получайте до 40% от их заработка</p>
                     
                     <div class="referral-stats">
                         <div class="stat-item">
-                            <div class="stat-value">5</div>
+                            <div class="stat-value">12</div>
                             <div class="stat-label">Приглашено</div>
                         </div>
                         <div class="stat-item">
-                            <div class="stat-value">$25</div>
+                            <div class="stat-value">$156.80</div>
                             <div class="stat-label">Заработано</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">$24.50</div>
+                            <div class="stat-label">Доступно</div>
                         </div>
                     </div>
                     
-                    <button class="referral-button" id="copy-referral">
-                        <span class="action-icon">📋</span>
-                        <span>Скопировать реф. ссылку</span>
-                    </button>
+                    <div class="referral-code">
+                        <div class="code-label">Ваша реферальная ссылка:</div>
+                        <div class="code-value">https://t.me/gamesverse_bot?start=ref12345</div>
+                        <button class="copy-button" id="copy-referral">
+                            <i class="fas fa-copy"></i>
+                            Скопировать
+                        </button>
+                    </div>
                 </div>
 
                 <div class="profile-actions">
-                    <button class="action-button" id="share-button">
-                        <span class="action-icon">📤</span>
-                        <span>Поделиться приложением</span>
-                    </button>
+                    <div class="action-group">
+                        <h4>Настройки</h4>
+                        <button class="action-button" id="theme-button">
+                            <span class="action-icon">
+                                <i class="fas fa-moon"></i>
+                            </span>
+                            <span class="action-text">Темная тема</span>
+                            <span class="action-arrow">
+                                <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </button>
+                        
+                        <button class="action-button" id="notifications-button">
+                            <span class="action-icon">
+                                <i class="fas fa-bell"></i>
+                            </span>
+                            <span class="action-text">Уведомления</span>
+                            <span class="action-arrow">
+                                <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </button>
+                    </div>
                     
-                    <button class="action-button" id="theme-button">
-                        <span class="action-icon">🌙</span>
-                        <span>Сменить тему</span>
-                    </button>
+                    <div class="action-group">
+                        <h4>Поделиться</h4>
+                        <button class="action-button" id="share-button">
+                            <span class="action-icon">
+                                <i class="fas fa-share-alt"></i>
+                            </span>
+                            <span class="action-text">Поделиться приложением</span>
+                            <span class="action-arrow">
+                                <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </button>
+                    </div>
                 </div>
             </section>
         </main>
@@ -293,21 +392,32 @@
         <!-- Bottom Navigation -->
         <nav class="bottom-nav">
             <button class="nav-item active" data-section="games-section">
-                <span class="nav-icon">🎮</span>
+                <span class="nav-icon">
+                    <i class="fas fa-gamepad"></i>
+                </span>
                 <span class="nav-label">Игры</span>
             </button>
-            <button class="nav-item" data-section="earn-section">
-                <span class="nav-icon">💎</span>
-                <span class="nav-label">Заработок</span>
+            <button class="nav-item" data-section="exchanges-section">
+                <span class="nav-icon">
+                    <i class="fas fa-exchange-alt"></i>
+                </span>
+                <span class="nav-label">Биржи</span>
             </button>
             <button class="nav-item" data-section="profile-section">
-                <span class="nav-icon">👤</span>
+                <span class="nav-icon">
+                    <i class="fas fa-user"></i>
+                </span>
                 <span class="nav-label">Профиль</span>
             </button>
         </nav>
 
         <!-- Notification -->
-        <div id="notification" class="notification">Ссылка скопирована в буфер обмена!</div>
+        <div id="notification" class="notification">
+            <div class="notification-content">
+                <i class="fas fa-check-circle"></i>
+                <span class="notification-text">Ссылка скопирована в буфер обмена!</span>
+            </div>
+        </div>
     </div>
 
     <script src="script.js"></script>
