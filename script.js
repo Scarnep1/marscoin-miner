@@ -8,7 +8,12 @@ function initializeApp() {
     setupExchangeCards();
     setupThemeToggle();
     setupShareButton();
-    setupReferralSystem();
+    loadThemePreference();
+    
+    // Плавная загрузка контента
+    setTimeout(() => {
+        document.body.style.opacity = '1';
+    }, 100);
     
     // Telegram Web App integration
     if (window.Telegram && window.Telegram.WebApp) {
@@ -54,7 +59,7 @@ function setupGameCards() {
         card.addEventListener('click', function() {
             const botUsername = this.getAttribute('data-bot');
             if (botUsername) {
-                const telegramUrl = `https://t.me/${botUsername}?start=ref_gamesverse`;
+                const telegramUrl = `https://t.me/${botUsername}`;
                 
                 if (window.Telegram && window.Telegram.WebApp) {
                     window.Telegram.WebApp.openTelegramLink(telegramUrl);
@@ -71,7 +76,7 @@ function setupGameCards() {
                 e.stopPropagation(); // Prevent triggering the card click event twice
                 const botUsername = card.getAttribute('data-bot');
                 if (botUsername) {
-                    const telegramUrl = `https://t.me/${botUsername}?start=ref_gamesverse`;
+                    const telegramUrl = `https://t.me/${botUsername}`;
                     
                     if (window.Telegram && window.Telegram.WebApp) {
                         window.Telegram.WebApp.openTelegramLink(telegramUrl);
@@ -89,7 +94,7 @@ function setupExchangeCards() {
     
     exchangeCards.forEach(card => {
         card.addEventListener('click', function() {
-            const exchangeUrl = this.getAttribute('data-url') + '?ref=gamesverse';
+            const exchangeUrl = this.getAttribute('data-url');
             if (exchangeUrl) {
                 if (window.Telegram && window.Telegram.WebApp) {
                     window.Telegram.WebApp.openLink(exchangeUrl);
@@ -98,22 +103,6 @@ function setupExchangeCards() {
                 }
             }
         });
-        
-        // Also make the exchange button work
-        const exchangeButton = card.querySelector('.exchange-button');
-        if (exchangeButton) {
-            exchangeButton.addEventListener('click', function(e) {
-                e.stopPropagation(); // Prevent triggering the card click event twice
-                const exchangeUrl = card.getAttribute('data-url') + '?ref=gamesverse';
-                if (exchangeUrl) {
-                    if (window.Telegram && window.Telegram.WebApp) {
-                        window.Telegram.WebApp.openLink(exchangeUrl);
-                    } else {
-                        window.open(exchangeUrl, '_blank');
-                    }
-                }
-            });
-        }
     });
 }
 
@@ -124,19 +113,33 @@ function setupThemeToggle() {
     if (themeButton) {
         themeButton.addEventListener('click', function() {
             body.classList.toggle('dark-theme');
-            
-            // Update button text and icon
-            const themeIcon = this.querySelector('.action-icon i');
-            const themeText = this.querySelector('.action-text');
-            
-            if (body.classList.contains('dark-theme')) {
-                themeIcon.className = 'fas fa-sun';
-                themeText.textContent = 'Светлая тема';
-            } else {
-                themeIcon.className = 'fas fa-moon';
-                themeText.textContent = 'Темная тема';
-            }
+            localStorage.setItem('theme', body.classList.contains('dark-theme') ? 'dark' : 'light');
+            updateThemeButton();
         });
+    }
+}
+
+function loadThemePreference() {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+        document.body.classList.add('dark-theme');
+    }
+    updateThemeButton();
+}
+
+function updateThemeButton() {
+    const themeButton = document.getElementById('theme-button');
+    if (themeButton) {
+        const themeIcon = themeButton.querySelector('.action-icon');
+        const themeText = themeButton.querySelector('span:last-child');
+        
+        if (document.body.classList.contains('dark-theme')) {
+            themeIcon.textContent = '☀️';
+            themeText.textContent = 'Светлая тема';
+        } else {
+            themeIcon.textContent = '🌙';
+            themeText.textContent = 'Темная тема';
+        }
     }
 }
 
@@ -147,13 +150,12 @@ function setupShareButton() {
     if (shareButton) {
         shareButton.addEventListener('click', function() {
             const shareUrl = window.location.href;
-            const shareText = 'Открой для себя лучшие игры Telegram и торговые платформы с реферальной программой в одном приложении!';
             
             // Check if Web Share API is available
             if (navigator.share) {
                 navigator.share({
                     title: 'Games Verse',
-                    text: shareText,
+                    text: 'Открой для себя лучшие игры Telegram в одном приложении!',
                     url: shareUrl,
                 })
                 .then(() => console.log('Успешный шаринг'))
@@ -182,43 +184,13 @@ function setupShareButton() {
     }
 }
 
-function setupReferralSystem() {
-    const referralButton = document.getElementById('copy-referral');
-    const notification = document.getElementById('notification');
-    
-    if (referralButton) {
-        referralButton.addEventListener('click', function() {
-            const referralCode = 'ref_gamesverse_12345';
-            const referralUrl = `https://t.me/gamesverse_bot?start=${referralCode}`;
-            
-            navigator.clipboard.writeText(referralUrl).then(() => {
-                showNotification(notification, 'Реферальная ссылка скопирована!');
-            }).catch(() => {
-                // Fallback for older browsers
-                try {
-                    const textArea = document.createElement('textarea');
-                    textArea.value = referralUrl;
-                    document.body.appendChild(textArea);
-                    textArea.select();
-                    document.execCommand('copy');
-                    document.body.removeChild(textArea);
-                    showNotification(notification, 'Реферальная ссылка скопирована!');
-                } catch (err) {
-                    console.error('Copy failed:', err);
-                    showNotification(notification, 'Не удалось скопировать ссылку');
-                }
-            });
-        });
-    }
-}
-
 function showNotification(notification, message) {
     if (message) {
-        notification.querySelector('.notification-text').textContent = message;
+        notification.textContent = message;
     }
     
     notification.classList.add('show');
     setTimeout(() => {
         notification.classList.remove('show');
-    }, 3000);
+    }, 2000);
 }
