@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Games Verse</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -52,7 +52,7 @@
                 </div>
                 
                 <div class="games-grid">
-                    <div class="game-card" data-bot="hamsterdev_bot">
+                    <div class="game-card">
                         <div class="game-image">
                             <img src="images/hamster-gamedev.jpg" alt="Hamster GameDev" class="game-img">
                         </div>
@@ -60,10 +60,10 @@
                             <h3>Hamster GameDev</h3>
                             <p data-i18n="hamsterGameDevDesc">Создай свою студию</p>
                         </div>
-                        <button class="play-button" data-i18n="play">Играть</button>
+                        <button class="play-button" data-bot="hamsterdev_bot" data-i18n="play">Играть</button>
                     </div>
 
-                    <div class="game-card" data-bot="hamsterking_bot">
+                    <div class="game-card">
                         <div class="game-image">
                             <img src="images/hamster-king.jpg" alt="Hamster King" class="game-img">
                         </div>
@@ -71,10 +71,10 @@
                             <h3>Hamster King</h3>
                             <p data-i18n="hamsterKingDesc">Стань королем хомяков</p>
                         </div>
-                        <button class="play-button" data-i18n="play">Играть</button>
+                        <button class="play-button" data-bot="hamsterking_bot" data-i18n="play">Играть</button>
                     </div>
 
-                    <div class="game-card" data-bot="hamsterfightclub_bot">
+                    <div class="game-card">
                         <div class="game-image">
                             <img src="images/hamster-fightclub.jpg" alt="Hamster Fight Club" class="game-img">
                         </div>
@@ -82,10 +82,10 @@
                             <h3>Hamster Fight Club</h3>
                             <p data-i18n="hamsterFightClubDesc">Бойцовский клуб хомяков</p>
                         </div>
-                        <button class="play-button" data-i18n="play">Играть</button>
+                        <button class="play-button" data-bot="hamsterfightclub_bot" data-i18n="play">Играть</button>
                     </div>
 
-                    <div class="game-card" data-bot="bitquest_bot">
+                    <div class="game-card">
                         <div class="game-image">
                             <img src="images/bitquest.jpg" alt="BitQuest" class="game-img">
                         </div>
@@ -93,7 +93,7 @@
                             <h3>BitQuest</h3>
                             <p data-i18n="bitquestDesc">Приключения в мире крипты</p>
                         </div>
-                        <button class="play-button" data-i18n="play">Играть</button>
+                        <button class="play-button" data-bot="bitquest_bot" data-i18n="play">Играть</button>
                     </div>
                 </div>
             </section>
@@ -106,7 +106,7 @@
                 </div>
                 
                 <div class="exchanges-list">
-                    <div class="exchange-card" data-url="https://www.bybit.com">
+                    <div class="exchange-card">
                         <div class="exchange-logo">
                             <img src="images/bybit.jpg" alt="Bybit" class="exchange-img">
                         </div>
@@ -114,10 +114,10 @@
                             <h3>Bybit</h3>
                             <p data-i18n="bybitDesc">Продвинутая торговая платформа</p>
                         </div>
-                        <div class="exchange-arrow">→</div>
+                        <button class="exchange-button" data-url="https://www.bybit.com" data-i18n="go">Перейти</button>
                     </div>
 
-                    <div class="exchange-card" data-url="https://www.bingx.com">
+                    <div class="exchange-card">
                         <div class="exchange-logo">
                             <img src="images/bingx.jpg" alt="BingX" class="exchange-img">
                         </div>
@@ -125,10 +125,10 @@
                             <h3>BingX</h3>
                             <p data-i18n="bingxDesc">Социальная торговля и копирование</p>
                         </div>
-                        <div class="exchange-arrow">→</div>
+                        <button class="exchange-button" data-url="https://www.bingx.com" data-i18n="go">Перейти</button>
                     </div>
 
-                    <div class="exchange-card" data-url="https://www.bitget.com">
+                    <div class="exchange-card">
                         <div class="exchange-logo">
                             <img src="images/bitget.jpg" alt="Bitget" class="exchange-img">
                         </div>
@@ -136,10 +136,10 @@
                             <h3>Bitget</h3>
                             <p data-i18n="bitgetDesc">Инновационная торговая платформа</p>
                         </div>
-                        <div class="exchange-arrow">→</div>
+                        <button class="exchange-button" data-url="https://www.bitget.com" data-i18n="go">Перейти</button>
                     </div>
 
-                    <div class="exchange-card" data-url="https://www.mexc.com">
+                    <div class="exchange-card">
                         <div class="exchange-logo">
                             <img src="images/mexc.jpg" alt="MEXC" class="exchange-img">
                         </div>
@@ -147,7 +147,7 @@
                             <h3>MEXC</h3>
                             <p data-i18n="mexcDesc">Глобальная биржа с низкими комиссиями</p>
                         </div>
-                        <div class="exchange-arrow">→</div>
+                        <button class="exchange-button" data-url="https://www.mexc.com" data-i18n="go">Перейти</button>
                     </div>
                 </div>
             </section>
