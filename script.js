@@ -64,6 +64,13 @@ const translations = {
     }
 };
 
+// Vibration function
+function vibrate(pattern) {
+    if (navigator.vibrate) {
+        navigator.vibrate(pattern);
+    }
+}
+
 function initializeApp() {
     setupNavigation();
     setupGameButtons();
@@ -101,15 +108,30 @@ function setupNavigation() {
         item.addEventListener('click', function() {
             const targetSection = this.getAttribute('data-section');
             
+            // Вибрация при нажатии
+            vibrate([30]);
+            
             // Update active nav item
-            navItems.forEach(nav => nav.classList.remove('active'));
+            navItems.forEach(nav => {
+                nav.classList.remove('active');
+                // Сбрасываем анимацию
+                nav.style.animation = 'none';
+            });
+            
             this.classList.add('active');
+            
+            // Добавляем анимацию для активного элемента
+            setTimeout(() => {
+                this.style.animation = 'navBounce 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+            }, 10);
             
             // Show target section
             sections.forEach(section => {
                 section.classList.remove('active');
                 if (section.id === targetSection) {
-                    section.classList.add('active');
+                    setTimeout(() => {
+                        section.classList.add('active');
+                    }, 150);
                 }
             });
         });
@@ -122,6 +144,9 @@ function setupGameButtons() {
     playButtons.forEach(button => {
         button.addEventListener('click', function(e) {
             e.stopPropagation();
+            // Вибрация при нажатии
+            vibrate([20]);
+            
             const botUsername = this.getAttribute('data-bot');
             if (botUsername) {
                 const telegramUrl = `https://t.me/${botUsername}`;
@@ -142,6 +167,9 @@ function setupExchangeButtons() {
     exchangeButtons.forEach(button => {
         button.addEventListener('click', function(e) {
             e.stopPropagation();
+            // Вибрация при нажатии
+            vibrate([20]);
+            
             const exchangeUrl = this.getAttribute('data-url');
             if (exchangeUrl) {
                 if (window.Telegram && window.Telegram.WebApp) {
@@ -161,12 +189,16 @@ function setupSettingsPanel() {
     
     if (settingsButton) {
         settingsButton.addEventListener('click', function() {
+            // Вибрация при нажатии
+            vibrate([15]);
             settingsPanel.classList.add('active');
         });
     }
     
     if (closeSettings) {
         closeSettings.addEventListener('click', function() {
+            // Вибрация при нажатии
+            vibrate([15]);
             settingsPanel.classList.remove('active');
         });
     }
@@ -184,6 +216,9 @@ function setupSettingsPanel() {
     const themeOptions = document.querySelectorAll('.theme-option');
     themeOptions.forEach(option => {
         option.addEventListener('click', function() {
+            // Вибрация при нажатии
+            vibrate([10]);
+            
             const theme = this.getAttribute('data-theme');
             
             // Update active state
@@ -206,6 +241,9 @@ function setupSettingsPanel() {
     const languageOptions = document.querySelectorAll('.language-option');
     languageOptions.forEach(option => {
         option.addEventListener('click', function() {
+            // Вибрация при нажатии
+            vibrate([10]);
+            
             const lang = this.getAttribute('data-lang');
             
             // Update active state
@@ -311,6 +349,9 @@ function setupShareButton() {
     
     if (shareButton) {
         shareButton.addEventListener('click', function() {
+            // Вибрация при нажатии
+            vibrate([25]);
+            
             const shareUrl = window.location.href;
             
             // Check if Web Share API is available
