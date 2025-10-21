@@ -1,17 +1,17 @@
 /* Улучшенная цветовая палитра для темной темы */
 :root {
   --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  --primary-dark: #4a5568;
   --surface-light: #ffffff;
   --surface-dark: #1a1a1a;
   --card-light: #f8f9fa;
-  --card-dark: #242424;
+  --card-dark: #2d3748;
   --text-primary-light: #1a1a1a;
   --text-primary-dark: #f0f0f0;
   --text-secondary-light: #666;
   --text-secondary-dark: #a0a0a0;
   --border-light: #e9ecef;
-  --border-dark: #333333;
+  --border-dark: #4a5568;
 }
 
 * {
@@ -179,6 +179,10 @@ body.dark-theme {
     box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
 }
 
+.dark-theme .theme-option.active, .dark-theme .language-option.active {
+    background: var(--primary-dark);
+}
+
 .close-settings {
     width: 100%;
     padding: 12px;
@@ -193,9 +197,17 @@ body.dark-theme {
     font-size: 14px;
 }
 
+.dark-theme .close-settings {
+    background: var(--primary-dark);
+}
+
 .close-settings:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.dark-theme .close-settings:hover {
+    box-shadow: 0 4px 12px rgba(74, 85, 104, 0.4);
 }
 
 /* Main Content */
@@ -280,7 +292,7 @@ body.dark-theme {
 }
 
 .dark-theme .game-card:hover {
-    background: #2a2a2a;
+    background: #374151;
     box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
 }
 
@@ -333,6 +345,11 @@ body.dark-theme {
     box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
 }
 
+.dark-theme .play-button {
+    background: var(--primary-dark);
+    box-shadow: 0 4px 15px rgba(74, 85, 104, 0.3);
+}
+
 .play-button::after {
     content: '';
     position: absolute;
@@ -355,6 +372,10 @@ body.dark-theme {
 .play-button:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+}
+
+.dark-theme .play-button:hover {
+    box-shadow: 0 6px 20px rgba(74, 85, 104, 0.4);
 }
 
 /* Exchanges List */
@@ -405,29 +426,31 @@ body.dark-theme {
 }
 
 .dark-theme .exchange-card:hover {
-    background: #2a2a2a;
+    background: #374151;
     box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
 }
 
 .exchange-logo {
     width: 50px;
     height: 50px;
-    background: var(--secondary-gradient);
     border-radius: 14px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-weight: 700;
-    color: white;
-    font-size: 18px;
-    box-shadow: 0 4px 12px rgba(245, 87, 108, 0.3);
     overflow: hidden;
+    background: #f8f9fa;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.dark-theme .exchange-logo {
+    background: #4a5568;
 }
 
 .exchange-img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
+    padding: 4px;
 }
 
 .exchange-info {
@@ -489,6 +512,11 @@ body.dark-theme {
     position: relative;
 }
 
+.dark-theme .profile-avatar {
+    background: var(--primary-dark);
+    box-shadow: 0 8px 20px rgba(74, 85, 104, 0.3);
+}
+
 #avatar-img {
     width: 100%;
     height: 100%;
@@ -523,7 +551,7 @@ body.dark-theme {
     gap: 12px;
     width: 100%;
     padding: 18px;
-    background: var(--secondary-gradient);
+    background: var(--primary-gradient);
     color: white;
     border: none;
     border-radius: 20px;
@@ -531,12 +559,21 @@ body.dark-theme {
     transition: all 0.3s ease;
     font-size: 16px;
     font-weight: 600;
-    box-shadow: 0 4px 15px rgba(245, 87, 108, 0.3);
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.dark-theme .share-friends-button {
+    background: var(--primary-dark);
+    box-shadow: 0 4px 15px rgba(74, 85, 104, 0.3);
 }
 
 .share-friends-button:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(245, 87, 108, 0.4);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+}
+
+.dark-theme .share-friends-button:hover {
+    box-shadow: 0 6px 20px rgba(74, 85, 104, 0.4);
 }
 
 /* Bottom Navigation */
@@ -582,7 +619,7 @@ body.dark-theme {
 }
 
 .dark-theme .nav-item.active {
-    background: #2a2a2a;
+    background: #374151;
 }
 
 .nav-icon {
