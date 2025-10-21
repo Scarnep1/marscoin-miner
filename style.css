@@ -22,6 +22,12 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
 }
 
 body {
@@ -33,6 +39,8 @@ body {
   opacity: 0;
   animation: fadeIn 0.5s ease forwards;
   -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: 100%;
+  touch-action: manipulation;
 }
 
 body.dark-theme {
@@ -47,6 +55,7 @@ body.dark-theme {
   min-height: 100vh;
   position: relative;
   padding-bottom: 80px;
+  overflow-x: hidden;
 }
 
 .dark-theme .app-container {
@@ -269,23 +278,8 @@ body.dark-theme {
   position: relative;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   border: 1px solid var(--border-light);
-  cursor: pointer;
+  cursor: default;
   overflow: hidden;
-}
-
-.game-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-  transition: left 0.6s;
-}
-
-.game-card:hover::before {
-  left: 100%;
 }
 
 .dark-theme .game-card {
@@ -351,6 +345,7 @@ body.dark-theme {
   position: relative;
   overflow: hidden;
   box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+  white-space: nowrap;
 }
 
 .dark-theme .play-button {
@@ -402,24 +397,9 @@ body.dark-theme {
   gap: 16px;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   border: 1px solid var(--border-light);
-  cursor: pointer;
+  cursor: default;
   position: relative;
   overflow: hidden;
-}
-
-.exchange-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-  transition: left 0.6s;
-}
-
-.exchange-card:hover::before {
-  left: 100%;
 }
 
 .dark-theme .exchange-card {
@@ -439,15 +419,16 @@ body.dark-theme {
 }
 
 .exchange-logo {
-  width: 50px;
-  height: 50px;
-  border-radius: 14px;
+  width: 60px;
+  height: 60px;
+  border-radius: 16px;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
   background: var(--card-light);
   box-shadow: var(--shadow-light);
+  flex-shrink: 0;
 }
 
 .dark-theme .exchange-logo {
@@ -457,8 +438,7 @@ body.dark-theme {
 .exchange-img {
   width: 100%;
   height: 100%;
-  object-fit: contain;
-  padding: 4px;
+  object-fit: cover;
 }
 
 .exchange-info {
@@ -481,19 +461,32 @@ body.dark-theme {
   color: var(--text-secondary-dark);
 }
 
-.exchange-arrow {
-  margin-left: auto;
-  font-size: 20px;
-  color: var(--text-secondary-light);
-  transition: transform 0.3s ease;
+.exchange-button {
+  background: var(--primary-gradient);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 14px;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+  white-space: nowrap;
 }
 
-.exchange-card:hover .exchange-arrow {
-  transform: translateX(4px);
+.dark-theme .exchange-button {
+  background: var(--primary-dark);
+  box-shadow: 0 4px 15px rgba(74, 85, 104, 0.3);
 }
 
-.dark-theme .exchange-arrow {
-  color: var(--text-secondary-dark);
+.exchange-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+}
+
+.dark-theme .exchange-button:hover {
+  box-shadow: 0 6px 20px rgba(74, 85, 104, 0.4);
 }
 
 /* Profile Section */
