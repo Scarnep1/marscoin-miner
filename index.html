@@ -12,28 +12,39 @@
         <!-- Header -->
         <header class="header">
             <div class="header-content">
-                <h1 class="app-title">Games Verse</h1>
-                <div class="header-stats">
-                    <span class="points-badge" id="user-points">0 очков</span>
+                <h1 class="app-title" data-i18n="appTitle">Games Verse</h1>
+                <div class="header-actions">
+                    <button class="points-display" id="points-display">
+                        <span class="points-icon">🪙</span>
+                        <span id="points-count">0</span>
+                    </button>
+                    <button class="settings-button" id="settings-button">⚙️</button>
                 </div>
-                <button class="settings-button" id="settings-button">⚙️</button>
             </div>
         </header>
 
         <!-- Settings Panel -->
         <div class="settings-panel" id="settings-panel">
             <div class="settings-content">
-                <h3 class="settings-title">Настройки</h3>
+                <h3 class="settings-title" data-i18n="settings">Настройки</h3>
                 
                 <div class="setting-item">
-                    <span class="setting-label">Тема</span>
-                    <div class="theme-switcher">
-                        <button class="theme-option active" data-theme="light">Светлая</button>
-                        <button class="theme-option" data-theme="dark">Темная</button>
+                    <span class="setting-label" data-i18n="language">Язык</span>
+                    <div class="language-switcher">
+                        <button class="language-option active" data-lang="ru" data-i18n="russian">Русский</button>
+                        <button class="language-option" data-lang="en" data-i18n="english">English</button>
                     </div>
                 </div>
                 
-                <button class="close-settings" id="close-settings">Готово</button>
+                <div class="setting-item">
+                    <span class="setting-label" data-i18n="notifications">Уведомления</span>
+                    <div class="toggle-switch">
+                        <input type="checkbox" id="notifications-toggle" checked>
+                        <label for="notifications-toggle"></label>
+                    </div>
+                </div>
+                
+                <button class="close-settings" id="close-settings" data-i18n="done">Готово</button>
             </div>
         </div>
 
@@ -42,148 +53,68 @@
             <!-- Games Section -->
             <section id="games-section" class="content-section active">
                 <div class="section-header">
-                    <h2>Игры</h2>
-                    <span class="section-subtitle">Лучшие игры Telegram</span>
+                    <h2 data-i18n="games">Игры</h2>
+                    <span class="section-subtitle" data-i18n="bestGames">Лучшие игры Telegram</span>
                 </div>
                 
-                <!-- Рекомендованные игры -->
-                <div class="recommended-section">
-                    <h3 class="recommended-title">Рекомендуем для вас</h3>
-                    <div class="games-grid" id="recommended-games">
-                        <!-- Рекомендации загружаются через JS -->
+                <!-- Achievements Carousel -->
+                <div class="achievements-carousel">
+                    <div class="achievement-card">
+                        <span class="achievement-icon">🎮</span>
+                        <div class="achievement-info">
+                            <strong data-i18n="firstGame">Первая игра</strong>
+                            <span data-i18n="playAnyGame">Сыграйте в любую игру</span>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 0%"></div>
+                            </div>
+                        </div>
+                        <div class="reward">+10</div>
+                    </div>
+                    
+                    <div class="achievement-card">
+                        <span class="achievement-icon">🏆</span>
+                        <div class="achievement-info">
+                            <strong data-i18n="gameCollector">Коллекционер</strong>
+                            <span data-i18n="play5Games">Сыграйте в 5 игр</span>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 0%"></div>
+                            </div>
+                        </div>
+                        <div class="reward">+50</div>
                     </div>
                 </div>
-
-                <!-- Все игры -->
-                <div class="all-games-section">
-                    <h3 class="section-subtitle">Все игры</h3>
-                    <div class="games-grid" id="all-games">
-                        <div class="game-card">
-                            <div class="game-image">
-                                <img src="images/hamster-gamedev.jpg" alt="Hamster GameDev" class="game-img">
-                            </div>
-                            <div class="game-info">
-                                <h3>Hamster GameDev</h3>
-                                <p>Создай свою студию</p>
-                                <div class="game-stats">
-                                    <span class="stat">★ 4.8</span>
-                                    <span class="stat">1M+ игроков</span>
-                                </div>
-                            </div>
-                            <button class="play-button" data-bot="hamsterdev_bot" data-game="Hamster GameDev">Играть</button>
-                        </div>
-
-                        <div class="game-card">
-                            <div class="game-image">
-                                <img src="images/hamster-king.jpg" alt="Hamster King" class="game-img">
-                            </div>
-                            <div class="game-info">
-                                <h3>Hamster King</h3>
-                                <p>Стань королем хомяков</p>
-                                <div class="game-stats">
-                                    <span class="stat">★ 4.6</span>
-                                    <span class="stat">800K+ игроков</span>
-                                </div>
-                            </div>
-                            <button class="play-button" data-bot="hamsterking_bot" data-game="Hamster King">Играть</button>
-                        </div>
-
-                        <div class="game-card">
-                            <div class="game-image">
-                                <img src="images/hamster-fightclub.jpg" alt="Hamster Fight Club" class="game-img">
-                            </div>
-                            <div class="game-info">
-                                <h3>Hamster Fight Club</h3>
-                                <p>Бойцовский клуб хомяков</p>
-                                <div class="game-stats">
-                                    <span class="stat">★ 4.7</span>
-                                    <span class="stat">600K+ игроков</span>
-                                </div>
-                            </div>
-                            <button class="play-button" data-bot="hamsterfightclub_bot" data-game="Hamster Fight Club">Играть</button>
-                        </div>
-
-                        <div class="game-card">
-                            <div class="game-image">
-                                <img src="images/bitquest.jpg" alt="BitQuest" class="game-img">
-                            </div>
-                            <div class="game-info">
-                                <h3>BitQuest</h3>
-                                <p>Приключения в мире крипты</p>
-                                <div class="game-stats">
-                                    <span class="stat">★ 4.9</span>
-                                    <span class="stat">1.2M+ игроков</span>
-                                </div>
-                            </div>
-                            <button class="play-button" data-bot="bitquest_bot" data-game="BitQuest">Играть</button>
-                        </div>
-                    </div>
+                
+                <div class="games-grid" id="games-grid">
+                    <!-- Games will be loaded dynamically -->
                 </div>
             </section>
 
             <!-- Exchanges Section -->
             <section id="exchanges-section" class="content-section">
                 <div class="section-header">
-                    <h2>Крипто-биржи</h2>
-                    <span class="section-subtitle">Торгуйте криптовалютами безопасно</span>
+                    <h2 data-i18n="exchanges">Крипто-биржи</h2>
+                    <span class="section-subtitle" data-i18n="exchangesDesc">Торгуйте криптовалютами безопасно</span>
                 </div>
                 
-                <div class="exchanges-list">
-                    <div class="exchange-card">
-                        <div class="exchange-logo">
-                            <img src="images/bybit.jpg" alt="Bybit" class="exchange-img">
-                        </div>
-                        <div class="exchange-info">
-                            <h3>Bybit</h3>
-                            <p>Продвинутая торговая платформа</p>
-                            <div class="exchange-bonus">
-                                <span class="bonus-badge">+10$ за регистрацию</span>
-                            </div>
-                        </div>
-                        <button class="exchange-button" data-url="https://www.bybit.com/register?ref=YOUR_REF_CODE" data-exchange="Bybit">Перейти</button>
-                    </div>
+                <div class="exchanges-list" id="exchanges-list">
+                    <!-- Exchanges will be loaded dynamically -->
+                </div>
+            </section>
 
-                    <div class="exchange-card">
-                        <div class="exchange-logo">
-                            <img src="images/bingx.jpg" alt="BingX" class="exchange-img">
-                        </div>
-                        <div class="exchange-info">
-                            <h3>BingX</h3>
-                            <p>Социальная торговля и копирование</p>
-                            <div class="exchange-bonus">
-                                <span class="bonus-badge">+5$ за регистрацию</span>
-                            </div>
-                        </div>
-                        <button class="exchange-button" data-url="https://www.bingx.com/register?ref=YOUR_REF_CODE" data-exchange="BingX">Перейти</button>
-                    </div>
-
-                    <div class="exchange-card">
-                        <div class="exchange-logo">
-                            <img src="images/bitget.jpg" alt="Bitget" class="exchange-img">
-                        </div>
-                        <div class="exchange-info">
-                            <h3>Bitget</h3>
-                            <p>Инновационная торговая платформа</p>
-                            <div class="exchange-bonus">
-                                <span class="bonus-badge">+20$ за регистрацию</span>
-                            </div>
-                        </div>
-                        <button class="exchange-button" data-url="https://www.bitget.com/register?ref=YOUR_REF_CODE" data-exchange="Bitget">Перейти</button>
-                    </div>
-
-                    <div class="exchange-card">
-                        <div class="exchange-logo">
-                            <img src="images/mexc.jpg" alt="MEXC" class="exchange-img">
-                        </div>
-                        <div class="exchange-info">
-                            <h3>MEXC</h3>
-                            <p>Глобальная биржа с низкими комиссиями</p>
-                            <div class="exchange-bonus">
-                                <span class="bonus-badge">+1000 MX токенов</span>
-                            </div>
-                        </div>
-                        <button class="exchange-button" data-url="https://www.mexc.com/register?ref=YOUR_REF_CODE" data-exchange="MEXC">Перейти</button>
-                    </div>
+            <!-- Leaderboard Section -->
+            <section id="leaderboard-section" class="content-section">
+                <div class="section-header">
+                    <h2 data-i18n="leaderboard">Топ игроков</h2>
+                    <span class="section-subtitle" data-i18n="weeklyRanking">Еженедельный рейтинг</span>
+                </div>
+                
+                <div class="leaderboard-tabs">
+                    <button class="tab-button active" data-tab="weekly" data-i18n="weekly">За неделю</button>
+                    <button class="tab-button" data-tab="alltime" data-i18n="allTime">За все время</button>
+                </div>
+                
+                <div class="leaderboard-list" id="leaderboard-list">
+                    <!-- Leaderboard will be loaded dynamically -->
                 </div>
             </section>
 
@@ -195,81 +126,81 @@
                         <span id="avatar-fallback">U</span>
                     </div>
                     <div class="profile-info">
-                        <h2 id="user-name">Пользователь</h2>
+                        <h2 id="user-name" data-i18n="user">Пользователь</h2>
                         <p id="user-username">@username</p>
                         <div class="level-badge">
-                            <span class="level-text">Уровень 1</span>
-                            <div class="level-progress">
-                                <div class="level-progress-bar" id="level-progress"></div>
-                            </div>
+                            <span data-i18n="level">Уровень</span>
+                            <span id="user-level">1</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- Статистика -->
-                <div class="stats-section">
-                    <div class="stat-item">
-                        <span class="stat-number" id="games-played">0</span>
-                        <span class="stat-label">Игр сыграно</span>
+                <!-- Daily Bonus -->
+                <div class="daily-bonus">
+                    <h3 data-i18n="dailyBonus">Ежедневный бонус</h3>
+                    <div class="bonus-calendar">
+                        <div class="bonus-day" data-day="1">
+                            <span class="day-number">1</span>
+                            <span class="day-reward">+10</span>
+                        </div>
+                        <div class="bonus-day" data-day="2">
+                            <span class="day-number">2</span>
+                            <span class="day-reward">+20</span>
+                        </div>
+                        <div class="bonus-day" data-day="3">
+                            <span class="day-number">3</span>
+                            <span class="day-reward">+30</span>
+                        </div>
+                        <div class="bonus-day" data-day="4">
+                            <span class="day-number">4</span>
+                            <span class="day-reward">+40</span>
+                        </div>
+                        <div class="bonus-day" data-day="5">
+                            <span class="day-number">5</span>
+                            <span class="day-reward">+50</span>
+                        </div>
                     </div>
-                    <div class="stat-item">
-                        <span class="stat-number" id="friends-invited">0</span>
-                        <span class="stat-label">Друзей</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-number" id="points-earned">0</span>
-                        <span class="stat-label">Очков</span>
-                    </div>
+                    <button class="claim-bonus-button" id="claim-bonus" data-i18n="claimBonus">Получить бонус</button>
                 </div>
 
-                <!-- Достижения -->
-                <div class="achievements-section">
-                    <h3>Достижения</h3>
-                    <div class="achievements-grid">
-                        <div class="achievement" data-achievement="first_play">
-                            <span class="achievement-icon">🎮</span>
-                            <span class="achievement-text">Первая игра</span>
-                            <span class="achievement-points">+10</span>
-                        </div>
-                        <div class="achievement" data-achievement="invite_3">
-                            <span class="achievement-icon">👥</span>
-                            <span class="achievement-text">Пригласи 3 друзей</span>
-                            <span class="achievement-points">+50</span>
-                        </div>
-                        <div class="achievement" data-achievement="play_5_games">
-                            <span class="achievement-icon">⭐</span>
-                            <span class="achievement-text">5 разных игр</span>
-                            <span class="achievement-points">+30</span>
-                        </div>
-                        <div class="achievement" data-achievement="exchange_visit">
-                            <span class="achievement-icon">💼</span>
-                            <span class="achievement-text">Посети биржу</span>
-                            <span class="achievement-points">+25</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Реферальная система -->
+                <!-- Referral System -->
                 <div class="referral-section">
-                    <h3>Пригласи друзей</h3>
+                    <h3 data-i18n="referralTitle">Пригласи друзей</h3>
+                    <div class="referral-stats">
+                        <div class="stat">
+                            <span class="stat-number" id="invited-count">0</span>
+                            <span data-i18n="invitedFriends">Приглашено друзей</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number" id="referral-earnings">0</span>
+                            <span data-i18n="referralEarnings">Заработано баллов</span>
+                        </div>
+                    </div>
                     <div class="referral-link">
                         <input type="text" id="referral-link-input" readonly>
-                        <button class="copy-referral" onclick="copyReferralLink()">Копировать</button>
+                        <button id="copy-referral-link" data-i18n="copy">Копировать</button>
                     </div>
-                    <p class="referral-description">Получи 100 очков за каждого друга!</p>
+                </div>
+
+                <!-- Share Buttons -->
+                <div class="profile-actions">
+                    <button class="share-friends-button" id="share-friends-button">
+                        <span class="action-icon">👥</span>
+                        <span data-i18n="shareWithFriends">Поделиться с друзьями</span>
+                    </button>
                     
-                    <div class="share-options">
-                        <button class="share-option" data-platform="telegram">
-                            <span class="share-icon">📱</span>
-                            Telegram
+                    <div class="share-platforms" id="share-platforms">
+                        <button class="platform-button" data-platform="telegram">
+                            <span class="platform-icon">📱</span>
+                            <span>Telegram</span>
                         </button>
-                        <button class="share-option" data-platform="whatsapp">
-                            <span class="share-icon">💬</span>
-                            WhatsApp
+                        <button class="platform-button" data-platform="whatsapp">
+                            <span class="platform-icon">💬</span>
+                            <span>WhatsApp</span>
                         </button>
-                        <button class="share-option" data-platform="copy">
-                            <span class="share-icon">📋</span>
-                            Копировать
+                        <button class="platform-button" data-platform="copy">
+                            <span class="platform-icon">📋</span>
+                            <span data-i18n="copyLink">Скопировать</span>
                         </button>
                     </div>
                 </div>
@@ -280,20 +211,24 @@
         <nav class="bottom-nav">
             <button class="nav-item active" data-section="games-section">
                 <span class="nav-icon">🎮</span>
-                <span class="nav-label">Игры</span>
+                <span class="nav-label" data-i18n="games">Игры</span>
             </button>
             <button class="nav-item" data-section="exchanges-section">
                 <span class="nav-icon">📊</span>
-                <span class="nav-label">Биржи</span>
+                <span class="nav-label" data-i18n="exchanges">Биржи</span>
+            </button>
+            <button class="nav-item" data-section="leaderboard-section">
+                <span class="nav-icon">🏆</span>
+                <span class="nav-label" data-i18n="leaderboard">Топ</span>
             </button>
             <button class="nav-item" data-section="profile-section">
                 <span class="nav-icon">👤</span>
-                <span class="nav-label">Профиль</span>
+                <span class="nav-label" data-i18n="profile">Профиль</span>
             </button>
         </nav>
 
         <!-- Notification -->
-        <div id="notification" class="notification">Ссылка скопирована в буфер обмена!</div>
+        <div id="notification" class="notification" data-i18n="linkCopied">Ссылка скопирована в буфер обмена!</div>
     </div>
 
     <script src="script.js"></script>
