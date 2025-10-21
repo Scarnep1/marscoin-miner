@@ -64,13 +64,6 @@ const translations = {
     }
 };
 
-// Enhanced vibration function with different patterns
-function vibrate(pattern) {
-    if (navigator.vibrate) {
-        navigator.vibrate(pattern);
-    }
-}
-
 function initializeApp() {
     setupNavigation();
     setupGameButtons();
@@ -108,37 +101,15 @@ function setupNavigation() {
         item.addEventListener('click', function() {
             const targetSection = this.getAttribute('data-section');
             
-            // Premium vibration feedback
-            vibrate([15, 10, 15]);
-            
-            // Reset all nav items
-            navItems.forEach(nav => {
-                nav.classList.remove('active');
-                // Reset animations
-                nav.style.animation = 'none';
-                const icon = nav.querySelector('.nav-icon');
-                if (icon) icon.style.animation = 'none';
-            });
-            
-            // Activate current item
+            // Update active nav item
+            navItems.forEach(nav => nav.classList.remove('active'));
             this.classList.add('active');
             
-            // Add premium animations
-            setTimeout(() => {
-                this.style.animation = 'premiumBounce 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards';
-                const icon = this.querySelector('.nav-icon');
-                if (icon) {
-                    icon.style.animation = 'iconPulse 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards';
-                }
-            }, 10);
-            
-            // Show target section with smooth transition
+            // Show target section
             sections.forEach(section => {
                 section.classList.remove('active');
                 if (section.id === targetSection) {
-                    setTimeout(() => {
-                        section.classList.add('active');
-                    }, 200);
+                    section.classList.add('active');
                 }
             });
         });
@@ -151,9 +122,6 @@ function setupGameButtons() {
     playButtons.forEach(button => {
         button.addEventListener('click', function(e) {
             e.stopPropagation();
-            // Premium vibration
-            vibrate([20, 15]);
-            
             const botUsername = this.getAttribute('data-bot');
             if (botUsername) {
                 const telegramUrl = `https://t.me/${botUsername}`;
@@ -174,9 +142,6 @@ function setupExchangeButtons() {
     exchangeButtons.forEach(button => {
         button.addEventListener('click', function(e) {
             e.stopPropagation();
-            // Premium vibration
-            vibrate([20, 15]);
-            
             const exchangeUrl = this.getAttribute('data-url');
             if (exchangeUrl) {
                 if (window.Telegram && window.Telegram.WebApp) {
@@ -196,16 +161,12 @@ function setupSettingsPanel() {
     
     if (settingsButton) {
         settingsButton.addEventListener('click', function() {
-            // Premium vibration
-            vibrate([10, 5]);
             settingsPanel.classList.add('active');
         });
     }
     
     if (closeSettings) {
         closeSettings.addEventListener('click', function() {
-            // Premium vibration
-            vibrate([10, 5]);
             settingsPanel.classList.remove('active');
         });
     }
@@ -223,9 +184,6 @@ function setupSettingsPanel() {
     const themeOptions = document.querySelectorAll('.theme-option');
     themeOptions.forEach(option => {
         option.addEventListener('click', function() {
-            // Premium vibration
-            vibrate([8]);
-            
             const theme = this.getAttribute('data-theme');
             
             // Update active state
@@ -248,9 +206,6 @@ function setupSettingsPanel() {
     const languageOptions = document.querySelectorAll('.language-option');
     languageOptions.forEach(option => {
         option.addEventListener('click', function() {
-            // Premium vibration
-            vibrate([8]);
-            
             const lang = this.getAttribute('data-lang');
             
             // Update active state
@@ -356,9 +311,6 @@ function setupShareButton() {
     
     if (shareButton) {
         shareButton.addEventListener('click', function() {
-            // Premium vibration
-            vibrate([25, 15, 25]);
-            
             const shareUrl = window.location.href;
             
             // Check if Web Share API is available
