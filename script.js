@@ -130,14 +130,12 @@ function setupGameButtons() {
         button.addEventListener('click', function(e) {
             e.stopPropagation();
             vibrate();
-            const botUsername = this.getAttribute('data-bot');
-            if (botUsername) {
-                const telegramUrl = `https://t.me/${botUsername}`;
-                
+            const gameUrl = this.getAttribute('data-url');
+            if (gameUrl) {
                 if (window.Telegram && window.Telegram.WebApp) {
-                    window.Telegram.WebApp.openTelegramLink(telegramUrl);
+                    window.Telegram.WebApp.openTelegramLink(gameUrl);
                 } else {
-                    window.open(telegramUrl, '_blank');
+                    window.open(gameUrl, '_blank');
                 }
             }
         });
