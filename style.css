@@ -14,6 +14,7 @@
   --border-light: #e2e8f0;
   --border-dark: #2d3748;
   --success-color: #48bb78;
+  --warning-color: #ed8936;
   --shadow-light: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   --shadow-dark: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
 }
@@ -86,6 +87,21 @@ body.dark-theme {
 .app-title {
   font-size: 24px;
   font-weight: 700;
+}
+
+.header-stats {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.points-badge {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  backdrop-filter: blur(10px);
 }
 
 .settings-button {
@@ -165,7 +181,7 @@ body.dark-theme {
   font-size: 14px;
 }
 
-.theme-switcher, .language-switcher {
+.theme-switcher {
   display: flex;
   background: var(--card-light);
   border-radius: 10px;
@@ -173,12 +189,12 @@ body.dark-theme {
   border: 1px solid var(--border-light);
 }
 
-.dark-theme .theme-switcher, .dark-theme .language-switcher {
+.dark-theme .theme-switcher {
   background: var(--surface-dark);
   border-color: var(--border-dark);
 }
 
-.theme-option, .language-option {
+.theme-option {
   flex: 1;
   padding: 8px 12px;
   border: none;
@@ -190,13 +206,13 @@ body.dark-theme {
   font-size: 13px;
 }
 
-.theme-option.active, .language-option.active {
+.theme-option.active {
   background: var(--primary-gradient);
   color: white;
   box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
 }
 
-.dark-theme .theme-option.active, .dark-theme .language-option.active {
+.dark-theme .theme-option.active {
   background: var(--primary-dark);
 }
 
@@ -238,6 +254,7 @@ body.dark-theme {
 
 .content-section.active {
   display: block;
+  animation: slideInUp 0.4s ease-out;
 }
 
 /* Section Headers */
@@ -259,6 +276,21 @@ body.dark-theme {
 
 .dark-theme .section-subtitle {
   color: var(--text-secondary-dark);
+}
+
+.recommended-section {
+  margin-bottom: 30px;
+}
+
+.recommended-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: var(--primary-light);
+}
+
+.dark-theme .recommended-title {
+  color: var(--primary-dark);
 }
 
 /* Games Grid */
@@ -326,9 +358,25 @@ body.dark-theme {
 .game-info p {
   font-size: 14px;
   color: var(--text-secondary-light);
+  margin-bottom: 8px;
 }
 
 .dark-theme .game-info p {
+  color: var(--text-secondary-dark);
+}
+
+.game-stats {
+  display: flex;
+  gap: 12px;
+  font-size: 12px;
+}
+
+.stat {
+  color: var(--text-secondary-light);
+  font-weight: 500;
+}
+
+.dark-theme .stat {
   color: var(--text-secondary-dark);
 }
 
@@ -454,11 +502,24 @@ body.dark-theme {
 .exchange-info p {
   font-size: 14px;
   color: var(--text-secondary-light);
-  margin-bottom: 4px;
+  margin-bottom: 8px;
 }
 
 .dark-theme .exchange-info p {
   color: var(--text-secondary-dark);
+}
+
+.exchange-bonus {
+  margin-top: 4px;
+}
+
+.bonus-badge {
+  background: linear-gradient(135deg, #48bb78, #38a169);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 600;
 }
 
 .exchange-button {
@@ -494,7 +555,7 @@ body.dark-theme {
   display: flex;
   align-items: center;
   gap: 16px;
-  margin-bottom: 32px;
+  margin-bottom: 24px;
 }
 
 .profile-avatar {
@@ -524,6 +585,10 @@ body.dark-theme {
   object-fit: cover;
 }
 
+.profile-info {
+  flex-grow: 1;
+}
+
 .profile-info h2 {
   font-size: 24px;
   font-weight: 700;
@@ -533,52 +598,268 @@ body.dark-theme {
 .profile-info p {
   color: var(--text-secondary-light);
   font-size: 14px;
+  margin-bottom: 8px;
 }
 
 .dark-theme .profile-info p {
   color: var(--text-secondary-dark);
 }
 
-.profile-actions {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+.level-badge {
+  background: var(--card-light);
+  padding: 8px 12px;
+  border-radius: 12px;
+  border: 1px solid var(--border-light);
 }
 
-.share-friends-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
+.dark-theme .level-badge {
+  background: var(--card-dark);
+  border-color: var(--border-dark);
+}
+
+.level-text {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary-light);
+  display: block;
+  margin-bottom: 4px;
+}
+
+.dark-theme .level-text {
+  color: var(--text-secondary-dark);
+}
+
+.level-progress {
   width: 100%;
-  padding: 18px;
+  height: 4px;
+  background: var(--border-light);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.dark-theme .level-progress {
+  background: var(--border-dark);
+}
+
+.level-progress-bar {
+  height: 100%;
+  background: var(--primary-gradient);
+  border-radius: 2px;
+  transition: width 0.5s ease;
+}
+
+/* Stats Section */
+.stats-section {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+  background: var(--card-light);
+  padding: 20px;
+  border-radius: 20px;
+  border: 1px solid var(--border-light);
+}
+
+.dark-theme .stats-section {
+  background: var(--card-dark);
+  border-color: var(--border-dark);
+}
+
+.stat-item {
+  text-align: center;
+}
+
+.stat-number {
+  display: block;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--primary-light);
+  margin-bottom: 4px;
+}
+
+.dark-theme .stat-number {
+  color: var(--primary-dark);
+}
+
+.stat-label {
+  font-size: 12px;
+  color: var(--text-secondary-light);
+  font-weight: 500;
+}
+
+.dark-theme .stat-label {
+  color: var(--text-secondary-dark);
+}
+
+/* Achievements Section */
+.achievements-section {
+  margin-bottom: 24px;
+}
+
+.achievements-section h3 {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.achievements-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.achievement {
+  background: var(--card-light);
+  padding: 16px;
+  border-radius: 16px;
+  text-align: center;
+  border: 1px solid var(--border-light);
+  transition: all 0.3s ease;
+  opacity: 0.6;
+}
+
+.dark-theme .achievement {
+  background: var(--card-dark);
+  border-color: var(--border-dark);
+}
+
+.achievement.earned {
+  opacity: 1;
+  background: var(--primary-light);
+  color: white;
+  transform: scale(1.05);
+}
+
+.dark-theme .achievement.earned {
+  background: var(--primary-dark);
+}
+
+.achievement-icon {
+  font-size: 24px;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.achievement-text {
+  font-size: 12px;
+  font-weight: 600;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.achievement-points {
+  font-size: 10px;
+  opacity: 0.8;
+  font-weight: 500;
+}
+
+/* Referral Section */
+.referral-section {
+  background: var(--card-light);
+  padding: 20px;
+  border-radius: 20px;
+  border: 1px solid var(--border-light);
+}
+
+.dark-theme .referral-section {
+  background: var(--card-dark);
+  border-color: var(--border-dark);
+}
+
+.referral-section h3 {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.referral-link {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+#referral-link-input {
+  flex-grow: 1;
+  padding: 12px;
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  background: var(--surface-light);
+  color: var(--text-primary-light);
+  font-size: 12px;
+}
+
+.dark-theme #referral-link-input {
+  background: var(--surface-dark);
+  border-color: var(--border-dark);
+  color: var(--text-primary-dark);
+}
+
+.copy-referral {
   background: var(--primary-gradient);
   color: white;
   border: none;
-  border-radius: 20px;
+  padding: 12px 16px;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.dark-theme .copy-referral {
+  background: var(--primary-dark);
+}
+
+.referral-description {
+  text-align: center;
+  color: var(--text-secondary-light);
+  font-size: 12px;
+  margin-bottom: 16px;
+}
+
+.dark-theme .referral-description {
+  color: var(--text-secondary-dark);
+}
+
+.share-options {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.share-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 12px 8px;
+  background: var(--surface-light);
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
   cursor: pointer;
   transition: all 0.3s ease;
-  font-size: 16px;
-  font-weight: 600;
-  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+  font-size: 11px;
+  font-weight: 500;
 }
 
-.dark-theme .share-friends-button {
-  background: var(--primary-dark);
-  box-shadow: 0 4px 15px rgba(74, 85, 104, 0.3);
+.dark-theme .share-option {
+  background: var(--surface-dark);
+  border-color: var(--border-dark);
 }
 
-.share-friends-button:hover {
+.share-option:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+  background: var(--primary-light);
+  color: white;
 }
 
-.dark-theme .share-friends-button:hover {
-  box-shadow: 0 6px 20px rgba(74, 85, 104, 0.4);
+.dark-theme .share-option:hover {
+  background: var(--primary-dark);
 }
 
-.action-icon {
-  font-size: 20px;
+.share-icon {
+  font-size: 16px;
 }
 
 /* Bottom Navigation */
@@ -691,8 +972,13 @@ body.dark-theme {
     font-size: 28px;
   }
   
-  .share-friends-button {
+  .stats-section {
     padding: 16px;
+    gap: 12px;
+  }
+  
+  .achievements-grid {
+    grid-template-columns: 1fr;
   }
   
   .settings-content {
@@ -726,13 +1012,30 @@ body.dark-theme {
   }
 }
 
-.content-section.active {
-  animation: slideInUp 0.4s ease-out;
+/* Скелетоны для загрузки */
+.skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+  border-radius: 8px;
 }
 
-/* Плавные переходы для всех интерактивных элементов */
-* {
-  transition: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+.dark-theme .skeleton {
+  background: linear-gradient(90deg, #2d3748 25%, #4a5568 50%, #2d3748 75%);
+}
+
+@keyframes loading {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Улучшенные медиа-запросы для анимаций */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
 /* Убрали outline для всех кнопок */
