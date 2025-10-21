@@ -23,10 +23,10 @@ const translations = {
         play: "Играть",
         exchanges: "Биржи",
         exchangesDesc: "Торгуйте криптовалютами безопасно",
-        binanceDesc: "Крупнейшая мировая биржа",
         bybitDesc: "Продвинутая торговая платформа",
-        okxDesc: "Надежная и безопасная",
-        kucoinDesc: "Множество торговых пар",
+        bingxDesc: "Социальная торговля и копирование",
+        bitgetDesc: "Инновационная торговая платформа",
+        mexcDesc: "Глобальная биржа с низкими комиссиями",
         user: "Пользователь",
         shareWithFriends: "Поделиться с друзьями",
         profile: "Профиль",
@@ -39,7 +39,7 @@ const translations = {
         lightTheme: "Light",
         darkTheme: "Dark",
         language: "Language",
-        russian: "Русский",
+        russian: "Russian",
         english: "English",
         done: "Done",
         games: "Games",
@@ -51,10 +51,10 @@ const translations = {
         play: "Play",
         exchanges: "Exchanges",
         exchangesDesc: "Trade cryptocurrencies safely",
-        binanceDesc: "Largest global exchange",
         bybitDesc: "Advanced trading platform",
-        okxDesc: "Reliable and secure",
-        kucoinDesc: "Multiple trading pairs",
+        bingxDesc: "Social trading and copy trading",
+        bitgetDesc: "Innovative trading platform",
+        mexcDesc: "Global exchange with low fees",
         user: "User",
         shareWithFriends: "Share with friends",
         profile: "Profile",
@@ -70,6 +70,7 @@ function initializeApp() {
     loadThemePreference();
     loadLanguagePreference();
     loadUserData();
+    setupShareButton();
     
     // Плавная загрузка контента
     setTimeout(() => {
