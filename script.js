@@ -2,14 +2,73 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeApp();
 });
 
+// Translations object
+const translations = {
+    ru: {
+        appTitle: "Games Verse",
+        settings: "Настройки",
+        theme: "Тема",
+        lightTheme: "Светлая",
+        darkTheme: "Темная",
+        language: "Язык",
+        russian: "Русский",
+        english: "English",
+        done: "Готово",
+        games: "Игры",
+        bestGames: "Лучшие игры Telegram",
+        hamsterGameDevDesc: "Создай свою студию",
+        hamsterKingDesc: "Стань королем хомяков",
+        hamsterFightClubDesc: "Бойцовский клуб хомяков",
+        bitquestDesc: "Приключения в мире крипты",
+        play: "Играть",
+        exchanges: "Биржи",
+        exchangesDesc: "Торгуйте криптовалютами безопасно",
+        binanceDesc: "Крупнейшая мировая биржа",
+        bybitDesc: "Продвинутая торговая платформа",
+        okxDesc: "Надежная и безопасная",
+        kucoinDesc: "Множество торговых пар",
+        user: "Пользователь",
+        shareWithFriends: "Поделиться с друзьями",
+        profile: "Профиль",
+        linkCopied: "Ссылка скопирована в буфер обмена!"
+    },
+    en: {
+        appTitle: "Games Verse",
+        settings: "Settings",
+        theme: "Theme",
+        lightTheme: "Light",
+        darkTheme: "Dark",
+        language: "Language",
+        russian: "Русский",
+        english: "English",
+        done: "Done",
+        games: "Games",
+        bestGames: "Best Telegram Games",
+        hamsterGameDevDesc: "Create your own studio",
+        hamsterKingDesc: "Become the hamster king",
+        hamsterFightClubDesc: "Hamster fighting club",
+        bitquestDesc: "Adventures in the crypto world",
+        play: "Play",
+        exchanges: "Exchanges",
+        exchangesDesc: "Trade cryptocurrencies safely",
+        binanceDesc: "Largest global exchange",
+        bybitDesc: "Advanced trading platform",
+        okxDesc: "Reliable and secure",
+        kucoinDesc: "Multiple trading pairs",
+        user: "User",
+        shareWithFriends: "Share with friends",
+        profile: "Profile",
+        linkCopied: "Link copied to clipboard!"
+    }
+};
+
 function initializeApp() {
     setupNavigation();
     setupGameCards();
     setupExchangeCards();
-    setupThemeToggle();
-    setupShareButton();
     setupSettingsPanel();
     loadThemePreference();
+    loadLanguagePreference();
     loadUserData();
     
     // Плавная загрузка контента
@@ -166,27 +225,24 @@ function setupSettingsPanel() {
             languageOptions.forEach(opt => opt.classList.remove('active'));
             this.classList.add('active');
             
+            // Change language
+            setLanguage(lang);
+            
             // Save to localStorage
             localStorage.setItem('language', lang);
-            
-            // In a real app, you would reload translations here
-            console.log('Language changed to:', lang);
         });
     });
 }
 
-function setupThemeToggle() {
-    const themeButton = document.getElementById('theme-button');
-    const body = document.body;
-    
-    if (themeButton) {
-        themeButton.addEventListener('click', function() {
-            body.classList.toggle('dark-theme');
-            localStorage.setItem('theme', body.classList.contains('dark-theme') ? 'dark' : 'light');
-            updateThemeButton();
-            updateSettingsThemeOptions();
-        });
-    }
+function setLanguage(lang) {
+    // Update all elements with data-i18n attribute
+    const elements = document.querySelectorAll('[data-i18n]');
+    elements.forEach(element => {
+        const key = element.getAttribute('data-i18n');
+        if (translations[lang] && translations[lang][key]) {
+            element.textContent = translations[lang][key];
+        }
+    });
 }
 
 function loadThemePreference() {
@@ -194,28 +250,13 @@ function loadThemePreference() {
     if (savedTheme === 'dark') {
         document.body.classList.add('dark-theme');
     }
-    updateThemeButton();
     updateSettingsThemeOptions();
-    
-    // Load language preference
-    const savedLang = localStorage.getItem('language') || 'ru';
-    updateSettingsLanguageOptions(savedLang);
 }
 
-function updateThemeButton() {
-    const themeButton = document.getElementById('theme-button');
-    if (themeButton) {
-        const themeIcon = themeButton.querySelector('.action-icon');
-        const themeText = themeButton.querySelector('span:last-child');
-        
-        if (document.body.classList.contains('dark-theme')) {
-            themeIcon.textContent = '☀️';
-            themeText.textContent = 'Светлая тема';
-        } else {
-            themeIcon.textContent = '🌙';
-            themeText.textContent = 'Темная тема';
-        }
-    }
+function loadLanguagePreference() {
+    const savedLang = localStorage.getItem('language') || 'ru';
+    setLanguage(savedLang);
+    updateSettingsLanguageOptions(savedLang);
 }
 
 function updateSettingsThemeOptions() {
@@ -297,7 +338,7 @@ function setupShareButton() {
             } else {
                 // Fallback: copy to clipboard
                 navigator.clipboard.writeText(shareUrl).then(() => {
-                    showNotification(notification, 'Ссылка скопирована в буфер обмена!');
+                    showNotification(notification);
                 }).catch(() => {
                     // Fallback for older browsers
                     try {
@@ -307,7 +348,7 @@ function setupShareButton() {
                         textArea.select();
                         document.execCommand('copy');
                         document.body.removeChild(textArea);
-                        showNotification(notification, 'Ссылка скопирована в буфер обмена!');
+                        showNotification(notification);
                     } catch (err) {
                         console.error('Copy failed:', err);
                         showNotification(notification, 'Не удалось скопировать ссылку');
@@ -318,9 +359,9 @@ function setupShareButton() {
     }
 }
 
-function showNotification(notification, message) {
-    if (message) {
-        notification.textContent = message;
+function showNotification(notification, customMessage) {
+    if (customMessage) {
+        notification.textContent = customMessage;
     }
     
     notification.classList.add('show');
