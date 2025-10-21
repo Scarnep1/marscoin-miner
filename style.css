@@ -9,6 +9,12 @@ body {
     background-color: #ffffff;
     color: #1a1a1a;
     line-height: 1.5;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+body.dark-theme {
+    background-color: #121212;
+    color: #e0e0e0;
 }
 
 .app-container {
@@ -18,6 +24,11 @@ body {
     min-height: 100vh;
     position: relative;
     padding-bottom: 80px;
+    transition: background-color 0.3s;
+}
+
+.dark-theme .app-container {
+    background: #121212;
 }
 
 /* Header */
@@ -82,6 +93,10 @@ body {
     font-weight: 500;
 }
 
+.dark-theme .section-subtitle {
+    color: #aaa;
+}
+
 /* Games Grid */
 .games-grid {
     display: grid;
@@ -102,21 +117,38 @@ body {
     cursor: pointer;
 }
 
+.dark-theme .game-card {
+    background: #1e1e1e;
+    border-color: #333;
+}
+
 .game-card:hover {
     transform: translateY(-2px);
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
     background: #ffffff;
 }
 
+.dark-theme .game-card:hover {
+    background: #252525;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
 .game-image {
     width: 60px;
     height: 60px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 24px;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.game-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.game-info {
+    flex-grow: 1;
 }
 
 .game-info h3 {
@@ -130,20 +162,25 @@ body {
     color: #666;
 }
 
-.game-badge {
-    position: absolute;
-    top: 12px;
-    right: 12px;
-    background: #ff4444;
-    color: white;
-    padding: 4px 8px;
-    border-radius: 12px;
-    font-size: 10px;
-    font-weight: 600;
+.dark-theme .game-info p {
+    color: #aaa;
 }
 
-.game-badge.new {
-    background: #00c851;
+.play-button {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 14px;
+}
+
+.play-button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
 }
 
 /* Exchanges List */
@@ -165,10 +202,20 @@ body {
     cursor: pointer;
 }
 
+.dark-theme .exchange-card {
+    background: #1e1e1e;
+    border-color: #333;
+}
+
 .exchange-card:hover {
     transform: translateY(-1px);
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     background: #ffffff;
+}
+
+.dark-theme .exchange-card:hover {
+    background: #252525;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 
 .exchange-logo {
@@ -195,10 +242,18 @@ body {
     color: #666;
 }
 
+.dark-theme .exchange-info p {
+    color: #aaa;
+}
+
 .exchange-arrow {
     margin-left: auto;
     font-size: 20px;
     color: #666;
+}
+
+.dark-theme .exchange-arrow {
+    color: #aaa;
 }
 
 /* Profile Section */
@@ -206,7 +261,7 @@ body {
     display: flex;
     align-items: center;
     gap: 16px;
-    margin-bottom: 24px;
+    margin-bottom: 32px;
 }
 
 .profile-avatar {
@@ -233,124 +288,50 @@ body {
     font-size: 14px;
 }
 
-.balance-card {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    border-radius: 20px;
-    padding: 24px;
-    margin-bottom: 24px;
-    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+.dark-theme .profile-info p {
+    color: #aaa;
 }
 
-.balance-header {
+.profile-actions {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 16px;
-    font-size: 14px;
-    opacity: 0.9;
-}
-
-.balance-refresh {
-    cursor: pointer;
-    font-size: 16px;
-}
-
-.balance-amount {
-    display: flex;
-    align-items: baseline;
-    gap: 8px;
-    margin-bottom: 8px;
-}
-
-.amount {
-    font-size: 32px;
-    font-weight: 700;
-}
-
-.currency {
-    font-size: 20px;
-    opacity: 0.9;
-}
-
-.balance-equivalent {
-    font-size: 14px;
-    opacity: 0.8;
-}
-
-.referral-section {
-    background: #f8f9fa;
-    border-radius: 20px;
-    padding: 20px;
-    border: 1px solid #e9ecef;
-}
-
-.referral-section h3 {
-    font-size: 18px;
-    font-weight: 600;
-    margin-bottom: 8px;
-}
-
-.referral-section p {
-    color: #666;
-    margin-bottom: 16px;
-    font-size: 14px;
-}
-
-.referral-link {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 20px;
-}
-
-#referral-input {
-    flex: 1;
-    padding: 12px 16px;
-    border: 1px solid #ddd;
-    border-radius: 12px;
-    background: white;
-    font-size: 14px;
-}
-
-#copy-btn {
-    padding: 12px 20px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    border: none;
-    border-radius: 12px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-#copy-btn:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
-}
-
-.referral-stats {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    flex-direction: column;
     gap: 16px;
 }
 
-.stat-item {
-    text-align: center;
-    padding: 12px;
-    background: white;
-    border-radius: 12px;
+.action-button {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    width: 100%;
+    padding: 16px;
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 16px;
+    font-weight: 500;
 }
 
-.stat-number {
-    display: block;
+.dark-theme .action-button {
+    background: #1e1e1e;
+    border-color: #333;
+    color: #e0e0e0;
+}
+
+.action-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    background: #ffffff;
+}
+
+.dark-theme .action-button:hover {
+    background: #252525;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.action-icon {
     font-size: 24px;
-    font-weight: 700;
-    color: #667eea;
-}
-
-.stat-label {
-    font-size: 12px;
-    color: #666;
 }
 
 /* Bottom Navigation */
@@ -367,6 +348,11 @@ body {
     backdrop-filter: blur(10px);
     max-width: 400px;
     margin: 0 auto;
+}
+
+.dark-theme .bottom-nav {
+    background: #1e1e1e;
+    border-color: #333;
 }
 
 .nav-item {
@@ -386,6 +372,10 @@ body {
 .nav-item.active {
     opacity: 1;
     background: #f8f9fa;
+}
+
+.dark-theme .nav-item.active {
+    background: #252525;
 }
 
 .nav-icon {
