@@ -64,7 +64,7 @@ const translations = {
     }
 };
 
-// Vibration function
+// Enhanced vibration function with different patterns
 function vibrate(pattern) {
     if (navigator.vibrate) {
         navigator.vibrate(pattern);
@@ -108,30 +108,37 @@ function setupNavigation() {
         item.addEventListener('click', function() {
             const targetSection = this.getAttribute('data-section');
             
-            // Вибрация при нажатии
-            vibrate([30]);
+            // Premium vibration feedback
+            vibrate([15, 10, 15]);
             
-            // Update active nav item
+            // Reset all nav items
             navItems.forEach(nav => {
                 nav.classList.remove('active');
-                // Сбрасываем анимацию
+                // Reset animations
                 nav.style.animation = 'none';
+                const icon = nav.querySelector('.nav-icon');
+                if (icon) icon.style.animation = 'none';
             });
             
+            // Activate current item
             this.classList.add('active');
             
-            // Добавляем анимацию для активного элемента
+            // Add premium animations
             setTimeout(() => {
-                this.style.animation = 'navBounce 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+                this.style.animation = 'premiumBounce 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards';
+                const icon = this.querySelector('.nav-icon');
+                if (icon) {
+                    icon.style.animation = 'iconPulse 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards';
+                }
             }, 10);
             
-            // Show target section
+            // Show target section with smooth transition
             sections.forEach(section => {
                 section.classList.remove('active');
                 if (section.id === targetSection) {
                     setTimeout(() => {
                         section.classList.add('active');
-                    }, 150);
+                    }, 200);
                 }
             });
         });
@@ -144,8 +151,8 @@ function setupGameButtons() {
     playButtons.forEach(button => {
         button.addEventListener('click', function(e) {
             e.stopPropagation();
-            // Вибрация при нажатии
-            vibrate([20]);
+            // Premium vibration
+            vibrate([20, 15]);
             
             const botUsername = this.getAttribute('data-bot');
             if (botUsername) {
@@ -167,8 +174,8 @@ function setupExchangeButtons() {
     exchangeButtons.forEach(button => {
         button.addEventListener('click', function(e) {
             e.stopPropagation();
-            // Вибрация при нажатии
-            vibrate([20]);
+            // Premium vibration
+            vibrate([20, 15]);
             
             const exchangeUrl = this.getAttribute('data-url');
             if (exchangeUrl) {
@@ -189,16 +196,16 @@ function setupSettingsPanel() {
     
     if (settingsButton) {
         settingsButton.addEventListener('click', function() {
-            // Вибрация при нажатии
-            vibrate([15]);
+            // Premium vibration
+            vibrate([10, 5]);
             settingsPanel.classList.add('active');
         });
     }
     
     if (closeSettings) {
         closeSettings.addEventListener('click', function() {
-            // Вибрация при нажатии
-            vibrate([15]);
+            // Premium vibration
+            vibrate([10, 5]);
             settingsPanel.classList.remove('active');
         });
     }
@@ -216,8 +223,8 @@ function setupSettingsPanel() {
     const themeOptions = document.querySelectorAll('.theme-option');
     themeOptions.forEach(option => {
         option.addEventListener('click', function() {
-            // Вибрация при нажатии
-            vibrate([10]);
+            // Premium vibration
+            vibrate([8]);
             
             const theme = this.getAttribute('data-theme');
             
@@ -241,8 +248,8 @@ function setupSettingsPanel() {
     const languageOptions = document.querySelectorAll('.language-option');
     languageOptions.forEach(option => {
         option.addEventListener('click', function() {
-            // Вибрация при нажатии
-            vibrate([10]);
+            // Premium vibration
+            vibrate([8]);
             
             const lang = this.getAttribute('data-lang');
             
@@ -349,8 +356,8 @@ function setupShareButton() {
     
     if (shareButton) {
         shareButton.addEventListener('click', function() {
-            // Вибрация при нажатии
-            vibrate([25]);
+            // Premium vibration
+            vibrate([25, 15, 25]);
             
             const shareUrl = window.location.href;
             
