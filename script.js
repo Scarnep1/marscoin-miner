@@ -6,8 +6,8 @@ function initializeApp() {
     setupNavigation();
     setupGameCards();
     setupExchangeCards();
-    setupReferralLink();
-    setupBalanceRefresh();
+    setupThemeToggle();
+    setupShareButton();
     
     // Telegram Web App integration
     if (window.Telegram && window.Telegram.WebApp) {
@@ -62,6 +62,24 @@ function setupGameCards() {
                 }
             }
         });
+        
+        // Also make the play button work
+        const playButton = card.querySelector('.play-button');
+        if (playButton) {
+            playButton.addEventListener('click', function(e) {
+                e.stopPropagation(); // Prevent triggering the card click event twice
+                const botUsername = card.getAttribute('data-bot');
+                if (botUsername) {
+                    const telegramUrl = `https://t.me/${botUsername}`;
+                    
+                    if (window.Telegram && window.Telegram.WebApp) {
+                        window.Telegram.WebApp.openTelegramLink(telegramUrl);
+                    } else {
+                        window.open(telegramUrl, '_blank');
+                    }
+                }
+            });
+        }
     });
 }
 
@@ -82,85 +100,77 @@ function setupExchangeCards() {
     });
 }
 
-function setupReferralLink() {
-    const copyBtn = document.getElementById('copy-btn');
-    const referralInput = document.getElementById('referral-input');
-    const notification = document.getElementById('notification');
+function setupThemeToggle() {
+    const themeButton = document.getElementById('theme-button');
+    const body = document.body;
     
-    if (copyBtn && referralInput && notification) {
-        copyBtn.addEventListener('click', function() {
-            referralInput.select();
-            referralInput.setSelectionRange(0, 99999);
+    if (themeButton) {
+        themeButton.addEventListener('click', function() {
+            body.classList.toggle('dark-theme');
             
-            navigator.clipboard.writeText(referralInput.value).then(() => {
-                showNotification(notification);
-            }).catch(() => {
-                // Fallback for older browsers
-                try {
-                    document.execCommand('copy');
-                    showNotification(notification);
-                } catch (err) {
-                    console.error('Copy failed:', err);
-                }
-            });
+            // Update button text and icon
+            const themeIcon = this.querySelector('.action-icon');
+            const themeText = this.querySelector('span:last-child');
+            
+            if (body.classList.contains('dark-theme')) {
+                themeIcon.textContent = '☀️';
+                themeText.textContent = 'Светлая тема';
+            } else {
+                themeIcon.textContent = '🌙';
+                themeText.textContent = 'Темная тема';
+            }
         });
     }
 }
 
-function showNotification(notification) {
+function setupShareButton() {
+    const shareButton = document.getElementById('share-button');
+    const notification = document.getElementById('notification');
+    
+    if (shareButton) {
+        shareButton.addEventListener('click', function() {
+            const shareUrl = window.location.href;
+            
+            // Check if Web Share API is available
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Games Verse',
+                    text: 'Открой для себя лучшие игры Telegram в одном приложении!',
+                    url: shareUrl,
+                })
+                .then(() => console.log('Успешный шаринг'))
+                .catch((error) => console.log('Ошибка шаринга', error));
+            } else {
+                // Fallback: copy to clipboard
+                navigator.clipboard.writeText(shareUrl).then(() => {
+                    showNotification(notification, 'Ссылка скопирована в буфер обмена!');
+                }).catch(() => {
+                    // Fallback for older browsers
+                    try {
+                        const textArea = document.createElement('textarea');
+                        textArea.value = shareUrl;
+                        document.body.appendChild(textArea);
+                        textArea.select();
+                        document.execCommand('copy');
+                        document.body.removeChild(textArea);
+                        showNotification(notification, 'Ссылка скопирована в буфер обмена!');
+                    } catch (err) {
+                        console.error('Copy failed:', err);
+                        showNotification(notification, 'Не удалось скопировать ссылку');
+                    }
+                });
+            }
+        });
+    }
+}
+
+function showNotification(notification, message) {
+    if (message) {
+        notification.textContent = message;
+    }
+    
     notification.classList.add('show');
     setTimeout(() => {
         notification.classList.remove('show');
     }, 2000);
 }
-
-function setupBalanceRefresh() {
-    const refreshBtn = document.querySelector('.balance-refresh');
-    const balanceAmount = document.querySelector('.amount');
-    
-    if (refreshBtn && balanceAmount) {
-        refreshBtn.addEventListener('click', function() {
-            this.style.transition = 'transform 0.3s ease';
-            this.style.transform = 'rotate(360deg)';
-            
-            setTimeout(() => {
-                this.style.transform = 'rotate(0deg)';
-                
-                const currentBalance = parseInt(balanceAmount.textContent.replace(',', ''));
-                const randomChange = Math.floor(Math.random() * 10) - 5;
-                const newBalance = Math.max(0, currentBalance + randomChange);
-                
-                balanceAmount.textContent = newBalance.toLocaleString();
-                
-                const usdValue = (newBalance * 0.01).toFixed(2);
-                const usdElement = document.querySelector('.balance-equivalent');
-                if (usdElement) {
-                    usdElement.textContent = `≈ $${usdValue}`;
-                }
-            }, 1000);
-        });
-    }
-}
-
-// Simulate user activity for demo
-function simulateUserActivity() {
-    const balanceElement = document.querySelector('.amount');
-    if (!balanceElement) return;
-
-    setInterval(() => {
-        const currentBalance = parseInt(balanceElement.textContent.replace(',', ''));
-        const randomIncrease = Math.floor(Math.random() * 3);
-        const newBalance = currentBalance + randomIncrease;
-        
-        balanceElement.textContent = newBalance.toLocaleString();
-        
-        const usdValue = (newBalance * 0.01).toFixed(2);
-        const usdElement = document.querySelector('.balance-equivalent');
-        if (usdElement) {
-            usdElement.textContent = `≈ $${usdValue}`;
-        }
-    }, 30000);
-}
-
-// Start simulation after delay
-setTimeout(simulateUserActivity, 5000);
