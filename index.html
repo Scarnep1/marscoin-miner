@@ -13,9 +13,34 @@
         <header class="header">
             <div class="header-content">
                 <h1 class="app-title">Games Verse</h1>
-                <div class="user-avatar">U</div>
+                <button class="settings-button" id="settings-button">⚙️</button>
             </div>
         </header>
+
+        <!-- Settings Panel -->
+        <div class="settings-panel" id="settings-panel">
+            <div class="settings-content">
+                <h3 class="settings-title">Настройки</h3>
+                
+                <div class="setting-item">
+                    <span class="setting-label">Тема</span>
+                    <div class="theme-switcher">
+                        <button class="theme-option active" data-theme="light">Светлая</button>
+                        <button class="theme-option" data-theme="dark">Темная</button>
+                    </div>
+                </div>
+                
+                <div class="setting-item">
+                    <span class="setting-label">Язык</span>
+                    <div class="language-switcher">
+                        <button class="language-option active" data-lang="ru">Русский</button>
+                        <button class="language-option" data-lang="en">English</button>
+                    </div>
+                </div>
+                
+                <button class="close-settings" id="close-settings">Готово</button>
+            </div>
+        </div>
 
         <!-- Main Content -->
         <main class="main-content">
@@ -126,17 +151,20 @@
             <!-- Profile Section -->
             <section id="profile-section" class="content-section">
                 <div class="profile-header">
-                    <div class="profile-avatar">U</div>
+                    <div class="profile-avatar" id="user-avatar">
+                        <img src="" alt="User Avatar" id="avatar-img" style="display: none;">
+                        <span id="avatar-fallback">U</span>
+                    </div>
                     <div class="profile-info">
-                        <h2>Пользователь</h2>
-                        <p>@gamesverse_user</p>
+                        <h2 id="user-name">Пользователь</h2>
+                        <p id="user-username">@username</p>
                     </div>
                 </div>
 
                 <div class="profile-actions">
-                    <button class="action-button" id="share-button">
-                        <span class="action-icon">📤</span>
-                        <span>Поделиться приложением</span>
+                    <button class="share-friends-button" id="share-friends-button">
+                        <span class="action-icon">👥</span>
+                        <span>Поделиться с друзьями</span>
                     </button>
                     
                     <button class="action-button" id="theme-button">
