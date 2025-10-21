@@ -64,6 +64,12 @@ const translations = {
     }
 };
 
+function vibrate() {
+    if (navigator.vibrate) {
+        navigator.vibrate(50);
+    }
+}
+
 function initializeApp() {
     setupNavigation();
     setupGameButtons();
@@ -99,6 +105,7 @@ function setupNavigation() {
     
     navItems.forEach(item => {
         item.addEventListener('click', function() {
+            vibrate();
             const targetSection = this.getAttribute('data-section');
             
             // Update active nav item
@@ -122,6 +129,7 @@ function setupGameButtons() {
     playButtons.forEach(button => {
         button.addEventListener('click', function(e) {
             e.stopPropagation();
+            vibrate();
             const botUsername = this.getAttribute('data-bot');
             if (botUsername) {
                 const telegramUrl = `https://t.me/${botUsername}`;
@@ -142,6 +150,7 @@ function setupExchangeButtons() {
     exchangeButtons.forEach(button => {
         button.addEventListener('click', function(e) {
             e.stopPropagation();
+            vibrate();
             const exchangeUrl = this.getAttribute('data-url');
             if (exchangeUrl) {
                 if (window.Telegram && window.Telegram.WebApp) {
@@ -161,12 +170,14 @@ function setupSettingsPanel() {
     
     if (settingsButton) {
         settingsButton.addEventListener('click', function() {
+            vibrate();
             settingsPanel.classList.add('active');
         });
     }
     
     if (closeSettings) {
         closeSettings.addEventListener('click', function() {
+            vibrate();
             settingsPanel.classList.remove('active');
         });
     }
@@ -184,6 +195,7 @@ function setupSettingsPanel() {
     const themeOptions = document.querySelectorAll('.theme-option');
     themeOptions.forEach(option => {
         option.addEventListener('click', function() {
+            vibrate();
             const theme = this.getAttribute('data-theme');
             
             // Update active state
@@ -206,6 +218,7 @@ function setupSettingsPanel() {
     const languageOptions = document.querySelectorAll('.language-option');
     languageOptions.forEach(option => {
         option.addEventListener('click', function() {
+            vibrate();
             const lang = this.getAttribute('data-lang');
             
             // Update active state
@@ -311,6 +324,7 @@ function setupShareButton() {
     
     if (shareButton) {
         shareButton.addEventListener('click', function() {
+            vibrate();
             const shareUrl = window.location.href;
             
             // Check if Web Share API is available
